@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.xuzilin.common.dao.RecordEntityMapper">
+  <resultMap id="BaseResultMap" type="cn.xuzilin.common.po.RecordEntity">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="roomId" jdbcType="INTEGER" property="roomId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="idcardNo" jdbcType="VARCHAR" property="idcardNo" />
+    <result column="checkInTime" jdbcType="VARCHAR" property="checkInTime" />
+    <result column="checkOutTime" jdbcType="VARCHAR" property="checkOutTime" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, roomId, name, idcardNo, checkInTime, checkOutTime, status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.xuzilin.common.po.RecordEntity">
+    insert into record (id, roomId, name, 
+      idcardNo, checkInTime, checkOutTime, 
+      status)
+    values (#{id,jdbcType=INTEGER}, #{roomId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{idcardNo,jdbcType=VARCHAR}, #{checkInTime,jdbcType=VARCHAR}, #{checkOutTime,jdbcType=VARCHAR}, 
+      #{status,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.xuzilin.common.po.RecordEntity">
+    insert into record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="roomId != null">
+        roomId,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="idcardNo != null">
+        idcardNo,
+      </if>
+      <if test="checkInTime != null">
+        checkInTime,
+      </if>
+      <if test="checkOutTime != null">
+        checkOutTime,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="roomId != null">
+        #{roomId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="idcardNo != null">
+        #{idcardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="checkInTime != null">
+        #{checkInTime,jdbcType=VARCHAR},
+      </if>
+      <if test="checkOutTime != null">
+        #{checkOutTime,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.xuzilin.common.po.RecordEntity">
+    update record
+    <set>
+      <if test="roomId != null">
+        roomId = #{roomId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="idcardNo != null">
+        idcardNo = #{idcardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="checkInTime != null">
+        checkInTime = #{checkInTime,jdbcType=VARCHAR},
+      </if>
+      <if test="checkOutTime != null">
+        checkOutTime = #{checkOutTime,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.xuzilin.common.po.RecordEntity">
+    update record
+    set roomId = #{roomId,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      idcardNo = #{idcardNo,jdbcType=VARCHAR},
+      checkInTime = #{checkInTime,jdbcType=VARCHAR},
+      checkOutTime = #{checkOutTime,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.xuzilin.common.dao.RoomEntityMapper">
+  <resultMap id="BaseResultMap" type="cn.xuzilin.common.po.RoomEntity">
+    <id column="roomId" jdbcType="INTEGER" property="roomId" />
+    <result column="roomType" jdbcType="TINYINT" property="roomType" />
+    <result column="checkIn" jdbcType="TINYINT" property="checkIn" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    roomId, roomType, checkIn
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from room
+    where roomId = #{roomId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from room
+    where roomId = #{roomId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.xuzilin.common.po.RoomEntity">
+    insert into room (roomId, roomType, checkIn
+      )
+    values (#{roomId,jdbcType=INTEGER}, #{roomType,jdbcType=TINYINT}, #{checkIn,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.xuzilin.common.po.RoomEntity">
+    insert into room
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="roomId != null">
+        roomId,
+      </if>
+      <if test="roomType != null">
+        roomType,
+      </if>
+      <if test="checkIn != null">
+        checkIn,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="roomId != null">
+        #{roomId,jdbcType=INTEGER},
+      </if>
+      <if test="roomType != null">
+        #{roomType,jdbcType=TINYINT},
+      </if>
+      <if test="checkIn != null">
+        #{checkIn,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.xuzilin.common.po.RoomEntity">
+    update room
+    <set>
+      <if test="roomType != null">
+        roomType = #{roomType,jdbcType=TINYINT},
+      </if>
+      <if test="checkIn != null">
+        checkIn = #{checkIn,jdbcType=TINYINT},
+      </if>
+    </set>
+    where roomId = #{roomId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.xuzilin.common.po.RoomEntity">
+    update room
+    set roomType = #{roomType,jdbcType=TINYINT},
+      checkIn = #{checkIn,jdbcType=TINYINT}
+    where roomId = #{roomId,jdbcType=INTEGER}
+  </update>
+</mapper>

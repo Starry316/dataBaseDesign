@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>学生在线-纳新系统</title>
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+
+<body>
+    <div class="login">
+        <div class="login-panel">
+            <div class="header">
+                <i class="logo"></i>
+                <span class="head-text">纳新管理系统</span>
+            </div>
+            <div class="body">
+                <h2>请输入口令</h2>
+                <input type="text">
+                <button class="bt" id="login-bt">登入</button>
+            </div>
+            <div class="login-loading hide"></div>
+        </div>
+        <div class="info">
+            <p>Copyright © 2018 ©
+                <a href="https://online.sdu.edu.cn/">学生在线网络文化工作室</a>
+            </p>
+        </div>
+    </div>
+    <div class="main hide">
+        <header>
+            <a class="logo" href="https://online.sdu.edu.cn"></a>
+            <span class="header-text">纳新管理系统</span>
+            <a class="help" href="http://127.0.0.1:3000/static/html/help.html">使用帮助</a>
+        </header>
+        <main>
+            <nav class="side-nav">
+                <div class="welcome">
+                    欢迎使用哟
+                </div>
+                <ul>
+                    <li class="divider">
+                        人员管理
+                        <a id="input-info">录入</a>
+                        <a id="showall">查看全部</a>
+                    </li>
+                    <li>
+                        <a class="nav-item" mark="2">
+                            <span class="title">应用服务事业群</span>
+                            <i class="arrow"></i>
+                        </a>
+                        <ul class="hide">
+                            <li>
+                                <a class="sub-item member-info" mark="0">中心校区</a>
+                            </li>
+                            <li>
+                                <a class="sub-item member-info" mark="1">洪家楼校区</a>
+                            </li>
+                            <li>
+                                <a class="sub-item member-info" mark="2">兴隆山校区</a>
+                            </li>
+                            <li>
+                                <a class="sub-item member-info" mark="3">软件园校区</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="nav-item" mark="1">
+                            <span class="title">技术工程事业群</span>
+                            <i class="arrow"></i>
+                        </a>
+                        <ul class="hide">
+                            <li>
+                                <a class="sub-item member-info" mark="0">中心校区</a>
+                            </li>
+                            <li>
+                                <a class="sub-item member-info" mark="1">洪家楼校区</a>
+                            </li>
+                            <li>
+                                <a class="sub-item member-info" mark="2">兴隆山校区</a>
+                            </li>
+                            <li>
+                                <a class="sub-item member-info" mark="3">软件园校区</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="nav-item" mark="3">
+                            <span class="title" mark="3">网络媒体事业群</span>
+                            <i class="arrow"></i>
+                        </a>
+                        <ul class="hide">
+                            <li>
+                                <a class="sub-item member-info" mark="0">中心校区</a>
+                            </li>
+                            <li>
+                                <a class="sub-item member-info" mark="1">洪家楼校区</a>
+                            </li>
+                            <li>
+                                <a class="sub-item member-info" mark="2">兴隆山校区</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="nav-item">
+                            <span class="title" mark="4">团队发展事业群</span>
+                            <i class="arrow"></i>
+                        </a>
+                        <ul class="hide">
+                            <li>
+                                <a class="sub-item member-info" mark="0">中心校区</a>
+                            </li>
+                            <li>
+                                <a class="sub-item member-info" mark="1">洪家楼校区</a>
+                            </li>
+                            <li>
+                                <a class="sub-item member-info" mark="2">兴隆山校区</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="nav-item">
+                            <span class="title" mark="5">易班事业群</span>
+                            <i class="arrow"></i>
+                        </a>
+                        <ul class="hide">
+                            <li>
+                                <a class="sub-item member-info" mark="0">中心校区</a>
+                            </li>
+                            <li>
+                                <a class="sub-item member-info" mark="1">洪家楼校区</a>
+                            </li>
+                            <li>
+                                <a class="sub-item member-info" mark="2">兴隆山校区</a>
+                            </li>
+                            <li>
+                                <a class="sub-item member-info" mark="3">软件园校区</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="divider">
+                        成绩录入
+                    </li>
+                    <li>
+                        <a class="nav-item" mark="2">
+                            <span class="title">应用服务事业群</span>
+                            <i class="arrow"></i>
+                        </a>
+                        <ul class="hide">
+                            <li>
+                                <a class="sub-item score-input" mark="0">中心校区</a>
+                            </li>
+                            <li>
+                                <a class="sub-item score-input" mark="1">洪家楼校区</a>
+                            </li>
+                            <li>
+                                <a class="sub-item score-input" mark="2">兴隆山校区</a>
+                            </li>
+                            <li>
+                                <a class="sub-item score-input" mark="3">软件园校区</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="nav-item" mark="1">
+                            <span class="title">技术工程事业群</span>
+                            <i class="arrow"></i>
+                        </a>
+                        <ul class="hide">
+                            <li>
+                                <a class="sub-item score-input" mark="0">中心校区</a>
+                            </li>
+                            <li>
+                                <a class="sub-item score-input" mark="1">洪家楼校区</a>
+                            </li>
+                            <li>
+                                <a class="sub-item score-input" mark="2">兴隆山校区</a>
+                            </li>
+                            <li>
+                                <a class="sub-item score-input" mark="3">软件园校区</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="nav-item" mark="3">
+                            <span class="title" mark="3">网络媒体事业群</span>
+                            <i class="arrow"></i>
+                        </a>
+                        <ul class="hide">
+                            <li>
+                                <a class="sub-item score-input" mark="0">中心校区</a>
+                            </li>
+                            <li>
+                                <a class="sub-item score-input" mark="1">洪家楼校区</a>
+                            </li>
+                            <li>
+                                <a class="sub-item score-input" mark="2">兴隆山校区</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="nav-item">
+                            <span class="title" mark="4">团队发展事业群</span>
+                            <i class="arrow"></i>
+                        </a>
+                        <ul class="hide">
+                            <li>
+                                <a class="sub-item score-input" mark="0">中心校区</a>
+                            </li>
+                            <li>
+                                <a class="sub-item score-input" mark="1">洪家楼校区</a>
+                            </li>
+                            <li>
+                                <a class="sub-item score-input" mark="2">兴隆山校区</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="nav-item">
+                            <span class="title" mark="5">易班事业群</span>
+                            <i class="arrow"></i>
+                        </a>
+                        <ul class="hide">
+                            <li>
+                                <a class="sub-item score-input" mark="0">中心校区</a>
+                            </li>
+                            <li>
+                                <a class="sub-item score-input" mark="1">洪家楼校区</a>
+                            </li>
+                            <li>
+                                <a class="sub-item score-input" mark="2">兴隆山校区</a>
+                            </li>
+                            <li>
+                                <a class="sub-item score-input" mark="3">软件园校区</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="divider">
+                        <div>纳新管理</div>
+                    </li>
+                    <li>
+                        <a class="nav-item">
+                            <span class="title">发布公告</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-item">
+                            <span class="title">流程管理</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-item">
+                            <span class="title">其他</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="page-main">
+                <div class="loading hide">
+                    <div class="loading-container">
+                        <span class="pillar"></span>
+                        <span class="pillar"></span>
+                        <span class="pillar"></span>
+                        <span class="pillar"></span>
+                        <span class="pillar"></span>
+                    </div>
+                    <p>LOADING...</p>
+                </div>
+                <div class="content-info hide">
+                    <div class="details hide">
+                        <h3>详细信息<i class="close"> </i></h3>
+                        <p>姓名：<strong id="details_name"></strong></p>
+                        <p>校区：<strong id="details_campus"></strong></p>
+                        <p>学院：<strong id="details_academy"></strong></p>
+                        <p>籍贯：<strong id="details_from"></strong></p>
+                        <p>电话：<strong id="details_tel"></strong></p>
+                        <p>QQ：<strong id="details_qq"></strong></p>
+                        <p>自我介绍：<strong id="details_introduction"></strong></p>
+                    </div>
+                    <div class="tips">
+                        <h3>说明</h3>
+                        <p>1.我是说明我是说明我是说明我是说明
+                            <br>2.我是说明说明</p>
+                    </div>
+                    <div class="table-container">
+                        <p class="table-info">
+                            共123条数据
+                        </p>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>姓名</th>
+                                    <th>性别</th>
+                                    <th>学号</th>
+                                    <th>志愿1</th>
+                                    <th>志愿1状态</th>
+                                    <th>志愿1操作</th>
+                                    <th>志愿2</th>
+                                    <th>志愿2状态</th>
+                                    <th>志愿2操作</th>
+                                    <th>其他操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- 在这里增加子元素 -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="content-input-info hide">
+                    <div class="input-panel">
+                        <h2>录入信息</h2>
+                        <label for="name">姓名</label>
+                        <input type="text" name="name" id="name">
+                        <label for="sex">性别</label>
+                        <input type="text" name="sex" id="sex">
+                        <label for="stu_no">学号</label>
+                        <input type="text" name="stu_no" id="stu_no">
+                        <label for="campus">校区</label>
+                        <input type="text" name="campus" id="campus">
+                        <label for="academy">学院</label>
+                        <input type="text" name="academy" id="academy">
+                        <label for="from">籍贯</label>
+                        <input type="text" name="from" id="from">
+                        <label for="department1">志愿1</label>
+                        <input type="text" name="department1" id="department1">
+                        <label for="department2">志愿2</label>
+                        <input type="text" name="department2" id="department2">
+                        <label for="tel">电话</label>
+                        <input type="text" name="tel" id="tel">
+                        <label for="qq">QQ</label>
+                        <input type="text" name="qq" id="qq">
+                        <label for="introduction">自我介绍</label>
+                        <input type="text" name="introduction" id="introduction">
+                        <button class="bt bt-green" id="input-info-bt">提交</button>
+                    </div>
+                </div>
+                <div class="content-input-score hide">
+                    <div class="tips">
+                        <h3>说明</h3>
+                        <p>1.新成绩会覆盖旧成绩,如果没有成绩，则空着就行
+                        <br>2.如果需要搜索，请按Ctrl+F,在搜索框中输入要查找的内容
+                    <br>3.操作过程中<strong style="color:red">请勿刷新页面</strong></p>
+                    </div>
+                    <div class="table-container">
+                        <div class="controls">
+                                <button class="bt bt-green" id="submit-scores">提交</button>
+                                <p class="table-info">
+                                        共123条数据
+                                    </p>
+                        </div>
+                        
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>姓名</th>
+                                    <th>第一次成绩</th>
+                                    <th>第二次成绩</th>
+                                    <th>第三次成绩</th>
+                                    <th>第四次成绩</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- <tr>
+                                    <td>2</td>
+                                    <td>齐迪</td>
+                                    <td><input type="number" id="score_1"></td>
+                                    <td><input type="number" id="score_2"></td>
+                                    <td><input type="number" id="score_3"></td>
+                                    <td><input type="number" id="score_4"></td>
+                                </tr> -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+        </main>
+        <footer>学生在线网络文化工作室</footer>
+        </div>
+        <script src="/js/jquery.js"></script>
+        <script src="/js/main.js"></script>
+        <script src="/js/login.js"></script>
+</body>
+
+</html>
