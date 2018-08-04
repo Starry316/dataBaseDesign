@@ -4,14 +4,17 @@
   <resultMap id="BaseResultMap" type="cn.xuzilin.common.po.RecordEntity">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="roomId" jdbcType="INTEGER" property="roomId" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="customerName" jdbcType="VARCHAR" property="customerName" />
     <result column="idcardNo" jdbcType="VARCHAR" property="idcardNo" />
     <result column="checkInTime" jdbcType="VARCHAR" property="checkInTime" />
     <result column="checkOutTime" jdbcType="VARCHAR" property="checkOutTime" />
     <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="phoneNum" jdbcType="VARCHAR" property="phoneNum" />
+    <result column="discount" jdbcType="VARCHAR" property="discount" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, roomId, name, idcardNo, checkInTime, checkOutTime, status
+    id, roomId, customerName, idcardNo, checkInTime, checkOutTime, status, phoneNum, 
+    discount
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -24,12 +27,14 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="cn.xuzilin.common.po.RecordEntity">
-    insert into record (id, roomId, name, 
+    insert into record (id, roomId, customerName, 
       idcardNo, checkInTime, checkOutTime, 
-      status)
-    values (#{id,jdbcType=INTEGER}, #{roomId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      status, phoneNum, discount
+      )
+    values (#{id,jdbcType=INTEGER}, #{roomId,jdbcType=INTEGER}, #{customerName,jdbcType=VARCHAR}, 
       #{idcardNo,jdbcType=VARCHAR}, #{checkInTime,jdbcType=VARCHAR}, #{checkOutTime,jdbcType=VARCHAR}, 
-      #{status,jdbcType=TINYINT})
+      #{status,jdbcType=TINYINT}, #{phoneNum,jdbcType=VARCHAR}, #{discount,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="cn.xuzilin.common.po.RecordEntity">
     insert into record
@@ -40,8 +45,8 @@
       <if test="roomId != null">
         roomId,
       </if>
-      <if test="name != null">
-        name,
+      <if test="customerName != null">
+        customerName,
       </if>
       <if test="idcardNo != null">
         idcardNo,
@@ -55,6 +60,12 @@
       <if test="status != null">
         status,
       </if>
+      <if test="phoneNum != null">
+        phoneNum,
+      </if>
+      <if test="discount != null">
+        discount,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -63,8 +74,8 @@
       <if test="roomId != null">
         #{roomId,jdbcType=INTEGER},
       </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
+      <if test="customerName != null">
+        #{customerName,jdbcType=VARCHAR},
       </if>
       <if test="idcardNo != null">
         #{idcardNo,jdbcType=VARCHAR},
@@ -78,6 +89,12 @@
       <if test="status != null">
         #{status,jdbcType=TINYINT},
       </if>
+      <if test="phoneNum != null">
+        #{phoneNum,jdbcType=VARCHAR},
+      </if>
+      <if test="discount != null">
+        #{discount,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="cn.xuzilin.common.po.RecordEntity">
@@ -86,8 +103,8 @@
       <if test="roomId != null">
         roomId = #{roomId,jdbcType=INTEGER},
       </if>
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
+      <if test="customerName != null">
+        customerName = #{customerName,jdbcType=VARCHAR},
       </if>
       <if test="idcardNo != null">
         idcardNo = #{idcardNo,jdbcType=VARCHAR},
@@ -101,17 +118,25 @@
       <if test="status != null">
         status = #{status,jdbcType=TINYINT},
       </if>
+      <if test="phoneNum != null">
+        phoneNum = #{phoneNum,jdbcType=VARCHAR},
+      </if>
+      <if test="discount != null">
+        discount = #{discount,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.xuzilin.common.po.RecordEntity">
     update record
     set roomId = #{roomId,jdbcType=INTEGER},
-      name = #{name,jdbcType=VARCHAR},
+      customerName = #{customerName,jdbcType=VARCHAR},
       idcardNo = #{idcardNo,jdbcType=VARCHAR},
       checkInTime = #{checkInTime,jdbcType=VARCHAR},
       checkOutTime = #{checkOutTime,jdbcType=VARCHAR},
-      status = #{status,jdbcType=TINYINT}
+      status = #{status,jdbcType=TINYINT},
+      phoneNum = #{phoneNum,jdbcType=VARCHAR},
+      discount = #{discount,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

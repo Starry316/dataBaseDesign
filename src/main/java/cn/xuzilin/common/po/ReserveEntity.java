@@ -5,13 +5,15 @@ public class ReserveEntity {
 
     private Integer roomId;
 
-    private String reserveTime;
+    private String reserveCheckInTime;
 
     private String phone;
 
     private String name;
 
     private Byte status;
+
+    private String reserveCheckOutTime;
 
     public Integer getId() {
         return id;
@@ -29,12 +31,12 @@ public class ReserveEntity {
         this.roomId = roomId;
     }
 
-    public String getReserveTime() {
-        return reserveTime;
+    public String getReserveCheckInTime() {
+        return reserveCheckInTime;
     }
 
-    public void setReserveTime(String reserveTime) {
-        this.reserveTime = reserveTime == null ? null : reserveTime.trim();
+    public void setReserveCheckInTime(String reserveCheckInTime) {
+        this.reserveCheckInTime = reserveCheckInTime == null ? null : reserveCheckInTime.trim();
     }
 
     public String getPhone() {
@@ -59,5 +61,13 @@ public class ReserveEntity {
 
     public void setStatus(Byte status) {
         this.status = status;
+    }
+
+    public String getReserveCheckOutTime() {
+        return reserveCheckOutTime;
+    }
+
+    public void setReserveCheckOutTime(String reserveCheckOutTime) {
+        this.reserveCheckOutTime = reserveCheckOutTime == null ? null : reserveCheckOutTime.trim();
     }
 }

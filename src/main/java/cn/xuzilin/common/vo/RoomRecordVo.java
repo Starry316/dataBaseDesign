@@ -1,6 +1,6 @@
-package cn.xuzilin.common.po;
+package cn.xuzilin.common.vo;
 
-public class RecordEntity {
+public class RoomRecordVo {
     private Integer id;
 
     private Integer roomId;
@@ -17,8 +17,28 @@ public class RecordEntity {
 
     private String phoneNum;
 
-    private String discount;
+    private String sex;
+    private Byte roomType;
 
+    private Byte checkIn;
+
+
+
+    public Byte getRoomType() {
+        return roomType;
+    }
+
+    public void setRoomType(Byte roomType) {
+        this.roomType = roomType;
+    }
+
+    public Byte getCheckIn() {
+        return checkIn;
+    }
+
+    public void setCheckIn(Byte checkIn) {
+        this.checkIn = checkIn;
+    }
     public Integer getId() {
         return id;
     }
@@ -83,11 +103,11 @@ public class RecordEntity {
         this.phoneNum = phoneNum == null ? null : phoneNum.trim();
     }
 
-    public String getDiscount() {
-        return discount;
+    public String getSex() {
+        return sex;
     }
 
-    public void setDiscount(String discount) {
-        this.discount = discount == null ? null : discount.trim();
+    public void setSex(String sex) {
+        this.sex = sex == null ? null : sex.trim();
     }
 }

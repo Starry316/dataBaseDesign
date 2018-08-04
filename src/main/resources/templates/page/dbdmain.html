@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>入住管理</title>
+  <link href="/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="/css/font-awesome.css" rel="stylesheet" />
+  <link href="/css/bootstrapValidator.min.css" rel="stylesheet" />
+  <link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+  <link href="/css/dbdmain.css" rel="stylesheet" />
+  <link href="/css/bootstrap-dialog.min.css" rel="stylesheet" type="text/css" media="all" />
+  <script src="/js/jquery-3.2.1.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  <script src="/js/bootstrap-datetimepicker.js"></script>
+  <script src="/js/bootstrapValidator.min.js"></script>
+  <script src="/js/vue.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/js/vue-resource.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/js/bootstrap-dialog.min.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="main">
+  <!--导航条开始-->
+  <nav class="navbar navbar-collapse navbar-inverse  navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand ">宾馆后台管理系统</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li role="presentation" class="active"><a href="/page/dbdmain.html">入住管理</a></li>
+        <li role="presentation"><a href="/page/dbdreserve.html">预定管理 <span class="badge">{{reserveNum}}</span></a></li>
+      </ul>
+    </div>
+  </nav>
+  <!--导航条结束-->
+  <!--搜索栏开始-->
+  <div class="container-fluid" style="margin-top: 80px">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            入住管理
+          </div>
+          <form class=".form-inline">
+            <div class="form-group not-block" style="padding: 10px">
+              房间状态：
+              <select id="roomStatus" class="form-control" v-model="roomStatus"> <option value="3" selected="">所有房间</option> <option value="0" selected="">空闲房间</option> <option value="1" selected="">已入住房间</option> <option value="2" selected="">已预定房间</option> </select>
+            </div>
+            <div class="form-group not-block">
+              入住日期：
+              <input id="checkInTime" name="checkInTime" readonly="" class="form-control" style="width: 10rem" placeholder="入住日期" data-bv-field="startDate" />
+            </div>
+            <div class="form-group not-block">
+              离店日期：
+              <input id="checkOutTime" name="checkOutTime" readonly="" class="form-control" style="width: 10rem" placeholder="离店日期" data-bv-field="checkOutTime" />
+            </div>
+            <div class="form-group not-block">
+              房间号：
+              <input id="roomId" name="roomId" type="text" class="form-control" required="required" placeholder="房间号" v-model="roomId" />
+            </div>
+            <div class="form-group not-block">
+              顾客姓名：
+              <input id="customerName" name="customerName" type="text" class="form-control" required="required" placeholder="顾客姓名" v-model="customerName" />
+            </div>
+            <div class="form-group not-block">
+              顾客身份证号 ：
+              <input id="customerIdNo" name="customerIdNo" type="text" class="form-control" required="required" placeholder="顾客身份证号" v-model="customerIdNo" />
+            </div>
+            <div class=" not-block">
+              <button id="earch" class="btn btn-primary not-block" type="button" v-on:click="search">搜索 </button>
+            </div>
+          </form>
+        </div>
+        <div class="alert alert-danger hide" role="alert" id="errorMes">
+          {{errorMes}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--搜索栏结束-->
+  <!--表格开始-->
+  <div class="container-fluid">
+    <div style="overflow:scroll;">
+      <table class="table table-striped table-bordered table-hover" style="min-width:1500px;">
+        <thead>
+        <tr>
+          <th class="center" style="width:10%;">房间号</th>
+          <th class="center" style="width:10%;">房间类型</th>
+          <th class="center" style="width:10%;">状态</th>
+          <th class="center" style="width:10%;">入住顾客姓名</th>
+          <th class="center" style="width:15%;">入住顾客身份证号</th>
+          <th class="center" style="width:10%;">入住时间</th>
+          <th class="center" style="width:10%;">预计退房时间</th>
+          <th class="center" style="width:10%;">金额</th>
+          <th class="center" style="width:10%;">人住</th>
+          <th class="center" style="width:15%;">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="item in list">
+          <td>{{item.roomId}}</td>
+          <td>{{item.roomType}}</td>
+          <td>{{item.roomStatusName}}</td>
+          <td>{{item.customerName}}</td>
+          <td>{{item.customerIdNo}}</td>
+          <td>{{item.checkInTime}}</td>
+          <td>{{item.checkOutTime}}</td>
+          <td>{{item.payment}}</td>
+          <td> <button class="btn btn-info" v-if="item.roomStatus == 1" @click="showDelayModal(item.roomId)">续住</button> <button class="btn btn-info" @click="showCheckInModal(item.roomId)" v-else-if="item.roomStatus == 2">入住</button> <button class="btn btn-info" @click="showCheckInModal(item.roomId)" v-else="">入住</button> </td>
+          <td> <button class="btn btn-danger" v-if="item.roomStatus == 1" @click="showCheckOutModal(item.roomId)">退房</button>
+            <!--<button class="btn btn-danger disabled" v-else >退房</button>--> <button class="btn btn-warning" v-if="item.roomStatus == 1" @click="change(item.roomId)">换房</button> <button class="btn btn-warning" v-if="item.roomStatus == 2" @click="reserveInfo(item.roomId)">查看预定信息</button>
+            <!--<button class="btn btn-warning disabled" v-else >换房</button>--> </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="row">
+      <div class="col-lg-4 col-md-4 col-sm-4"></div>
+      <div class="col-lg-4 col-md-4 col-sm-4">
+        <nav aria-label="Page navigation">
+          <ul class="pagination pagination-lg">
+            <li @click="frontPage" id="frontBtn"> <a href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span> </a> </li>
+            <li v-for="i in maxPage" v-bind:id="i+'page'"><a href="#" @click="turnTo(i)">{{i}}</a></li>
+            <li @click="nextPage" id="nextBtn"> <a href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span> </a> </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <!--表格结束-->
+  <!--入住弹窗-->
+  <div class="modal fade" id="checkInModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">请登记入住顾客的基本信息</h3>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>顾客姓名：</label>
+            <input id="signName" class="form-control" placeholder="顾客姓名" v-model="signName" />
+          </div>
+          <div class="form-group">
+            <label>身份证号码：</label>
+            <input id="signIdcardNo" class="form-control" placeholder="身份证号码" v-model="signIdcardNo" />
+          </div>
+          <div class="form-group">
+            <label>手机号码：</label>
+            <input id="signPhoneNum" class="form-control" placeholder="手机号码" v-model="signPhoneNum" />
+          </div>
+          <div class="form-group">
+            <label>预计退房时间：</label>
+            <input id="signCheckOutTime" readonly="" name="signCheckOutTime" class="form-control" data-bv-field="signCheckOutTime" placeholder="退房时间" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" @click="checkIn">确认</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--入住弹窗结束-->
+  <!--预定信息弹窗-->
+  <div class="modal fade" id="reserveInfoModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">预定信息</h3>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>房间号：</label>
+            <p>{{reserveRoomId}}</p>
+          </div>
+          <div class="form-group">
+            <label>顾客姓名：</label>
+            <p>{{reserveName}}</p>
+          </div>
+          <div class="form-group">
+            <label>手机号码：</label>
+            <p>{{reservePhone}}</p>
+          </div>
+          <div class="form-group">
+            <label>预计入住时间：</label>
+            <p>{{reserveCheckInTime}}</p>
+          </div>
+          <div class="form-group">
+            <label>预计退房时间：</label>
+            <p>{{reserveCheckOutTime}}</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--预定信息结束-->
+  <!--续住信息弹窗-->
+  <div class="modal fade" id="delayModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">续住</h3>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="table-responsive">
+              <table class="table table-striped table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th>入住日期</th>
+                  <th>预计退房日期</th>
+                  <th>消费金额</th>
+                  <th>押金</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td>2018-08-02</td>
+                  <td>2018-08-05</td>
+                  <td>1000.12</td>
+                  <td>200.00</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="delayCheckOutTime">续住到</label>
+            <input id="delayCheckOutTime" readonly="" name="delayCheckOutTime" class="form-control" data-bv-field="delayCheckOutTime" placeholder="退房时间" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" @click="delay">确认</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--详细信息弹窗结束-->
+  <!--退房弹框-->
+  <div class="modal fade" id="checkOut" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">结账数据：</h4>
+        </div>
+        <div class="modal-body">
+          <h4><strong>请再次确认金额，等待顾客支付后点击退房</strong></h4>
+          <br />
+          <div class="row">
+            <div class="table-responsive">
+              <table class="table table-striped table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th>入住日期</th>
+                  <th>退房日期</th>
+                  <th>单日价格</th>
+                  <th>总金额</th>
+                  <th>优惠额</th>
+                  <th>共需支付</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td>{{quitCheckInTime}}</td>
+                  <td>{{quitCheckOutTime}}</td>
+                  <td>{{paymentPerDay}}</td>
+                  <td>{{paymentTotal}}</td>
+                  <td>{{discount}}</td>
+                  <td>{{actualPayment}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" @click="checkOut">退房</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--退房弹框结束-->
+  <!--换房弹框-->
+  <div class="modal fade" id="change" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">换房</h4>
+        </div>
+        <div class="modal-body">
+          <div id="changePage1">
+            <h4><strong>请先结清当前房间的账单，再进行换房操作</strong></h4>
+            <br />
+            <div class="row">
+              <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover">
+                  <thead>
+                  <tr>
+                    <th>入住日期</th>
+                    <th>退房日期</th>
+                    <th>单日价格</th>
+                    <th>总金额</th>
+                    <th>优惠额</th>
+                    <th>共需支付</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <td>{{quitCheckInTime}}</td>
+                    <td>{{quitCheckOutTime}}</td>
+                    <td>{{paymentPerDay}}</td>
+                    <td>{{paymentTotal}}</td>
+                    <td>{{discount}}</td>
+                    <td>{{actualPayment}}</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" @click="changePage">下一步</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+            </div>
+          </div>
+          <div id="changePage2" class="hide">
+            <h4><strong>请选择更换的房间</strong></h4>
+            <br />
+            <div class="row">
+              <div style="overflow:scroll; max-height: 400px">
+                <table class="table table-striped table-bordered table-hover">
+                  <thead>
+                  <tr>
+                    <th>房间号</th>
+                    <th>房间类型</th>
+                    <th>单日价格</th>
+                    <th>操作</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr v-for="item in changeList">
+                    <td>{{item.roomId}}</td>
+                    <td>{{item.roomType}}</td>
+                    <td>{{item.paymentPerDay}}</td>
+                    <td><button class="btn btn-info" @click="changeRoom(item.roomId)">换房</button></td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="row">
+                <div class="col-lg-2 col-md-2 col-sm-2"></div>
+                <div class="col-lg-8 col-md-8 col-sm-8">
+                  <nav aria-label="Page navigation">
+                    <ul class="pagination pagination-lg">
+                      <li @click="changeFrontPage" id="changeFrontBtn"> <a href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span> </a> </li>
+                      <li v-for="i in maxChangePage" v-bind:id="i+'changePage'"><a href="#" @click="changeTurnTo(i)">{{i}}</a></li>
+                      <li @click="changeNextPage" id="changeNextBtn"> <a href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span> </a> </li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--换房弹框结束-->
+  <div id="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4"></div>
+        <div class="col-lg-4 col-md-4 col-sm-4"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/js/dbdmain.js"></script>
+</body>
+</html>
