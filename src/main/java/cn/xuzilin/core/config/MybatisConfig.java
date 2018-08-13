@@ -20,7 +20,7 @@ import java.util.Properties;
 
 
 @Configuration
-@EnableTransactionManagement //加上这个注解，使得支持事务
+@EnableTransactionManagement
 public class MybatisConfig implements TransactionManagementConfigurer {
 
     @Resource

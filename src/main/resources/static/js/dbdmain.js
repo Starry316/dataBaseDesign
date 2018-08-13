@@ -123,6 +123,15 @@ let app = new Vue({
         //入住
         showCheckInModal(roomId) {
             this.selectedRoomId = roomId;
+            $('#idNoCheck').removeClass('showMes');
+            $('#idNoCheck').addClass('hide');
+            $('#phoneCheck').removeClass('showMes');
+            $('#phoneCheck').addClass('hide');
+            this.signIdcardNo='';
+            this.signPhoneNum='';
+            this.signName='';
+            this.signCheckOutTime='';
+            this.selectedRoomId='';
             let reqData = {
                 selectedRoomId: this.selectedRoomId
             };
@@ -153,15 +162,18 @@ let app = new Vue({
                 alert("请填写完整信息！");
                 return;
             }
-            if (this.signPhoneNum.length != 11) {
-                alert("请正确的手机号码！");
-                return;
-            }
             if (this.signIdcardNo.length != 18) {
                 alert("请正确的身份证号码！");
+                $('#idNoCheck').removeClass('hide');
+                $('#idNoCheck').addClass('showMes');
                 return;
             }
-
+            if (this.signPhoneNum.length != 11) {
+                alert("请正确的手机号码！");
+                $('#phoneCheck').removeClass('hide');
+                $('#phoneCheck').addClass('showMes');
+                return;
+            }
             let reqData = {
                 signIdcardNo: this.signIdcardNo,
                 signPhoneNum: this.signPhoneNum,

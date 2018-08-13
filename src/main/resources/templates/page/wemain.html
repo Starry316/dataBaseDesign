@@ -1,0 +1,483 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>jQuery WeUI</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
+">
+
+  <link rel="stylesheet" href="/css/weui.min.css" type="text/css">
+  <link rel="stylesheet" href="/css/jquery-weui.css" type="text/css">
+  <link href="/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="/css/font-awesome.css" rel="stylesheet"/>
+  <link href="/css/bootstrapValidator.min.css" rel="stylesheet"/>
+  <link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet"/>
+  <link href="/css/bootstrap-dialog.min.css" rel="stylesheet" type="text/css" media="all"/>
+  <script src="/js/jquery-3.2.1.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  <script src="/js/bootstrap-datetimepicker.js"></script>
+  <script src="/js/bootstrapValidator.min.js"></script>
+  <script src="/js/vue.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/js/vue-resource.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/js/bootstrap-dialog.min.js" type="text/javascript"></script>
+
+
+  <style>
+
+    .swiper-container img {
+      display: block;
+      width: 100%;
+    }
+    .starry-container{
+      padding: 1rem;
+      background-color: #1DB0B8;
+      color: whitesmoke;
+      font-size: 2rem;
+    }
+    .starry-panel{
+      background-color: white;
+      padding: 5px;
+      border-bottom:1px solid #e5e9ef;
+      border-top: 1px solid #e5e9ef;
+      box-shadow: 0px 1px 5px #e5e9ef;
+    }
+    .starry-background{
+      background-color: #EDEDED;
+    }
+    .starry-nav{
+      text-align: center;
+    }
+    .starry-shadow {
+      box-shadow: 0px 5px 30px rgba(0,0,0,.5);
+    }
+    .starry-middle{
+      vertical-align: middle;
+      text-align: center;
+    }
+    .starry-shadow-text{
+      transition: 1s;
+    }
+    .starry-shadow-text:hover{
+      text-shadow: 0 0 .1em,0 0 .3em;
+    }
+    .starry-heave-text{
+      text-shadow:0 1px hsl(0,0%,85%),
+      0 1px hsl(0,0%,80%),
+      0 1px hsl(0,0%,75%),
+      0 1px hsl(0,0%,70%),
+      0 1px hsl(0,0%,65%),
+      0 5px 10px black;
+    }
+    .starry-hide{
+       display: none;
+    }
+    .starry-show {
+      animation: show 1s ease-out forwards;
+    }
+    .row{
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+    .alert{
+      padding: 5px;
+      margin-top: -10px;
+    }
+    .modal{
+      margin: 0;
+    }
+    body{
+      background-color: #f6f9fa;
+    }
+    @keyframes show {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<div id="app">
+
+
+<div class="starry-container starry-shadow" id="header">
+  <div class="starry-nav">
+    <div>酒店介绍</div>
+  </div>
+</div>
+
+<div class="swiper-container">
+  <!-- Additional required wrapper -->
+  <div class="swiper-wrapper">
+    <!-- Slides -->
+    <div class="swiper-slide"><img src="/img/5.jpg" /></div>
+    <div class="swiper-slide"><img src="/img/4.jpg" /></div>
+    <div class="swiper-slide"><img src="/img/3.jpg" /></div>
+  </div>
+  <!-- If we need pagination -->
+  <div class="swiper-pagination"></div>
+</div>
+<div class="container-fluid">
+  <div class="row starry-panel" style="margin-bottom: 10px">
+    <label>酒店介绍</label>
+    <p>这家四星级的湾仔帝盛酒店（前香港丽都酒店）最近经过翻修，距离铜锣湾地铁站有短短的8分钟步行路程。所有区域均提供免费WiFi。所有装饰一新的客房均提供免费使用的智能手机（带无限制4G网络服务，支持WiFi数据共享，可与客人的私人手机、平板电脑和其他设备连接）、免费本地通话服务以及8个国家的国际直拨电话，包括中国大陆、美国、加拿大、新加坡、韩国、英国、澳大利亚和泰国。客人可在酒店内外使用这部手机。</p>
+  </div>
+  <div class="row starry-panel">
+    <div class="col-lg-4 col-md-4 col-xs-4"><img src="/img/4.jpg" width="100%" height="100%"></div>
+    <div class="col-lg-4 col-md-4 col-xs-6">
+      <label>标准间</label>
+      <p>
+        价格实惠价格实惠 价格实惠价格实惠 价格实惠
+      </p>
+    </div>
+    <div class="col-xs-2">
+      <br>
+      <button id="reserveBZ" class="btn btn-sm btn-warning starry-middle" type="button"
+              v-on:click="reserve(1)">预定
+      </button>
+    </div>
+  </div>
+  <div class="row starry-panel">
+    <div class="col-lg-4 col-md-4 col-xs-4"><img src="/img/4.jpg" width="100%" height="100%"></div>
+    <div class="col-lg-4 col-md-4 col-xs-6">
+      <label>大床房</label>
+      <p>
+        价格实惠价格实惠 价格实惠价格实惠 价格实惠
+      </p>
+    </div>
+    <div class="col-xs-2">
+      <br>
+      <button id="reserveDC" class="btn btn-sm btn-warning starry-middle" type="button"
+              v-on:click="reserve(2)">预定
+      </button>
+    </div>
+  </div>
+  <div class="row starry-panel">
+    <div class="col-lg-4 col-md-4 col-xs-4"><img src="/img/4.jpg" width="100%" height="100%"></div>
+    <div class="col-lg-4 col-md-4 col-xs-6">
+      <label>商务套房</label>
+      <p>
+        价格实惠价格实惠 价格实惠价格实惠 价格实惠
+      </p>
+    </div>
+    <div class="col-xs-2">
+      <br>
+      <button id="reserveSW" class="btn btn-sm btn-warning starry-middle" type="button"
+              v-on:click="reserve(3)">预定
+      </button>
+    </div>
+  </div>
+  <div class="row starry-panel">
+    <div class="col-lg-4 col-md-4 col-xs-4"><img src="/img/4.jpg" width="100%" height="100%"></div>
+    <div class="col-lg-4 col-md-4 col-xs-6">
+      <label>豪华套间</label>
+      <p>
+        价格实惠价格实惠 价格实惠价格实惠 价格实惠
+      </p>
+    </div>
+    <div class="col-xs-2">
+      <br>
+      <button id="reserveHH" class="btn btn-sm btn-warning starry-middle" type="button"
+              v-on:click="reserve(4)">预定
+      </button>
+    </div>
+  </div>
+</div>
+
+<!--入住弹窗-->
+<div class="modal fade" id="reserveModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">请登记入住顾客的基本信息</h3>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>顾客姓名：</label>
+          <input id="signName" class="form-control"  placeholder="顾客姓名">
+        </div>
+        <div class="form-group">
+          <label>身份证号码：</label>
+          <input id="signIdcardNo" class="form-control"  placeholder="身份证号码" >
+        </div>
+        <div class="alert alert-danger hide" role="alert" >{{errorMes}}</div>
+        <div class="form-group">
+          <label>手机号码：</label>
+          <input id="signPhoneNum" class="form-control"  placeholder="手机号码">
+
+        </div>
+        <div class="alert alert-danger " role="alert" ></div>
+        <div class="form-group">
+          <label>预计退房时间：</label>
+          <input id="signCheckOutTime" readonly name="signCheckOutTime" class="form-control" data-bv-field="signCheckOutTime" placeholder="退房时间" >
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">确认</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--入住弹窗结束-->
+
+  <!--登录或注册弹窗-->
+  <div class="modal fade" id="loginModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <!--登录页面-->
+      <div class="modal-content starry-show" id="loginPage">
+        <div class="modal-header">
+          <h3 class="modal-title">登录</h3>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>用户名：</label>
+            <input class="form-control"  placeholder="用户名" v-model="userName">
+          </div>
+          <div class="alert alert-danger starry-hide" id="lError0" role="alert" >{{lError0}}</div>
+          <div class="form-group">
+            <label>密码：</label>
+            <input class="form-control"  placeholder="密码" v-model="password">
+          </div>
+          <div class="alert alert-danger starry-hide" id="lError1" role="alert" >{{lError1}}</div>
+          <a @click="changeToSignUp">还没有账号？点击注册</a>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" @click="login">确认</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+        </div>
+      </div>
+      <!--登录页面结束-->
+      <!--注册页面-->
+      <div class="modal-content starry-hide" id="signUpPage">
+        <div class="modal-header">
+          <h3 class="modal-title">注册</h3>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>用户名：</label>
+            <input class="form-control"  placeholder="用户名" v-model="userName">
+          </div>
+          <div class="alert alert-danger starry-hide" id="sError0" role="alert" >{{sError0}}</div>
+          <div class="form-group">
+            <label>密码：</label>
+            <input class="form-control"  placeholder="密码" v-model="password">
+          </div>
+          <div class="alert alert-danger starry-hide" id="sError1" role="alert" >{{sError1}}</div>
+          <div class="form-group">
+            <label>手机号码：</label>
+            <input class="form-control"  placeholder="手机号码" v-model="phone">
+          </div>
+          <div class="alert alert-danger starry-hide"id="sError2" role="alert" >{{sError2}}</div>
+          <a @click="changeToLogin">已经有账号？去登录</a>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" @click="signUp">确认</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+        </div>
+      </div>
+      <!--注册页面结束-->
+    </div>
+  </div>
+  <!--登录或注册弹窗结束-->
+
+
+</div>
+<!--<div class="starry-background">-->
+  <!--<div class="container-fluid">-->
+    <!--<label>房间种类</label>-->
+    <!--<div class="row">-->
+      <!--<div class="col-sm-4">12</div>-->
+      <!--<div class="col-sm-4">12</div>-->
+    <!--</div>-->
+    <!--<div><img src="favicon.ico"></div>-->
+
+  <!--</div>-->
+  <!--<div class="starry-container">-->
+    <!--12121212-->
+  <!--</div>-->
+<!--</div>-->
+<script src="/js/fastclick.js"></script>
+<script>
+  $(function() {
+    FastClick.attach(document.body);
+  });
+  $(document).ready(function(){
+    $(window).scroll(function (event) {
+      if ($(window).scrollTop() > 1) {
+        $("#header").addClass("starry-shadow");
+      }
+      else{
+        $("#header").removeClass("starry-shadow");
+      }
+    });
+  });
+</script>
+<script src="/js/jquery-weui.js"></script>
+
+<script src="/js/swiper.js"></script>
+
+<script>
+  $(".swiper-container").swiper({
+    loop: true,
+    autoplay: 3000
+  });
+
+  let app = new Vue({
+    el: '#app',
+    data: {
+      type:'',
+      userName:'',
+      password:'',
+      phone:'',
+      isLogin:'',
+
+      //loginModal中的errorMes
+      sError0:'',
+      sError1:'',
+      sError2:'',
+      lError0:'',
+      lError1:'',
+    },
+    methods: {
+      reserve(type){
+        this.initModals();
+        if (!this.isLogin){
+          $('#loginModal').modal();
+          return;
+        }
+        this.type=type;
+        $('#reserveModal').modal();
+      },
+      initModals(){
+        // 数据初始化
+        this.type='';
+        this.userName='';
+        this.password='';
+        this.phone='';
+
+        //页面初始化
+        $('#signUpPage').removeClass('starry-show');
+        $('#signUpPage').addClass('starry-hide');
+        $('#loginPage').addClass('starry-show');
+        $('#loginPage').removeClass('starry-hide');
+
+        //出错信息初始化
+        $('.alert-danger').removeClass('starry-show');
+        $('.alert-danger').addClass('starry-hide');
+      },
+      changeToSignUp(){
+        this.userName='';
+        this.password='';
+        this.phone='';
+        $('#loginPage').removeClass('starry-show');
+        $('#loginPage').addClass('starry-hide');
+        $('#signUpPage').addClass('starry-show');
+        $('#signUpPage').removeClass('starry-hide');
+      },
+      changeToLogin(){
+        this.initModals();
+      },
+      login(){
+        $('.alert-danger').removeClass('starry-show');
+        $('.alert-danger').addClass('starry-hide');
+        let canGo = true;
+        if (!this.userName){
+          canGo=false;
+          this.lError0 = '请输入用户名';
+          $('#lError0').removeClass('starry-hide');
+          $('#lError0').addClass('starry-show');
+        }
+        if (!this.password){
+          canGo=false;
+          this.lError1 = '请输入密码';
+          $('#lError1').removeClass('starry-hide');
+          $('#lError1').addClass('starry-show');
+        }
+        if (!canGo) return;
+
+        let data = {
+          userName:this.userName,
+          password:this.password
+        }
+        this.$http.post('/login', data)
+          .then(response => {
+            let result = response.body;
+            if (result.status === 200) {
+              this.isLogin = true;
+              $('#loginModal').modal('hide');
+            } else {
+              this.isLogin = false;
+              alert(result.message);
+            }
+          })
+          .catch(resp => {
+            this.isLogin = false;
+            $('#loginModal').modal('hide');
+            alert("请求失败，请稍后重试");
+          });
+      },
+      signUp(){
+        $('.alert-danger').removeClass('starry-show');
+        $('.alert-danger').addClass('starry-hide');
+        let canGo = true;
+        if (!this.userName){
+          canGo=false;
+          this.sError0 = '请输入用户名';
+          $('#sError0').removeClass('starry-hide');
+          $('#sError0').addClass('starry-show');
+        }
+        if (!this.password){
+          canGo=false;
+          this.sError1 = '请输入密码';
+          $('#sError1').removeClass('starry-hide');
+          $('#sError1').addClass('starry-show');
+        }
+        if (!this.phone){
+          canGo=false;
+          this.sError2 = '请输入手机号';
+          $('#sError2').removeClass('starry-hide');
+          $('#sError2').addClass('starry-show');
+        }
+        if (this.phone&&this.phone.length!=11){
+          canGo=false;
+          this.sError2 = '请输入格式正确的手机号';
+          $('#sError2').removeClass('starry-hide');
+          $('#sError2').addClass('starry-show');
+        }
+        if (!canGo) return;
+        let data = {
+          userName:this.userName,
+          password:this.password,
+          phone:this.phone
+        }
+        this.$http.post('/signUp', data)
+          .then(response => {
+            let result = response.body;
+            if (result.status === 200) {
+              this.isLogin = true;
+              $('#loginModal').modal('hide');
+            } else {
+              this.isLogin = false;
+              alert(result.message);
+            }
+          })
+          .catch(resp => {
+            this.isLogin = false;
+            $('#loginModal').modal('hide');
+            alert("请求失败，请稍后重试");
+          });
+      }
+    }
+  });
+</script>
+</body>
+</html>

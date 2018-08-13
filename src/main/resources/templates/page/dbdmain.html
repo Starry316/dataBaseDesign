@@ -143,10 +143,12 @@
             <label>身份证号码：</label>
             <input id="signIdcardNo" class="form-control" placeholder="身份证号码" v-model="signIdcardNo" />
           </div>
+          <div class="alert alert-danger hide" role="alert" id="idNoCheck">请输入正确的身份证号码</div>
           <div class="form-group">
             <label>手机号码：</label>
             <input id="signPhoneNum" class="form-control" placeholder="手机号码" v-model="signPhoneNum" />
           </div>
+          <div class="alert alert-danger hide" role="alert" id="phoneCheck">请输入正确的手机号码</div>
           <div class="form-group">
             <label>预计退房时间：</label>
             <input id="signCheckOutTime" readonly="" name="signCheckOutTime" class="form-control" data-bv-field="signCheckOutTime" placeholder="退房时间" />
