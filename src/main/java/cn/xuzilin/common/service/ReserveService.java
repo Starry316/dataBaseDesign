@@ -48,14 +48,14 @@ public class ReserveService {
             RoomEntity room = roomMapper.selectByPrimaryKey(i.getRoomId());
             data.put("roomId",i.getRoomId());
             data.put("roomType", SwitchUtil.switchType(room.getRoomType()));
-            if (DateUtil.subDateByDay(i.getReserveCheckInTime(),DateUtil.getNowDate())<0)
+            if (DateUtil.subDateByDay(DateUtil.dateToStr(i.getReserveCheckInTime()),DateUtil.getNowDateStr())<0)
                 data.put("roomStatusName","过期未入住");
             else
                 data.put("roomStatusName","等待入住");
             data.put("customerName",i.getName());
             data.put("customerPhoneNum",i.getPhone());
-            data.put("checkInTime",i.getReserveCheckInTime());
-            data.put("checkOutTime",i.getReserveCheckOutTime());
+            data.put("checkInTime",DateUtil.formatDate(i.getReserveCheckInTime()));
+            data.put("checkOutTime",DateUtil.formatDate(i.getReserveCheckOutTime()));
             res.add(data);
         }
         return res;
@@ -89,8 +89,8 @@ public class ReserveService {
      */
     public void reserve(int roomId, String reserveCheckInTime,String reserveCheckOutTime,String phone,String name){
         ReserveEntity reserve = new ReserveEntity();
-        reserve.setReserveCheckInTime(reserveCheckInTime);
-        reserve.setReserveCheckOutTime(reserveCheckOutTime);
+        reserve.setReserveCheckInTime(DateUtil.strToDate(reserveCheckInTime));
+        reserve.setReserveCheckOutTime(DateUtil.strToDate(reserveCheckOutTime));
         reserve.setRoomId(roomId);
         reserve.setPhone(phone);
         reserve.setName(name);

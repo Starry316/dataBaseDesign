@@ -37,7 +37,7 @@ public class RecordService {
     public boolean delay(int roomId,String delayCheckOutTime){
         RecordEntity record = getByRoomId(roomId);
         if (record == null) return false;
-        record.setCheckOutTime(delayCheckOutTime);
+        record.setCheckOutTime(DateUtil.strToDate(delayCheckOutTime));
         update(record);
         return true;
     }
@@ -91,10 +91,10 @@ public class RecordService {
         RecordEntity record = recordMapper.getByRoomId(roomId);
         RoomEntity room = roomMapper.selectByPrimaryKey(roomId);
         double paymentPerDay = SwitchUtil.switchTpyePayment(room.getRoomType());
-        long days = DateUtil.subDateByDay(DateUtil.getNowDate(),record.getCheckInTime());
+        long days = DateUtil.subDateByDay(DateUtil.getNowDateStr(),DateUtil.dateToStr(record.getCheckInTime()));
         double discount = 59.00;
-        data.put("quitCheckInTime",record.getCheckInTime());
-        data.put("quitCheckOutTime",DateUtil.getNowDate());
+        data.put("quitCheckInTime",DateUtil.formatDate(record.getCheckInTime()));
+        data.put("quitCheckOutTime",DateUtil.getNowDateStr());
         data.put("paymentPerDay",paymentPerDay);
         data.put("paymentTotal",days*paymentPerDay);
         data.put("discount",discount);

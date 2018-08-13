@@ -1,11 +1,13 @@
 package cn.xuzilin.common.po;
 
+import java.util.Date;
+
 public class ReserveEntity {
     private Integer id;
 
     private Integer roomId;
 
-    private String reserveCheckInTime;
+    private Date reserveCheckInTime;
 
     private String phone;
 
@@ -13,7 +15,9 @@ public class ReserveEntity {
 
     private Byte status;
 
-    private String reserveCheckOutTime;
+    private Date reserveCheckOutTime;
+
+    private Byte reserveType;
 
     public Integer getId() {
         return id;
@@ -31,12 +35,12 @@ public class ReserveEntity {
         this.roomId = roomId;
     }
 
-    public String getReserveCheckInTime() {
+    public Date getReserveCheckInTime() {
         return reserveCheckInTime;
     }
 
-    public void setReserveCheckInTime(String reserveCheckInTime) {
-        this.reserveCheckInTime = reserveCheckInTime == null ? null : reserveCheckInTime.trim();
+    public void setReserveCheckInTime(Date reserveCheckInTime) {
+        this.reserveCheckInTime = reserveCheckInTime;
     }
 
     public String getPhone() {
@@ -63,11 +67,19 @@ public class ReserveEntity {
         this.status = status;
     }
 
-    public String getReserveCheckOutTime() {
+    public Date getReserveCheckOutTime() {
         return reserveCheckOutTime;
     }
 
-    public void setReserveCheckOutTime(String reserveCheckOutTime) {
-        this.reserveCheckOutTime = reserveCheckOutTime == null ? null : reserveCheckOutTime.trim();
+    public void setReserveCheckOutTime(Date reserveCheckOutTime) {
+        this.reserveCheckOutTime = reserveCheckOutTime;
+    }
+
+    public Byte getReserveType() {
+        return reserveType;
+    }
+
+    public void setReserveType(Byte reserveType) {
+        this.reserveType = reserveType;
     }
 }

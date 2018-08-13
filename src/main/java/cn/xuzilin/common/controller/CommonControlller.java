@@ -59,7 +59,7 @@ public class CommonControlller {
         record.setCustomerName(signName);
         record.setIdcardNo(signIdcardNo);
         record.setPhoneNum(signPhoneNum);
-        record.setCheckOutTime(signCheckOutTime);
+        record.setCheckOutTime(DateUtil.strToDate(signCheckOutTime));
         record.setCheckInTime(DateUtil.getNowDate());
         record.setStatus(ConstPool.CHECK_IN);
         record.setRoomId(Integer.parseInt(selectedRoomId));

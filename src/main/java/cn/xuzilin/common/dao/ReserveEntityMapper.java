@@ -4,7 +4,6 @@ import cn.xuzilin.common.po.ReserveEntity;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -20,9 +19,8 @@ public interface ReserveEntityMapper {
     int updateByPrimaryKeySelective(ReserveEntity record);
 
     int updateByPrimaryKey(ReserveEntity record);
-
     @Update("UPDATE reserve SET status = #{status} WHERE roomId = #{roomId}")
-    int updateStatusByRoomId(@Param("status") byte status,@Param("roomId") int roomId);
+    int updateStatusByRoomId(@Param("status") byte status, @Param("roomId") int roomId);
 
     @Select("SELECT * FROM reserve WHERE status = #{status}")
     List<ReserveEntity> getAllByStatus(@Param("status") byte status);

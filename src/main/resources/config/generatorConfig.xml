@@ -75,7 +75,7 @@
             <property name="useActualColumnNames" value="true"/>
         </table>
         <table schema="general"
-               tableName="room" domainObjectName="RoomEntity"
+               tableName="user" domainObjectName="UserEntity"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"
@@ -83,6 +83,15 @@
                selectByExampleQueryId="false" >
             <property name="useActualColumnNames" value="true"/>
         </table>
+        <!--<table schema="general"-->
+               <!--tableName="room" domainObjectName="RoomEntity"-->
+               <!--enableCountByExample="false"-->
+               <!--enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false" >-->
+            <!--<property name="useActualColumnNames" value="true"/>-->
+        <!--</table>-->
 
 
     </context>

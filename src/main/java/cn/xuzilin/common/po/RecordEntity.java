@@ -1,5 +1,7 @@
 package cn.xuzilin.common.po;
 
+import java.util.Date;
+
 public class RecordEntity {
     private Integer id;
 
@@ -9,9 +11,9 @@ public class RecordEntity {
 
     private String idcardNo;
 
-    private String checkInTime;
+    private Date checkInTime;
 
-    private String checkOutTime;
+    private Date checkOutTime;
 
     private Byte status;
 
@@ -51,20 +53,20 @@ public class RecordEntity {
         this.idcardNo = idcardNo == null ? null : idcardNo.trim();
     }
 
-    public String getCheckInTime() {
+    public Date getCheckInTime() {
         return checkInTime;
     }
 
-    public void setCheckInTime(String checkInTime) {
-        this.checkInTime = checkInTime == null ? null : checkInTime.trim();
+    public void setCheckInTime(Date checkInTime) {
+        this.checkInTime = checkInTime;
     }
 
-    public String getCheckOutTime() {
+    public Date getCheckOutTime() {
         return checkOutTime;
     }
 
-    public void setCheckOutTime(String checkOutTime) {
-        this.checkOutTime = checkOutTime == null ? null : checkOutTime.trim();
+    public void setCheckOutTime(Date checkOutTime) {
+        this.checkOutTime = checkOutTime;
     }
 
     public Byte getStatus() {

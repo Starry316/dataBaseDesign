@@ -6,8 +6,8 @@
     <result column="roomId" jdbcType="INTEGER" property="roomId" />
     <result column="customerName" jdbcType="VARCHAR" property="customerName" />
     <result column="idcardNo" jdbcType="VARCHAR" property="idcardNo" />
-    <result column="checkInTime" jdbcType="VARCHAR" property="checkInTime" />
-    <result column="checkOutTime" jdbcType="VARCHAR" property="checkOutTime" />
+    <result column="checkInTime" jdbcType="DATE" property="checkInTime" />
+    <result column="checkOutTime" jdbcType="DATE" property="checkOutTime" />
     <result column="status" jdbcType="TINYINT" property="status" />
     <result column="phoneNum" jdbcType="VARCHAR" property="phoneNum" />
     <result column="discount" jdbcType="VARCHAR" property="discount" />
@@ -32,7 +32,7 @@
       status, phoneNum, discount
       )
     values (#{id,jdbcType=INTEGER}, #{roomId,jdbcType=INTEGER}, #{customerName,jdbcType=VARCHAR}, 
-      #{idcardNo,jdbcType=VARCHAR}, #{checkInTime,jdbcType=VARCHAR}, #{checkOutTime,jdbcType=VARCHAR}, 
+      #{idcardNo,jdbcType=VARCHAR}, #{checkInTime,jdbcType=DATE}, #{checkOutTime,jdbcType=DATE}, 
       #{status,jdbcType=TINYINT}, #{phoneNum,jdbcType=VARCHAR}, #{discount,jdbcType=VARCHAR}
       )
   </insert>
@@ -81,10 +81,10 @@
         #{idcardNo,jdbcType=VARCHAR},
       </if>
       <if test="checkInTime != null">
-        #{checkInTime,jdbcType=VARCHAR},
+        #{checkInTime,jdbcType=DATE},
       </if>
       <if test="checkOutTime != null">
-        #{checkOutTime,jdbcType=VARCHAR},
+        #{checkOutTime,jdbcType=DATE},
       </if>
       <if test="status != null">
         #{status,jdbcType=TINYINT},
@@ -110,10 +110,10 @@
         idcardNo = #{idcardNo,jdbcType=VARCHAR},
       </if>
       <if test="checkInTime != null">
-        checkInTime = #{checkInTime,jdbcType=VARCHAR},
+        checkInTime = #{checkInTime,jdbcType=DATE},
       </if>
       <if test="checkOutTime != null">
-        checkOutTime = #{checkOutTime,jdbcType=VARCHAR},
+        checkOutTime = #{checkOutTime,jdbcType=DATE},
       </if>
       <if test="status != null">
         status = #{status,jdbcType=TINYINT},
@@ -132,8 +132,8 @@
     set roomId = #{roomId,jdbcType=INTEGER},
       customerName = #{customerName,jdbcType=VARCHAR},
       idcardNo = #{idcardNo,jdbcType=VARCHAR},
-      checkInTime = #{checkInTime,jdbcType=VARCHAR},
-      checkOutTime = #{checkOutTime,jdbcType=VARCHAR},
+      checkInTime = #{checkInTime,jdbcType=DATE},
+      checkOutTime = #{checkOutTime,jdbcType=DATE},
       status = #{status,jdbcType=TINYINT},
       phoneNum = #{phoneNum,jdbcType=VARCHAR},
       discount = #{discount,jdbcType=VARCHAR}

@@ -4,14 +4,15 @@
   <resultMap id="BaseResultMap" type="cn.xuzilin.common.po.ReserveEntity">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="roomId" jdbcType="INTEGER" property="roomId" />
-    <result column="reserveCheckInTime" jdbcType="VARCHAR" property="reserveCheckInTime" />
+    <result column="reserveCheckInTime" jdbcType="DATE" property="reserveCheckInTime" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="status" jdbcType="TINYINT" property="status" />
-    <result column="reserveCheckOutTime" jdbcType="VARCHAR" property="reserveCheckOutTime" />
+    <result column="reserveCheckOutTime" jdbcType="DATE" property="reserveCheckOutTime" />
+    <result column="reserveType" jdbcType="TINYINT" property="reserveType" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, roomId, reserveCheckInTime, phone, name, status, reserveCheckOutTime
+    id, roomId, reserveCheckInTime, phone, name, status, reserveCheckOutTime, reserveType
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -26,10 +27,10 @@
   <insert id="insert" parameterType="cn.xuzilin.common.po.ReserveEntity">
     insert into reserve (id, roomId, reserveCheckInTime, 
       phone, name, status, 
-      reserveCheckOutTime)
-    values (#{id,jdbcType=INTEGER}, #{roomId,jdbcType=INTEGER}, #{reserveCheckInTime,jdbcType=VARCHAR}, 
+      reserveCheckOutTime, reserveType)
+    values (#{id,jdbcType=INTEGER}, #{roomId,jdbcType=INTEGER}, #{reserveCheckInTime,jdbcType=DATE}, 
       #{phone,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
-      #{reserveCheckOutTime,jdbcType=VARCHAR})
+      #{reserveCheckOutTime,jdbcType=DATE}, #{reserveType,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="cn.xuzilin.common.po.ReserveEntity">
     insert into reserve
@@ -55,6 +56,9 @@
       <if test="reserveCheckOutTime != null">
         reserveCheckOutTime,
       </if>
+      <if test="reserveType != null">
+        reserveType,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -64,7 +68,7 @@
         #{roomId,jdbcType=INTEGER},
       </if>
       <if test="reserveCheckInTime != null">
-        #{reserveCheckInTime,jdbcType=VARCHAR},
+        #{reserveCheckInTime,jdbcType=DATE},
       </if>
       <if test="phone != null">
         #{phone,jdbcType=VARCHAR},
@@ -76,7 +80,10 @@
         #{status,jdbcType=TINYINT},
       </if>
       <if test="reserveCheckOutTime != null">
-        #{reserveCheckOutTime,jdbcType=VARCHAR},
+        #{reserveCheckOutTime,jdbcType=DATE},
+      </if>
+      <if test="reserveType != null">
+        #{reserveType,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
@@ -87,7 +94,7 @@
         roomId = #{roomId,jdbcType=INTEGER},
       </if>
       <if test="reserveCheckInTime != null">
-        reserveCheckInTime = #{reserveCheckInTime,jdbcType=VARCHAR},
+        reserveCheckInTime = #{reserveCheckInTime,jdbcType=DATE},
       </if>
       <if test="phone != null">
         phone = #{phone,jdbcType=VARCHAR},
@@ -99,7 +106,10 @@
         status = #{status,jdbcType=TINYINT},
       </if>
       <if test="reserveCheckOutTime != null">
-        reserveCheckOutTime = #{reserveCheckOutTime,jdbcType=VARCHAR},
+        reserveCheckOutTime = #{reserveCheckOutTime,jdbcType=DATE},
+      </if>
+      <if test="reserveType != null">
+        reserveType = #{reserveType,jdbcType=TINYINT},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -107,11 +117,12 @@
   <update id="updateByPrimaryKey" parameterType="cn.xuzilin.common.po.ReserveEntity">
     update reserve
     set roomId = #{roomId,jdbcType=INTEGER},
-      reserveCheckInTime = #{reserveCheckInTime,jdbcType=VARCHAR},
+      reserveCheckInTime = #{reserveCheckInTime,jdbcType=DATE},
       phone = #{phone,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
       status = #{status,jdbcType=TINYINT},
-      reserveCheckOutTime = #{reserveCheckOutTime,jdbcType=VARCHAR}
+      reserveCheckOutTime = #{reserveCheckOutTime,jdbcType=DATE},
+      reserveType = #{reserveType,jdbcType=TINYINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
