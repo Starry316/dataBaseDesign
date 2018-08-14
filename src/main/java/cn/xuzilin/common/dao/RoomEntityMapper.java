@@ -5,6 +5,7 @@ import cn.xuzilin.common.vo.RoomRecordVo;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.Date;
 import java.util.List;
 
 public interface RoomEntityMapper {
@@ -32,6 +33,10 @@ public interface RoomEntityMapper {
     @Select("SELECT count(*) FROM room")
     int  getCount();
 
+    @Select("SELECT a.roomId " +
+            "from room a left join record b on (a.roomId = b.roomId  and b.status != -1) " +
+            "where a.roomType=#{type} and a.checkIn != 2 and (b.checkOutTime is null or b.checkOutTime < #{checkInTime})")
+    Integer[] getRoomIdListByTypeAndCheckInTime(@Param("type") byte type , @Param("checkInTime")Date checkInTime);
 
     @Select("SELECT * \n" +
             "FROM room a left join record b on (a.roomId = b.roomId  and b.status != -1) \n" +

@@ -14,9 +14,12 @@ let app = new Vue({
         list: [],
     },
     methods: {
-        cancel(roomId) {
+        cancel(roomId,id) {
+            alert(id);
+            alert('room '+roomId);
             let reqData = {
-                roomId: roomId
+                roomId: roomId,
+                id: id
             }
             this.$http.post('/cancelReserve', reqData).then(resp =>{
                 let result = resp.body;

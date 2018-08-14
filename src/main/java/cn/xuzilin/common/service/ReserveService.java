@@ -46,6 +46,7 @@ public class ReserveService {
         for (ReserveEntity i:list){
             JSONObject data = new JSONObject();
             RoomEntity room = roomMapper.selectByPrimaryKey(i.getRoomId());
+            data.put("id",i.getId());
             data.put("roomId",i.getRoomId());
             data.put("roomType", SwitchUtil.switchType(room.getRoomType()));
             if (DateUtil.subDateByDay(DateUtil.dateToStr(i.getReserveCheckInTime()),DateUtil.getNowDateStr())<0)
@@ -102,8 +103,8 @@ public class ReserveService {
         reserveMapper.insertSelective(reserve);
     }
 
-    public void cancelReverse(int roomId){
-        reserveMapper.updateStatusByRoomId(ConstPool.CANCEL,roomId);
+    public void cancelReverse(int roomId,int id){
+        reserveMapper.updateStatusById(ConstPool.CANCEL,id);
         RoomEntity room = roomMapper.selectByPrimaryKey(roomId);
         room.setCheckIn(ConstPool.EMPTY);
         roomMapper.updateByPrimaryKey(room);

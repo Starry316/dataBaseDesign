@@ -58,7 +58,7 @@
           <td>{{item.customerPhoneNum}}</td>
           <td>{{item.checkInTime}}</td>
           <td>{{item.checkOutTime}}</td>
-          <td> <button class="btn btn-danger" @click="cancel(item.roomId)">取消预定</button> </td>
+          <td> <button class="btn btn-danger" @click="cancel(item.roomId,item.id)">取消预定</button> </td>
         </tr>
         </tbody>
       </table>

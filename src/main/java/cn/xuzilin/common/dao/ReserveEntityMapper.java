@@ -22,6 +22,9 @@ public interface ReserveEntityMapper {
     @Update("UPDATE reserve SET status = #{status} WHERE roomId = #{roomId}")
     int updateStatusByRoomId(@Param("status") byte status, @Param("roomId") int roomId);
 
+    @Update("UPDATE reserve SET status = #{status} WHERE id = #{id}")
+    int updateStatusById(@Param("status") byte status, @Param("id") int id);
+
     @Select("SELECT * FROM reserve WHERE status = #{status}")
     List<ReserveEntity> getAllByStatus(@Param("status") byte status);
 
@@ -30,4 +33,5 @@ public interface ReserveEntityMapper {
 
     @Select("SELECT count(*) FROM reserve WHERE  status = 1")
     int getCount();
+
 }

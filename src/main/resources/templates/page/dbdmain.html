@@ -43,7 +43,7 @@
           <form class=".form-inline">
             <div class="form-group not-block" style="padding: 10px">
               房间状态：
-              <select id="roomStatus" class="form-control" v-model="roomStatus"> <option value="3" selected="">所有房间</option> <option value="0" selected="">空闲房间</option> <option value="1" selected="">已入住房间</option> <option value="2" selected="">已预定房间</option> </select>
+              <select id="roomStatus" class="form-control" v-model="roomStatus"> <option value="3" selected="">所有房间</option> <option value="0" selected="">空闲房间</option> <option value="1" selected="">已入住房间</option> </select>
             </div>
             <div class="form-group not-block">
               入住日期：
@@ -107,7 +107,7 @@
           <td>{{item.payment}}</td>
           <td> <button class="btn btn-info" v-if="item.roomStatus == 1" @click="showDelayModal(item.roomId)">续住</button> <button class="btn btn-info" @click="showCheckInModal(item.roomId)" v-else-if="item.roomStatus == 2">入住</button> <button class="btn btn-info" @click="showCheckInModal(item.roomId)" v-else="">入住</button> </td>
           <td> <button class="btn btn-danger" v-if="item.roomStatus == 1" @click="showCheckOutModal(item.roomId)">退房</button>
-            <!--<button class="btn btn-danger disabled" v-else >退房</button>--> <button class="btn btn-warning" v-if="item.roomStatus == 1" @click="change(item.roomId)">换房</button> <button class="btn btn-warning" v-if="item.roomStatus == 2" @click="reserveInfo(item.roomId)">查看预定信息</button>
+            <!--<button class="btn btn-danger disabled" v-else >退房</button>--> <button class="btn btn-warning" v-if="item.roomStatus == 1" @click="change(item.roomId)">换房</button>
             <!--<button class="btn btn-warning disabled" v-else >换房</button>--> </td>
         </tr>
         </tbody>

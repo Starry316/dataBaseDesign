@@ -18,13 +18,14 @@ import java.util.List;
 @SpringBootTest
 public class DatabaseApplicationTests {
 	@Resource
-	private RoomEntityMapper roomEntityMapper;
+	private RoomEntityMapper roomMapper;
 	@Resource
 	private ReserveService reserveService;
 	@Test
 	public void contextLoads() {
-
-
+		Integer[] res =roomMapper.getRoomIdListByTypeAndCheckInTime(Byte.parseByte(4+""), DateUtil.strToDate("2018-08-14"));
+		for (Integer i: res)
+			System.out.println(i);
 
 	}
 
