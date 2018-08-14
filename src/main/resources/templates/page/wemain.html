@@ -33,10 +33,10 @@
       width: 100%;
     }
     .starry-container{
-      padding: 1rem;
+      padding: .5rem;
       background-color: #1DB0B8;
       color: whitesmoke;
-      font-size: 2rem;
+      font-size: 1rem;
     }
     .starry-panel{
       background-color: white;
@@ -58,6 +58,10 @@
       vertical-align: middle;
       text-align: center;
     }
+    .starry-rightfloat{
+      margin-left: 70%;
+      margin-bottom: 10px;
+    }
     .starry-shadow-text{
       transition: 1s;
     }
@@ -73,7 +77,7 @@
       0 5px 10px black;
     }
     .starry-hide{
-       display: none;
+      display: none;
     }
     .starry-show {
       animation: show 1s ease-out forwards;
@@ -109,7 +113,7 @@
 
 <div class="starry-container starry-shadow" id="header">
   <div class="starry-nav">
-    <div>酒店介绍</div>
+    奥伦治酒店
   </div>
 </div>
 
@@ -126,109 +130,204 @@
 </div>
 
 <div id="app">
-<div class="container-fluid">
-  <div class="row starry-panel" style="margin-bottom: 10px">
-    <label>酒店介绍</label>
-    <p>这家四星级的湾仔帝盛酒店（前香港丽都酒店）最近经过翻修，距离铜锣湾地铁站有短短的8分钟步行路程。所有区域均提供免费WiFi。所有装饰一新的客房均提供免费使用的智能手机（带无限制4G网络服务，支持WiFi数据共享，可与客人的私人手机、平板电脑和其他设备连接）、免费本地通话服务以及8个国家的国际直拨电话，包括中国大陆、美国、加拿大、新加坡、韩国、英国、澳大利亚和泰国。客人可在酒店内外使用这部手机。</p>
-  </div>
-  <div class="row starry-panel">
-    <div class="col-lg-4 col-md-4 col-xs-4"><img src="/img/4.jpg" width="100%" height="100%"></div>
-    <div class="col-lg-4 col-md-4 col-xs-6">
-      <label>标准间</label>
-      <p>
-        价格实惠价格实惠 价格实惠价格实惠 价格实惠
-      </p>
+  <div class="container-fluid">
+    <div class="row starry-panel" style="margin-bottom: 10px">
+      <label>酒店介绍</label>
+      <p>这家四星级的湾仔帝盛酒店（前香港丽都酒店）最近经过翻修，距离铜锣湾地铁站有短短的8分钟步行路程。所有区域均提供免费WiFi。所有装饰一新的客房均提供免费使用的智能手机（带无限制4G网络服务，支持WiFi数据共享，可与客人的私人手机、平板电脑和其他设备连接）、免费本地通话服务以及8个国家的国际直拨电话，包括中国大陆、美国、加拿大、新加坡、韩国、英国、澳大利亚和泰国。客人可在酒店内外使用这部手机。</p>
     </div>
-    <div class="col-xs-2">
-      <br>
-      <button id="reserveBZ" class="btn btn-sm btn-warning starry-middle" type="button"
-              v-on:click="reserve(1)">预定
-      </button>
+    <div class="row starry-panel">
+      <div class="col-lg-4 col-md-4 col-xs-4"><img src="/img/4.jpg" width="100%" height="100%"></div>
+      <div class="col-lg-4 col-md-4 col-xs-6">
+        <label>标准间</label>
+        <p>
+          价格实惠价格实惠 价格实惠价格实惠 价格实惠
+        </p>
+      </div>
+      <div class="col-xs-2">
+        <br>
+        <button id="reserveBZ" class="btn btn-sm btn-warning starry-middle" type="button"
+                v-on:click="reserve(1)">预定
+        </button>
+      </div>
     </div>
-  </div>
-  <div class="row starry-panel">
-    <div class="col-lg-4 col-md-4 col-xs-4"><img src="/img/4.jpg" width="100%" height="100%"></div>
-    <div class="col-lg-4 col-md-4 col-xs-6">
-      <label>大床房</label>
-      <p>
-        价格实惠价格实惠 价格实惠价格实惠 价格实惠
-      </p>
+    <!--预定表单-->
+    <div class="weui-cells weui-cells_form starry-hide" id="reserveform1">
+      <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">顾客姓名</label></div>
+        <div class="weui-cell__bd">
+          <input class="weui-input" type="text"v-model="name" placeholder="姓名">
+        </div>
+      </div>
+      <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">手机号码</label></div>
+        <div class="weui-cell__bd">
+          <input class="weui-input" type="text" v-model="telephone" placeholder="手机号码">
+        </div>
+      </div>
+      <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">预订时间</label></div>
+        <div class="weui-cell__bd">
+          <input class="weui-input" id="timeCheckIn1" type="text" placeholder="预定时间">
+        </div>
+      </div>
+      <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">退房时间</label></div>
+        <div class="weui-cell__bd">
+          <input class="weui-input" id="timeCheckOut1" type="text" placeholder="退房时间">
+        </div>
+      </div>
+      <div class="weui-cell">
+        <div class="starry-rightfloat" >
+          <button type="button" class="btn btn-primary" @click="sendReserve(1)">确认</button>
+        </div>
+      </div>
     </div>
-    <div class="col-xs-2">
-      <br>
-      <button id="reserveDC" class="btn btn-sm btn-warning starry-middle" type="button"
-              v-on:click="reserve(2)">预定
-      </button>
+    <div class="row starry-panel">
+      <div class="col-lg-4 col-md-4 col-xs-4"><img src="img/4.jpg" width="100%" height="100%"></div>
+      <div class="col-lg-4 col-md-4 col-xs-6">
+        <label>大床房</label>
+        <p>
+          价格实惠价格实惠 价格实惠价格实惠 价格实惠
+        </p>
+      </div>
+      <div class="col-xs-2">
+        <br>
+        <button id="reserveDC" class="btn btn-sm btn-warning starry-middle" type="button"
+                v-on:click="reserve(2)">预定
+        </button>
+      </div>
     </div>
-  </div>
-  <div class="row starry-panel">
-    <div class="col-lg-4 col-md-4 col-xs-4"><img src="/img/4.jpg" width="100%" height="100%"></div>
-    <div class="col-lg-4 col-md-4 col-xs-6">
-      <label>商务套房</label>
-      <p>
-        价格实惠价格实惠 价格实惠价格实惠 价格实惠
-      </p>
+    <!--预定表单-->
+    <div class="weui-cells weui-cells_form starry-hide" id="reserveform2">
+      <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">顾客姓名</label></div>
+        <div class="weui-cell__bd">
+          <input class="weui-input" type="text"v-model="name" placeholder="姓名">
+        </div>
+      </div>
+      <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">手机号码</label></div>
+        <div class="weui-cell__bd">
+          <input class="weui-input" type="text"v-model="telephone" placeholder="手机号码">
+        </div>
+      </div>
+      <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">预订时间</label></div>
+        <div class="weui-cell__bd">
+          <input class="weui-input" id="timeCheckIn2" type="text" placeholder="预定时间">
+        </div>
+      </div>
+      <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">退房时间</label></div>
+        <div class="weui-cell__bd">
+          <input class="weui-input" id="timeCheckOut2" type="text" placeholder="退房时间">
+        </div>
+      </div>
+      <div class="weui-cell">
+        <div class="starry-rightfloat" >
+          <button type="button" class="btn btn-primary" @click="sendReserve(2)">确认</button>
+        </div>
+      </div>
     </div>
-    <div class="col-xs-2">
-      <br>
-      <button id="reserveSW" class="btn btn-sm btn-warning starry-middle" type="button"
-              v-on:click="reserve(3)">预定
-      </button>
-    </div>
-  </div>
-  <div class="row starry-panel">
-    <div class="col-lg-4 col-md-4 col-xs-4"><img src="/img/4.jpg" width="100%" height="100%"></div>
-    <div class="col-lg-4 col-md-4 col-xs-6">
-      <label>豪华套间</label>
-      <p>
-        价格实惠价格实惠 价格实惠价格实惠 价格实惠
-      </p>
-    </div>
-    <div class="col-xs-2">
-      <br>
-      <button id="reserveHH" class="btn btn-sm btn-warning starry-middle" type="button"
-              v-on:click="reserve(4)">预定
-      </button>
-    </div>
-  </div>
-</div>
 
-<!--入住弹窗-->
-<div class="modal fade" id="reserveModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title">请登记入住顾客的基本信息</h3>
+    <div class="row starry-panel">
+      <div class="col-lg-4 col-md-4 col-xs-4"><img src="img/4.jpg" width="100%" height="100%"></div>
+      <div class="col-lg-4 col-md-4 col-xs-6">
+        <label>商务套房</label>
+        <p>
+          价格实惠价格实惠 价格实惠价格实惠 价格实惠
+        </p>
       </div>
-      <div class="modal-body">
-        <div class="form-group">
-          <label>顾客姓名：</label>
-          <input id="signName" class="form-control"  placeholder="顾客姓名">
+      <div class="col-xs-2">
+        <br>
+        <button id="reserveSW" class="btn btn-sm btn-warning starry-middle" type="button"
+                v-on:click="reserve(3)">预定
+        </button>
+      </div>
+    </div>
+    <!--预定表单-->
+    <div class="weui-cells weui-cells_form starry-hide" id="reserveform3">
+      <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">顾客姓名</label></div>
+        <div class="weui-cell__bd">
+          <input class="weui-input" type="text" v-model="name"placeholder="姓名">
         </div>
-        <div class="form-group">
-          <label>身份证号码：</label>
-          <input id="signIdcardNo" class="form-control"  placeholder="身份证号码" >
+      </div>
+      <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">手机号码</label></div>
+        <div class="weui-cell__bd">
+          <input class="weui-input" type="text" v-model="telephone" placeholder="手机号码">
         </div>
-        <div class="alert alert-danger hide" role="alert" ></div>
-        <div class="form-group">
-          <label>手机号码：</label>
-          <input id="signPhoneNum" class="form-control"  placeholder="手机号码">
+      </div>
+      <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">预订时间</label></div>
+        <div class="weui-cell__bd">
+          <input class="weui-input" id="timeCheckIn3" type="text" placeholder="预定时间">
+        </div>
+      </div>
+      <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">退房时间</label></div>
+        <div class="weui-cell__bd">
+          <input class="weui-input" id="timeCheckOut3" type="text" placeholder="退房时间">
+        </div>
+      </div>
+      <div class="weui-cell">
+        <div class="starry-rightfloat" >
+          <button type="button" class="btn btn-primary" @click="sendReserve(3)">确认</button>
+        </div>
+      </div>
+    </div>
 
-        </div>
-        <div class="alert alert-danger " role="alert" ></div>
-        <div class="form-group">
-          <label>预计退房时间：</label>
-          <input id="signCheckOutTime" readonly name="signCheckOutTime" class="form-control" data-bv-field="signCheckOutTime" placeholder="退房时间" >
+
+    <div class="row starry-panel">
+      <div class="col-lg-4 col-md-4 col-xs-4"><img src="img/4.jpg" width="100%" height="100%"></div>
+      <div class="col-lg-4 col-md-4 col-xs-6">
+        <label>豪华套间</label>
+        <p>
+          价格实惠价格实惠 价格实惠价格实惠 价格实惠
+        </p>
+      </div>
+      <div class="col-xs-2">
+        <br>
+        <button id="reserveHH" class="btn btn-sm btn-warning starry-middle" type="button"
+                v-on:click="reserve(4)">预定
+        </button>
+      </div>
+    </div>
+    <!--预定表单-->
+    <div class="weui-cells weui-cells_form starry-hide" id="reserveform4">
+      <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">顾客姓名</label></div>
+        <div class="weui-cell__bd">
+          <input class="weui-input" type="text" v-model="name" placeholder="姓名">
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary">确认</button>
-        <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+      <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">手机号码</label></div>
+        <div class="weui-cell__bd">
+          <input class="weui-input" type="text" v-model="telephone" placeholder="手机号码">
+        </div>
+      </div>
+      <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">预订时间</label></div>
+        <div class="weui-cell__bd">
+          <input class="weui-input" id="timeCheckIn4" type="text" placeholder="预定时间">
+        </div>
+      </div>
+      <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">退房时间</label></div>
+        <div class="weui-cell__bd">
+          <input class="weui-input" id="timeCheckOut4" type="text" placeholder="退房时间">
+        </div>
+      </div>
+      <div class="weui-cell">
+        <div class="starry-rightfloat" >
+          <button type="button" class="btn btn-primary" @click="sendReserve(4)">确认</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<!--入住弹窗结束-->
+
 
   <!--登录或注册弹窗-->
   <div class="modal fade" id="loginModal" tabindex="-1" role="dialog">
@@ -291,195 +390,364 @@
   </div>
   <!--登录或注册弹窗结束-->
 
-
 </div>
-<!--<div class="starry-background">-->
-  <!--<div class="container-fluid">-->
-    <!--<label>房间种类</label>-->
-    <!--<div class="row">-->
-      <!--<div class="col-sm-4">12</div>-->
-      <!--<div class="col-sm-4">12</div>-->
-    <!--</div>-->
-    <!--<div><img src="favicon.ico"></div>-->
-
-  <!--</div>-->
-  <!--<div class="starry-container">-->
-    <!--12121212-->
-  <!--</div>-->
-<!--</div>-->
 <script src="/js/fastclick.js"></script>
 <script>
-  $(function() {
-    FastClick.attach(document.body);
-  });
-  $(document).ready(function(){
-    $(window).scroll(function (event) {
-      if ($(window).scrollTop() > 1) {
-        $("#header").addClass("starry-shadow");
-      }
-      else{
-        $("#header").removeClass("starry-shadow");
-      }
+    $(function() {
+        FastClick.attach(document.body);
     });
-  });
+    $(document).ready(function(){
+        $(window).scroll(function (event) {
+            if ($(window).scrollTop() > 1) {
+                $("#header").addClass("starry-shadow");
+            }
+            else{
+                $("#header").removeClass("starry-shadow");
+            }
+        });
+    });
 </script>
 <script src="/js/jquery-weui.js"></script>
 
 <script src="/js/swiper.js"></script>
 
 <script>
-  $(".swiper-container").swiper({
-    loop: true,
-    autoplay: 3000
-  });
+    $(".swiper-container").swiper({
+        loop: true,
+        autoplay: 3000
+    });
 
-  let app = new Vue({
-    el: '#app',
-    data: {
-      type:'',
-      userName:'',
-      password:'',
-      phone:'',
-      isLogin:'',
+    let app = new Vue({
+        el: '#app',
+        data: {
+            type:'',
+            userName:'',
+            password:'',
+            phone:'',
+            isLogin:true,
 
-      //loginModal中的errorMes
-      sError0:'',
-      sError1:'',
-      sError2:'',
-      lError0:'',
-      lError1:'',
-    },
-    methods: {
-      reserve(type){
-        this.initModals();
-        if (!this.isLogin){
-          $('#loginModal').modal();
-          return;
-        }
-        this.type=type;
-        $('#reserveModal').modal();
-      },
-      initModals(){
-        // 数据初始化
-        this.type='';
-        this.userName='';
-        this.password='';
-        this.phone='';
+            //loginModal中的errorMes
+            sError0:'',
+            sError1:'',
+            sError2:'',
+            lError0:'',
+            lError1:'',
 
-        //页面初始化
-        $('#signUpPage').removeClass('starry-show');
-        $('#signUpPage').addClass('starry-hide');
-        $('#loginPage').addClass('starry-show');
-        $('#loginPage').removeClass('starry-hide');
+            //预定数据
+            name:'',
+            telephone:'',
+            timeCheckin:'',
+            timeCheckOut:''
 
-        //出错信息初始化
-        $('.alert-danger').removeClass('starry-show');
-        $('.alert-danger').addClass('starry-hide');
-      },
-      changeToSignUp(){
-        this.userName='';
-        this.password='';
-        this.phone='';
-        $('#loginPage').removeClass('starry-show');
-        $('#loginPage').addClass('starry-hide');
-        $('#signUpPage').addClass('starry-show');
-        $('#signUpPage').removeClass('starry-hide');
-      },
-      changeToLogin(){
-        this.initModals();
-      },
-      login(){
-        $('.alert-danger').removeClass('starry-show');
-        $('.alert-danger').addClass('starry-hide');
-        let canGo = true;
-        if (!this.userName){
-          canGo=false;
-          this.lError0 = '请输入用户名';
-          $('#lError0').removeClass('starry-hide');
-          $('#lError0').addClass('starry-show');
-        }
-        if (!this.password){
-          canGo=false;
-          this.lError1 = '请输入密码';
-          $('#lError1').removeClass('starry-hide');
-          $('#lError1').addClass('starry-show');
-        }
-        if (!canGo) return;
+        },
+        methods: {
+            reserve(type){
+                this.initModals();
+                if (!this.isLogin){
+                    $('#loginModal').modal();
+                    return;
+                }
+                this.type=type;
+                let selectForm ='#reserveform'+type;
+                $(selectForm).removeClass('starry-hide');
+                $(selectForm).addClass('starry-show');
+            },
+            sendReserve(type){
+                if (this.name.length<1){
+                    alert('请填写姓名！');
+                    return;
+                }
+                if (this.telephone.length!=11){
+                    alert('请填写正确的联系方式！');
+                    return;
+                }
+                this.getTime();
+                if (this.timeCheckin.length<1){
+                    alert('请选择入住时间！');
+                    return;
+                }
+                if (this.timeCheckOut.length<1){
+                    alert('请选择退房时间！');
+                    return;
+                }
+                let data = {
+                    name:this.name,
+                    type:this.type,
+                    telephone:this.telephone,
+                    timeCheckin:this.timeCheckin,
+                    timeCheckOut:this.timeCheckOut
+                }
+                this.$http.post('/reserve', data)
+                    .then(response => {
+                    let result = response.body;
+                if (result.status === 200) {
+                    alert('预定成功!');
+                    this.initModals();
+                } else {
+                    alert(result.message);
+                    this.initModals();
+                }
+            })
+            .catch(resp => {
+                    alert("请求失败，请稍后重试");
+                this.initModals();
+            });
 
-        let data = {
-          userName:this.userName,
-          password:this.password
-        }
-        this.$http.post('/login', data)
-          .then(response => {
-            let result = response.body;
-            if (result.status === 200) {
-              this.isLogin = true;
-              $('#loginModal').modal('hide');
-            } else {
-              this.isLogin = false;
-              alert(result.message);
+            },
+            getTime(){
+                let type =this.type;
+                let timeid = '#timeCheckIn'+type;
+                let date = $(timeid).val();
+                let year = date.split('年')[0];
+                date = date.split('年')[1];
+                let month = date.split('月')[0];
+                date = date.split('月')[1];
+                let day = date.split('日')[0];
+                date = date.split('日')[1];
+                date = year+'-'+month+'-'+day;
+                this.timeCheckin=date;
+                timeid = '#timeCheckOut'+type;
+                date = $(timeid).val();
+                year = date.split('年')[0];
+                date = date.split('年')[1];
+                month = date.split('月')[0];
+                date = date.split('月')[1];
+                day = date.split('日')[0];
+                date = date.split('日')[1];
+                date = year+'-'+month+'-'+day;
+                this.timeCheckOut=date;
+            },
+            initModals(){
+                // 数据初始化
+                this.type='';
+                this.userName='';
+                this.password='';
+                this.phone='';
+                this.name='';
+                this.telephone='';
+
+                for (var i =1;i<5;i++){
+                    let id = '#reserveform'+i;
+                    $(id).removeClass('starry-show');
+                    $(id).addClass('starry-hide');
+                }
+
+                //页面初始化
+                $('#signUpPage').removeClass('starry-show');
+                $('#signUpPage').addClass('starry-hide');
+                $('#loginPage').addClass('starry-show');
+                $('#loginPage').removeClass('starry-hide');
+
+                //出错信息初始化
+                $('.alert-danger').removeClass('starry-show');
+                $('.alert-danger').addClass('starry-hide');
+            },
+            changeToSignUp(){
+                this.userName='';
+                this.password='';
+                this.phone='';
+                $('#loginPage').removeClass('starry-show');
+                $('#loginPage').addClass('starry-hide');
+                $('#signUpPage').addClass('starry-show');
+                $('#signUpPage').removeClass('starry-hide');
+            },
+            changeToLogin(){
+                this.initModals();
+            },
+            login(){
+                $('.alert-danger').removeClass('starry-show');
+                $('.alert-danger').addClass('starry-hide');
+                let canGo = true;
+                if (!this.userName){
+                    canGo=false;
+                    this.lError0 = '请输入用户名';
+                    $('#lError0').removeClass('starry-hide');
+                    $('#lError0').addClass('starry-show');
+                }
+                if (!this.password){
+                    canGo=false;
+                    this.lError1 = '请输入密码';
+                    $('#lError1').removeClass('starry-hide');
+                    $('#lError1').addClass('starry-show');
+                }
+                if (!canGo) return;
+
+                let data = {
+                    userName:this.userName,
+                    password:this.password
+                }
+                this.$http.post('/login', data)
+                    .then(response => {
+                    let result = response.body;
+                if (result.status === 200) {
+                    this.isLogin = true;
+                    $('#loginModal').modal('hide');
+                } else {
+                    this.isLogin = false;
+                    alert(result.message);
+                }
+            })
+            .catch(resp => {
+                    this.isLogin = false;
+                $('#loginModal').modal('hide');
+                alert("请求失败，请稍后重试");
+            });
+            },
+            signUp(){
+                $('.alert-danger').removeClass('starry-show');
+                $('.alert-danger').addClass('starry-hide');
+                let canGo = true;
+                if (!this.userName){
+                    canGo=false;
+                    this.sError0 = '请输入用户名';
+                    $('#sError0').removeClass('starry-hide');
+                    $('#sError0').addClass('starry-show');
+                }
+                if (!this.password){
+                    canGo=false;
+                    this.sError1 = '请输入密码';
+                    $('#sError1').removeClass('starry-hide');
+                    $('#sError1').addClass('starry-show');
+                }
+                if (!this.phone){
+                    canGo=false;
+                    this.sError2 = '请输入手机号';
+                    $('#sError2').removeClass('starry-hide');
+                    $('#sError2').addClass('starry-show');
+                }
+                if (this.phone&&this.phone.length!=11){
+                    canGo=false;
+                    this.sError2 = '请输入格式正确的手机号';
+                    $('#sError2').removeClass('starry-hide');
+                    $('#sError2').addClass('starry-show');
+                }
+                if (!canGo) return;
+                let data = {
+                    userName:this.userName,
+                    password:this.password,
+                    phone:this.phone
+                }
+                this.$http.post('/signUp', data)
+                    .then(response => {
+                    let result = response.body;
+                if (result.status === 200) {
+                    this.isLogin = true;
+                    $('#loginModal').modal('hide');
+                } else {
+                    this.isLogin = false;
+                    alert(result.message);
+                }
+            })
+            .catch(resp => {
+                    this.isLogin = false;
+                $('#loginModal').modal('hide');
+                alert("请求失败，请稍后重试");
+            });
             }
-          })
-          .catch(resp => {
-            this.isLogin = false;
-            $('#loginModal').modal('hide');
-            alert("请求失败，请稍后重试");
-          });
-      },
-      signUp(){
-        $('.alert-danger').removeClass('starry-show');
-        $('.alert-danger').addClass('starry-hide');
-        let canGo = true;
-        if (!this.userName){
-          canGo=false;
-          this.sError0 = '请输入用户名';
-          $('#sError0').removeClass('starry-hide');
-          $('#sError0').addClass('starry-show');
-        }
-        if (!this.password){
-          canGo=false;
-          this.sError1 = '请输入密码';
-          $('#sError1').removeClass('starry-hide');
-          $('#sError1').addClass('starry-show');
-        }
-        if (!this.phone){
-          canGo=false;
-          this.sError2 = '请输入手机号';
-          $('#sError2').removeClass('starry-hide');
-          $('#sError2').addClass('starry-show');
-        }
-        if (this.phone&&this.phone.length!=11){
-          canGo=false;
-          this.sError2 = '请输入格式正确的手机号';
-          $('#sError2').removeClass('starry-hide');
-          $('#sError2').addClass('starry-show');
-        }
-        if (!canGo) return;
-        let data = {
-          userName:this.userName,
-          password:this.password,
-          phone:this.phone
-        }
-        this.$http.post('/signUp', data)
-          .then(response => {
-            let result = response.body;
-            if (result.status === 200) {
-              this.isLogin = true;
-              $('#loginModal').modal('hide');
-            } else {
-              this.isLogin = false;
-              alert(result.message);
+        },
+        mounted(){
+            for(let i =1;i<5;i++){
+                $("#timeCheckIn"+i).datetimePicker({
+                    title: '预计入住时间',
+                    yearSplit: '年',
+                    monthSplit: '月',
+                    dateSplit: '日',
+                    times: function () {
+                        return [  // 自定义的时间
+                        ];
+                    },
+                    min: '2013-12-12',
+                    onChange: function (picker, values, displayValues) {
+                        let date = values[0]+'-'+values[1]+'-'+values[2]
+                        console.log(date);
+                        this.time = date;
+                    }
+                });
+                $("#timeCheckOut"+i).datetimePicker({
+                    title: '预计入住时间',
+                    yearSplit: '年',
+                    monthSplit: '月',
+                    dateSplit: '日',
+                    times: function () {
+                        return [  // 自定义的时间
+                        ];
+                    },
+                    min: '2013-12-12',
+                    onChange: function (picker, values, displayValues) {
+                        let date = values[0]+'-'+values[1]+'-'+values[2]
+                        console.log(date);
+                        this.time = date;
+                    }
+                });
             }
-          })
-          .catch(resp => {
-            this.isLogin = false;
-            $('#loginModal').modal('hide');
-            alert("请求失败，请稍后重试");
-          });
-      }
-    }
-  });
+            // $("#time1").datetimePicker({
+            //   title: '预计入住时间',
+            //   yearSplit: '年',
+            //   monthSplit: '月',
+            //   dateSplit: '日',
+            //   times: function () {
+            //     return [  // 自定义的时间
+            //     ];
+            //   },
+            //   min: '2013-12-12',
+            //   onChange: function (picker, values, displayValues) {
+            //     let date = values[0]+'-'+values[1]+'-'+values[2]
+            //     console.log(date);
+            //     this.time = date;
+            //   }
+            // });
+            // $("#time2").datetimePicker({
+            //   title: '预计入住时间',
+            //   yearSplit: '年',
+            //   monthSplit: '月',
+            //   dateSplit: '日',
+            //   times: function () {
+            //     return [  // 自定义的时间
+            //     ];
+            //   },
+            //   min: '2013-12-12',
+            //   onChange: function (picker, values, displayValues) {
+            //     let date = values[0]+'-'+values[1]+'-'+values[2]
+            //     console.log(date);
+            //   }
+            // });
+            // $("#time3").datetimePicker({
+            //   title: '预计入住时间',
+            //   yearSplit: '年',
+            //   monthSplit: '月',
+            //   dateSplit: '日',
+            //   times: function () {
+            //     return [  // 自定义的时间
+            //     ];
+            //   },
+            //   min: '2013-12-12',
+            //   onChange: function (picker, values, displayValues) {
+            //     let date = values[0]+'-'+values[1]+'-'+values[2]
+            //     console.log(date);
+            //     this.time = date;
+            //   }
+            // });
+            // $("#time4").datetimePicker({
+            //   title: '预计入住时间',
+            //   yearSplit: '年',
+            //   monthSplit: '月',
+            //   dateSplit: '日',
+            //   times: function () {
+            //     return [  // 自定义的时间
+            //     ];
+            //   },
+            //   min: '2013-12-12',
+            //   onChange: function (picker, values, displayValues) {
+            //     let date = values[0]+'-'+values[1]+'-'+values[2]
+            //     console.log(date);
+            //     this.time = date;
+            //   }
+            // });
+
+        }
+    });
+
+
 </script>
 </body>
 </html>
