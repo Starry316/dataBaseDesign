@@ -34,4 +34,7 @@ public interface ReserveEntityMapper {
     @Select("SELECT count(*) FROM reserve WHERE  status = 1")
     int getCount();
 
+    @Select("SELECT * FROM reserve WHERE userId = #{userId} AND status = 1")
+    List<ReserveEntity> getActiveByUserId(@Param("userId") int userId);
+
 }

@@ -56,10 +56,8 @@ public class ReverseController {
     }
     @PostMapping("/cancelReserve")
     public MessageVo cancelReserve(@RequestBody Map<String ,String> map){
-        String roomId = map.get("roomId");
         String id = map.get("id");
-        reserveService.cancelReverse(Integer.parseInt(roomId),
-                Integer.parseInt(id));
+        reserveService.cancelReverse(Integer.parseInt(id));
         return ResponesUtil.success("success");
     }
     @PostMapping("/reserve")
@@ -67,12 +65,19 @@ public class ReverseController {
          String name = map.get("name");
          String type = map.get("type");
          String telephone = map.get("telephone");
-         String timeCheckIn = map.get("timeCheckIn");
+         String timeCheckIn = map.get("timeCheckin");
          String timeCheckOut = map.get("timeCheckOut");
+         int userId = SessionUtil.get(request,"user",UserEntity.class).getId();
          Integer []roomIds = roomMapper.getRoomIdListByTypeAndCheckInTime(Byte.parseByte(type), DateUtil.strToDate(timeCheckIn));
          if (roomIds.length==0)
              return ResponesUtil.systemError("该房型已满，请预定别的房间");
-         reserveService.reserve(roomIds[0],timeCheckIn,timeCheckOut,telephone,name);
+         reserveService.reserve(roomIds[0],timeCheckIn,timeCheckOut,telephone,name,userId);
          return ResponesUtil.success("success");
+    }
+    @GetMapping("/getHadReserveList")
+    public MessageVo getHadReserveList(HttpServletRequest request){
+        UserEntity user = SessionUtil.get(request,"user",UserEntity.class);
+        JSONArray respData = reserveService.getAllActive(user.getId());
+        return ResponesUtil.success("success",respData);
     }
 }

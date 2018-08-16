@@ -88,7 +88,7 @@ public class ReserveService {
      * @param phone
      * @param name
      */
-    public void reserve(int roomId, String reserveCheckInTime,String reserveCheckOutTime,String phone,String name){
+    public void reserve(int roomId, String reserveCheckInTime,String reserveCheckOutTime,String phone,String name,int userId){
         ReserveEntity reserve = new ReserveEntity();
         reserve.setReserveCheckInTime(DateUtil.strToDate(reserveCheckInTime));
         reserve.setReserveCheckOutTime(DateUtil.strToDate(reserveCheckOutTime));
@@ -96,18 +96,36 @@ public class ReserveService {
         reserve.setPhone(phone);
         reserve.setName(name);
         reserve.setStatus(ConstPool.ACTIVE);
+        reserve.setUserId(userId);
 
         RoomEntity room = roomMapper.selectByPrimaryKey(roomId);
-        room.setCheckIn(ConstPool.RESERVED);
-        roomMapper.updateByPrimaryKeySelective(room);
+        reserve.setReserveType(room.getRoomType());
+//        room.setCheckIn(ConstPool.RESERVED);
+//        roomMapper.updateByPrimaryKeySelective(room);
         reserveMapper.insertSelective(reserve);
     }
 
-    public void cancelReverse(int roomId,int id){
+    public void cancelReverse(int id){
         reserveMapper.updateStatusById(ConstPool.CANCEL,id);
+        ReserveEntity reserve = reserveMapper.selectByPrimaryKey(id);
+        Integer roomId = reserve.getRoomId();
+        if (roomId == null)return;
         RoomEntity room = roomMapper.selectByPrimaryKey(roomId);
         room.setCheckIn(ConstPool.EMPTY);
         roomMapper.updateByPrimaryKey(room);
+    }
+
+    public JSONArray getAllActive(int userId){
+        List<ReserveEntity> reserveList = reserveMapper.getActiveByUserId(userId);
+        JSONArray jsonArray = new JSONArray();
+        for (ReserveEntity i : reserveList){
+            JSONObject object= new JSONObject();
+            object.put("roomType",SwitchUtil.switchType(i.getReserveType()));
+            object.put("checkInTime",DateUtil.dateToStr(i.getReserveCheckInTime()));
+            object.put("id",i.getId());
+            jsonArray.add(object);
+        }
+        return jsonArray;
     }
 
     public void update(ReserveEntity record){

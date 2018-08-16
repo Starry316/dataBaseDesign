@@ -19,6 +19,8 @@ public class ReserveEntity {
 
     private Byte reserveType;
 
+    private Integer userId;
+
     public Integer getId() {
         return id;
     }
@@ -81,5 +83,13 @@ public class ReserveEntity {
 
     public void setReserveType(Byte reserveType) {
         this.reserveType = reserveType;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 }

@@ -126,9 +126,9 @@
   <!-- Additional required wrapper -->
   <div class="swiper-wrapper">
     <!-- Slides -->
-    <div class="swiper-slide"><img src="img/5.jpg" /></div>
-    <div class="swiper-slide"><img src="img/4.jpg" /></div>
-    <div class="swiper-slide"><img src="img/3.jpg" /></div>
+    <div class="swiper-slide"><img src="/img/5.jpg" /></div>
+    <div class="swiper-slide"><img src="/img/4.jpg" /></div>
+    <div class="swiper-slide"><img src="/img/3.jpg" /></div>
   </div>
   <!-- If we need pagination -->
   <div class="swiper-pagination"></div>
@@ -162,7 +162,7 @@
         <div class="col-xs-4">{{item.roomType}}</div>
         <div class="col-xs-5">{{item.checkInTime}}</div>
         <div class="col-xs-3">
-          <button  class="btn btn-sm btn-danger " type="button" v-on:click="cancel(item.roomId,item.id)">取消预定</button>
+          <button  class="btn btn-sm btn-danger " type="button" v-on:click="cancel(item.id)">取消预定</button>
         </div>
         <div class="divider"></div>
       </div>
@@ -174,7 +174,7 @@
   <!--预定-->
   <div class="container-fluid">
     <div class="row starry-panel">
-      <div class="col-lg-4 col-md-4 col-xs-4"><img src="img/4.jpg" width="100%" height="100%"></div>
+      <div class="col-lg-4 col-md-4 col-xs-4"><img src="/img/4.jpg" width="100%" height="100%"></div>
       <div class="col-lg-4 col-md-4 col-xs-6">
         <label>标准间</label>
         <p>
@@ -221,7 +221,7 @@
       </div>
     </div>
     <div class="row starry-panel">
-      <div class="col-lg-4 col-md-4 col-xs-4"><img src="img/4.jpg" width="100%" height="100%"></div>
+      <div class="col-lg-4 col-md-4 col-xs-4"><img src="/img/4.jpg" width="100%" height="100%"></div>
       <div class="col-lg-4 col-md-4 col-xs-6">
         <label>大床房</label>
         <p>
@@ -269,7 +269,7 @@
     </div>
 
     <div class="row starry-panel">
-      <div class="col-lg-4 col-md-4 col-xs-4"><img src="img/4.jpg" width="100%" height="100%"></div>
+      <div class="col-lg-4 col-md-4 col-xs-4"><img src="/img/4.jpg" width="100%" height="100%"></div>
       <div class="col-lg-4 col-md-4 col-xs-6">
         <label>商务套房</label>
         <p>
@@ -318,7 +318,7 @@
 
 
     <div class="row starry-panel">
-      <div class="col-lg-4 col-md-4 col-xs-4"><img src="img/3.jpg" width="100%" height="100%"></div>
+      <div class="col-lg-4 col-md-4 col-xs-4"><img src="/img/3.jpg" width="100%" height="100%"></div>
       <div class="col-lg-4 col-md-4 col-xs-6">
         <label>豪华套间</label>
         <p>
@@ -473,7 +473,7 @@
             userName:'',
             password:'',
             phone:'',
-            isLogin:true,
+            isLogin:false,
 
             isShown:false,
 
@@ -505,6 +505,7 @@
                     $('#reverseList').addClass('starry-show');
                     $('#arrowIcon').removeClass('glyphicon-menu-right');
                     $('#arrowIcon').addClass('glyphicon-menu-down');
+                    this.getReserveList();
                     this.isShown = true;
                 }
                 else {
@@ -515,9 +516,8 @@
                     this.isShown = false;
                 }
             },
-            cancel(roomId,id) {
+            cancel(id) {
                 let reqData = {
-                    roomId: roomId,
                     id: id
                 }
                 this.$http.post('/cancelReserve', reqData).then(resp =>{
@@ -537,7 +537,18 @@
                 this.getReserveList();
             },
             getReserveList(){
-
+                this.$http.get('/getHadReserveList')
+                    .then(response => {
+                    let result = response.body;
+                if (result.status === 200) {
+                    this.reservelist = result.data;
+                } else {
+                    alert(result.message);
+                }
+            })
+            .catch(resp => {
+                    alert("请求失败，请稍后重试");
+            });
             },
             reserve(type){
                 this.initModals();

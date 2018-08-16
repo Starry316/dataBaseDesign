@@ -22,4 +22,7 @@ public interface UserEntityMapper {
 
     @Select("SELECT count(*) FROM user WHERE userName = #{userName}")
     int getUserNum(@Param("userName") String userName);
+
+    @Select("SELECT id, userName, phone FROM user WHERE userName = #{userName}")
+    UserEntity getByUserName(@Param("userName") String userName);
 }

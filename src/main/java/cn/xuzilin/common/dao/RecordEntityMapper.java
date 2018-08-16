@@ -4,6 +4,8 @@ import cn.xuzilin.common.po.RecordEntity;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 public interface RecordEntityMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -19,4 +21,7 @@ public interface RecordEntityMapper {
 
     @Select("SELECT * FROM record WHERE roomId = #{roomId} AND status != -1")
     RecordEntity getByRoomId(@Param("roomId") int roomId);
+
+    @Select("SELECT * FROM record WHERE status = 1")
+    List<RecordEntity> getAll();
 }

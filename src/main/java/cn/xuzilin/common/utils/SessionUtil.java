@@ -12,7 +12,7 @@ public class SessionUtil {
         session.setAttribute(key,o);
     }
     public static <K> K get(HttpServletRequest request,String key,Class<K> clazz){
-        K res = (K) request.getAttribute(key);
+        K res = (K) request.getSession().getAttribute(key);
         return res;
     }
 }

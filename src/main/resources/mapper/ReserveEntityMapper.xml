@@ -10,9 +10,11 @@
     <result column="status" jdbcType="TINYINT" property="status" />
     <result column="reserveCheckOutTime" jdbcType="DATE" property="reserveCheckOutTime" />
     <result column="reserveType" jdbcType="TINYINT" property="reserveType" />
+    <result column="userId" jdbcType="INTEGER" property="userId" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, roomId, reserveCheckInTime, phone, name, status, reserveCheckOutTime, reserveType
+    id, roomId, reserveCheckInTime, phone, name, status, reserveCheckOutTime, reserveType, 
+    userId
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -27,10 +29,12 @@
   <insert id="insert" parameterType="cn.xuzilin.common.po.ReserveEntity">
     insert into reserve (id, roomId, reserveCheckInTime, 
       phone, name, status, 
-      reserveCheckOutTime, reserveType)
+      reserveCheckOutTime, reserveType, userId
+      )
     values (#{id,jdbcType=INTEGER}, #{roomId,jdbcType=INTEGER}, #{reserveCheckInTime,jdbcType=DATE}, 
       #{phone,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
-      #{reserveCheckOutTime,jdbcType=DATE}, #{reserveType,jdbcType=TINYINT})
+      #{reserveCheckOutTime,jdbcType=DATE}, #{reserveType,jdbcType=TINYINT}, #{userId,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="cn.xuzilin.common.po.ReserveEntity">
     insert into reserve
@@ -59,6 +63,9 @@
       <if test="reserveType != null">
         reserveType,
       </if>
+      <if test="userId != null">
+        userId,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -84,6 +91,9 @@
       </if>
       <if test="reserveType != null">
         #{reserveType,jdbcType=TINYINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -111,6 +121,9 @@
       <if test="reserveType != null">
         reserveType = #{reserveType,jdbcType=TINYINT},
       </if>
+      <if test="userId != null">
+        userId = #{userId,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -122,7 +135,8 @@
       name = #{name,jdbcType=VARCHAR},
       status = #{status,jdbcType=TINYINT},
       reserveCheckOutTime = #{reserveCheckOutTime,jdbcType=DATE},
-      reserveType = #{reserveType,jdbcType=TINYINT}
+      reserveType = #{reserveType,jdbcType=TINYINT},
+      userId = #{userId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

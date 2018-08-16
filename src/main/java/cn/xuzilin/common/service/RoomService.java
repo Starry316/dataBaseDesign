@@ -2,15 +2,18 @@ package cn.xuzilin.common.service;
 
 import cn.xuzilin.common.consts.ConstPool;
 import cn.xuzilin.common.dao.RecordEntityMapper;
+import cn.xuzilin.common.dao.ReserveEntityMapper;
 import cn.xuzilin.common.dao.RoomEntityMapper;
 import cn.xuzilin.common.po.RecordEntity;
 import cn.xuzilin.common.po.RoomEntity;
+import cn.xuzilin.common.utils.DateUtil;
 import cn.xuzilin.common.utils.JSONUtil;
 import cn.xuzilin.common.utils.SwitchUtil;
 import cn.xuzilin.common.vo.RoomRecordVo;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -26,6 +29,9 @@ public class RoomService {
 
     @Resource
     private RecordEntityMapper recordMapper;
+
+    @Resource
+    private ReserveEntityMapper reserveMapper;
 
     public JSONArray getEmptyRoomList(){
         return JSONUtil.toJSONArray(roomMapper.getEmptyRoomList());
@@ -150,4 +156,13 @@ public class RoomService {
         return (roomMapper.getEmptyRoomCount()+19) / 20;
     }
 
+    @Scheduled(cron = "0 0 12 1/1 * ?")
+    public void updateStatus(){
+        List<RecordEntity> list = recordMapper.getAll();
+        for (RecordEntity i : list)
+            if (i.getCheckOutTime().before( DateUtil.getNowDate())){
+                i.setStatus(ConstPool.OVERDUE);
+                recordMapper.updateByPrimaryKey(i);
+            }
+    }
 }

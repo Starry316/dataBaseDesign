@@ -3,9 +3,11 @@ package cn.xuzilin.common.service;
 import cn.xuzilin.common.dao.UserEntityMapper;
 import cn.xuzilin.common.po.UserEntity;
 import cn.xuzilin.common.utils.PasswordUtil;
+import cn.xuzilin.common.utils.SessionUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 @Service
 public class UserService {
@@ -18,10 +20,14 @@ public class UserService {
      * @param password
      * @return
      */
-    public boolean login(String userName,String password){
+    public boolean login(String userName,String password,HttpServletRequest request){
         String correctPass = userMapper.selectPasswordByUserName(userName);
         if (correctPass == null) return false;
-        if (PasswordUtil.validatePassword(password,correctPass))return true;
+        if (PasswordUtil.validatePassword(password,correctPass)){
+            UserEntity user = userMapper.getByUserName(userName);
+            SessionUtil.save(request,"user",user);
+            return true;
+        }
         return false;
     }
 
@@ -32,7 +38,7 @@ public class UserService {
      * @param phone
      * @return
      */
-    public boolean signUp(String userName ,String password,String phone){
+    public boolean signUp(String userName , String password, String phone, HttpServletRequest request){
         if (!judgeUnique(userName))return false;
         //对密码加密
         String hashPass = PasswordUtil.createHash(password);
@@ -42,6 +48,7 @@ public class UserService {
         user.setPhone(phone);
         try {
             userMapper.insertSelective(user);
+            SessionUtil.save(request,"user",user);
         }catch (Exception e){
             e.printStackTrace();
             return false;
