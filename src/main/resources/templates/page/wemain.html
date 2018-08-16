@@ -10,13 +10,14 @@
   <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
 ">
 
-  <link rel="stylesheet" href="/css/weui.min.css" type="text/css">
-  <link rel="stylesheet" href="/css/jquery-weui.css" type="text/css">
+
   <link href="/css/bootstrap.min.css" rel="stylesheet"/>
   <link href="/css/font-awesome.css" rel="stylesheet"/>
   <link href="/css/bootstrapValidator.min.css" rel="stylesheet"/>
   <link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet"/>
   <link href="/css/bootstrap-dialog.min.css" rel="stylesheet" type="text/css" media="all"/>
+  <link rel="stylesheet" href="/css/weui.min.css" type="text/css">
+  <link rel="stylesheet" href="/css/jquery-weui.css" type="text/css">
   <script src="/js/jquery-3.2.1.min.js"></script>
   <script src="/js/bootstrap.min.js"></script>
   <script src="/js/bootstrap-datetimepicker.js"></script>
@@ -36,7 +37,7 @@
       padding: .5rem;
       background-color: #1DB0B8;
       color: whitesmoke;
-      font-size: 1rem;
+      font-size: 5vw;
     }
     .starry-panel{
       background-color: white;
@@ -50,12 +51,18 @@
     }
     .starry-nav{
       text-align: center;
+      vertical-align: middle;
+      position: fixed;
+      z-index: 100;
+      width: 100%;
+      top: 0;
+      height: 3rem;
     }
     .starry-shadow {
       box-shadow: 0px 5px 30px rgba(0,0,0,.5);
     }
     .starry-middle{
-      vertical-align: middle;
+      vertical-align: middle;!important;
       text-align: center;
     }
     .starry-rightfloat{
@@ -111,32 +118,63 @@
 
 
 
-<div class="starry-container starry-shadow" id="header">
-  <div class="starry-nav">
-    奥伦治酒店
-  </div>
+<div class="starry-container starry-shadow starry-nav" id="header">
+  奥伦治酒店
 </div>
 
-<div class="swiper-container">
+<div class="swiper-container" style="margin-top: 3rem">
   <!-- Additional required wrapper -->
   <div class="swiper-wrapper">
     <!-- Slides -->
-    <div class="swiper-slide"><img src="/img/5.jpg" /></div>
-    <div class="swiper-slide"><img src="/img/4.jpg" /></div>
-    <div class="swiper-slide"><img src="/img/3.jpg" /></div>
+    <div class="swiper-slide"><img src="img/5.jpg" /></div>
+    <div class="swiper-slide"><img src="img/4.jpg" /></div>
+    <div class="swiper-slide"><img src="img/3.jpg" /></div>
   </div>
   <!-- If we need pagination -->
   <div class="swiper-pagination"></div>
 </div>
 
 <div id="app">
+
+  <!--酒店介绍-->
   <div class="container-fluid">
     <div class="row starry-panel" style="margin-bottom: 10px">
       <label>酒店介绍</label>
       <p>这家四星级的湾仔帝盛酒店（前香港丽都酒店）最近经过翻修，距离铜锣湾地铁站有短短的8分钟步行路程。所有区域均提供免费WiFi。所有装饰一新的客房均提供免费使用的智能手机（带无限制4G网络服务，支持WiFi数据共享，可与客人的私人手机、平板电脑和其他设备连接）、免费本地通话服务以及8个国家的国际直拨电话，包括中国大陆、美国、加拿大、新加坡、韩国、英国、澳大利亚和泰国。客人可在酒店内外使用这部手机。</p>
     </div>
+  </div>
+  <!--酒店介绍结束-->
+
+  <!--已预定房间-->
+  <div class="container-fluid starry-panel" style="background-color: white; padding-right: 15px;
+    padding-left: 15px;">
+    <div class="row" @click="showHadReverse">
+      <div class="col-xs-11"><label>查看已预定房间</label></div>
+      <span id="arrowIcon" class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+    </div>
+    <div id="reverseList" class="starry-hide">
+      <div class="row starry-middle">
+        <div class="col-xs-4"><strong>预订房型：</strong></div>
+        <div class="col-xs-5"><strong>入住时间：</strong></div>
+        <div class="divider"></div>
+      </div>
+      <div class="row starry-middle" v-for="item in reservelist">
+        <div class="col-xs-4">{{item.roomType}}</div>
+        <div class="col-xs-5">{{item.checkInTime}}</div>
+        <div class="col-xs-3">
+          <button  class="btn btn-sm btn-danger " type="button" v-on:click="cancel(item.roomId,item.id)">取消预定</button>
+        </div>
+        <div class="divider"></div>
+      </div>
+    </div>
+  </div>
+  <!--已预定房间结束-->
+
+
+  <!--预定-->
+  <div class="container-fluid">
     <div class="row starry-panel">
-      <div class="col-lg-4 col-md-4 col-xs-4"><img src="/img/4.jpg" width="100%" height="100%"></div>
+      <div class="col-lg-4 col-md-4 col-xs-4"><img src="img/4.jpg" width="100%" height="100%"></div>
       <div class="col-lg-4 col-md-4 col-xs-6">
         <label>标准间</label>
         <p>
@@ -280,7 +318,7 @@
 
 
     <div class="row starry-panel">
-      <div class="col-lg-4 col-md-4 col-xs-4"><img src="img/4.jpg" width="100%" height="100%"></div>
+      <div class="col-lg-4 col-md-4 col-xs-4"><img src="img/3.jpg" width="100%" height="100%"></div>
       <div class="col-lg-4 col-md-4 col-xs-6">
         <label>豪华套间</label>
         <p>
@@ -327,6 +365,17 @@
       </div>
     </div>
   </div>
+  <!--预定结束-->
+
+  <!--footer-->
+  <div class="container-fluid">
+    <div class="weui-footer">
+      <p class="weui-footer__text">@Author 徐子林 <a href="https://github.com/Starry316/dataBaseDesign">@GitHubRepository</a></p>
+      <p class="weui-footer__text">Project For Database Curriculum Design </p>
+
+    </div>
+  </div>
+  <!--footer结束-->
 
 
   <!--登录或注册弹窗-->
@@ -426,6 +475,8 @@
             phone:'',
             isLogin:true,
 
+            isShown:false,
+
             //loginModal中的errorMes
             sError0:'',
             sError1:'',
@@ -437,10 +488,57 @@
             name:'',
             telephone:'',
             timeCheckin:'',
-            timeCheckOut:''
+            timeCheckOut:'',
+
+            //已预定数据
+            reservelist:[]
 
         },
         methods: {
+            showHadReverse(){
+                if (!this.isLogin){
+                    $('#loginModal').modal();
+                    return;
+                }
+                if (!this.isShown){
+                    $('#reverseList').removeClass('starry-hide');
+                    $('#reverseList').addClass('starry-show');
+                    $('#arrowIcon').removeClass('glyphicon-menu-right');
+                    $('#arrowIcon').addClass('glyphicon-menu-down');
+                    this.isShown = true;
+                }
+                else {
+                    $('#reverseList').removeClass('starry-show');
+                    $('#reverseList').addClass('starry-hide');
+                    $('#arrowIcon').addClass('glyphicon-menu-right');
+                    $('#arrowIcon').removeClass('glyphicon-menu-down');
+                    this.isShown = false;
+                }
+            },
+            cancel(roomId,id) {
+                let reqData = {
+                    roomId: roomId,
+                    id: id
+                }
+                this.$http.post('/cancelReserve', reqData).then(resp =>{
+                    let result = resp.body;
+                if (result.status === 200) {
+                    this.getReserveList();
+                    alert('取消成功');
+                } else{
+                    this.getReserveList();
+                    alert(result.message);
+                }
+            }).
+                catch(resp =>{
+                    this.getReserveList();
+                alert("请求失败，请稍后重试");
+            });
+                this.getReserveList();
+            },
+            getReserveList(){
+
+            },
             reserve(type){
                 this.initModals();
                 if (!this.isLogin){
@@ -541,6 +639,13 @@
                 //出错信息初始化
                 $('.alert-danger').removeClass('starry-show');
                 $('.alert-danger').addClass('starry-hide');
+
+                //已预定初始化
+                $('#reverseList').removeClass('starry-show');
+                $('#reverseList').addClass('starry-hide');
+                $('#arrowIcon').addClass('glyphicon-menu-right');
+                $('#arrowIcon').removeClass('glyphicon-menu-down');
+                this.isShown = false;
             },
             changeToSignUp(){
                 this.userName='';
