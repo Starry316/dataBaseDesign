@@ -24,7 +24,6 @@ public class ReverseController {
     @Resource
     private ReserveService reserveService;
     @Resource
-    private ReserveEntityMapper reserveMapper;
     private RoomService roomService;
     @Resource
     private RoomEntityMapper roomMapper;
@@ -54,6 +53,18 @@ public class ReverseController {
 //        else respData = JSONUtil.toJSONObect(reserve);
 //        return ResponesUtil.success("success",respData);
 //    }
+    /**
+     * 获取预定信息
+     * @return
+     */
+    @GetMapping("/reserveInfo/{id}")
+    public MessageVo reserveInfo(@PathVariable("id")int id){
+        JSONObject respData = reserveService.getInfoById(id);
+        if (respData == null){
+            return ResponesUtil.systemError("出错，未查询到该预定记录！");
+        }
+        return ResponesUtil.success("success",respData);
+    }
     @PostMapping("/cancelReserve")
     public MessageVo cancelReserve(@RequestBody Map<String ,String> map){
         String id = map.get("id");

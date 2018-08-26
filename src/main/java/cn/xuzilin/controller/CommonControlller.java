@@ -66,6 +66,33 @@ public class CommonControlller {
         return ResponesUtil.success("success");
     }
 
+    @PostMapping("/checkInReserve")
+    public MessageVo checkInReserve(@RequestBody Map<String ,String> map){
+        //接收参数
+        String signIdcardNo = map.get("signIdcardNo");
+        String signPhoneNum = map.get("signPhoneNum");
+        String signName = map.get("signName");
+        String signCheckOutTime = map.get("signCheckOutTime");
+        String selectedRoomId =map.get("selectedRoomId");
+        String id = map.get("selectedId");
+
+        //入住
+        RecordEntity record = new RecordEntity();
+        record.setCustomerName(signName);
+        record.setIdcardNo(signIdcardNo);
+        record.setPhoneNum(signPhoneNum);
+        record.setCheckOutTime(DateUtil.strToDate(signCheckOutTime));
+        record.setCheckInTime(DateUtil.getNowDate());
+        record.setStatus(ConstPool.CHECK_IN);
+        record.setRoomId(Integer.parseInt(selectedRoomId));
+        recordService.insert(record);
+        //更新房间信息
+        roomService.checkIn(Integer.parseInt(selectedRoomId));
+        //更新预定信息
+        reserveService.updateComplete(Integer.parseInt(id));
+        return ResponesUtil.success("success");
+    }
+
 
     /**
      * 续住

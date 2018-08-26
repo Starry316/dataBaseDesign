@@ -147,8 +147,21 @@ public class ReserveService {
         return true;
     }
 
+    public JSONObject getInfoById(int id){
+        ReserveEntity reserve = reserveMapper.selectByPrimaryKey(id);
+        if (reserve == null)return null;
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("signName",reserve.getName());
+        jsonObject.put("signPhoneNum",reserve.getPhone());
+        jsonObject.put("signCheckOutTime",DateUtil.formatDate(reserve.getReserveCheckOutTime()));
+        return jsonObject;
+    }
+
     public void update(ReserveEntity record){
         reserveMapper.updateByPrimaryKeySelective(record);
+    }
+    public void updateComplete(int id){
+        reserveMapper.updateStatusById(ConstPool.COMPLETE,id);
     }
 
 }

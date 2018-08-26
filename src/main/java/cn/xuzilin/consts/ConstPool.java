@@ -28,7 +28,7 @@ public class ConstPool {
     //预定取消
     public final static byte CANCEL= -1;
     //预定完成
-    public final static byte COMPELETE = 0;
+    public final static byte COMPLETE = 0;
     //预定正在进行
     public final static byte ACTIVE = 1;
 }
