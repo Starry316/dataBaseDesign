@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.xuzilin.common.dao.RecordEntityMapper">
-  <resultMap id="BaseResultMap" type="cn.xuzilin.common.po.RecordEntity">
+<mapper namespace="cn.xuzilin.dao.RecordEntityMapper">
+  <resultMap id="BaseResultMap" type="cn.xuzilin.po.RecordEntity">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="roomId" jdbcType="INTEGER" property="roomId" />
     <result column="customerName" jdbcType="VARCHAR" property="customerName" />
@@ -26,7 +26,7 @@
     delete from record
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="cn.xuzilin.common.po.RecordEntity">
+  <insert id="insert" parameterType="cn.xuzilin.po.RecordEntity">
     insert into record (id, roomId, customerName, 
       idcardNo, checkInTime, checkOutTime, 
       status, phoneNum, discount
@@ -36,7 +36,7 @@
       #{status,jdbcType=TINYINT}, #{phoneNum,jdbcType=VARCHAR}, #{discount,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="cn.xuzilin.common.po.RecordEntity">
+  <insert id="insertSelective" parameterType="cn.xuzilin.po.RecordEntity">
     insert into record
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -97,7 +97,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.xuzilin.common.po.RecordEntity">
+  <update id="updateByPrimaryKeySelective" parameterType="cn.xuzilin.po.RecordEntity">
     update record
     <set>
       <if test="roomId != null">
@@ -127,7 +127,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.xuzilin.common.po.RecordEntity">
+  <update id="updateByPrimaryKey" parameterType="cn.xuzilin.po.RecordEntity">
     update record
     set roomId = #{roomId,jdbcType=INTEGER},
       customerName = #{customerName,jdbcType=VARCHAR},

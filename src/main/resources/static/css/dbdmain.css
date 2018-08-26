@@ -24,6 +24,16 @@ th {
 .showMes {
     animation: optionShow .5s ease-out forwards;
 }
+.starry-footer{
+    height: 50px;
+}
+.starry-wrapper{
+    min-height: calc(100vh - 120px);
+}
+.starry-middle{
+    vertical-align: middle;!important;
+    text-align: center;
+}
 @keyframes optionShow {
     from {
         opacity: 0;

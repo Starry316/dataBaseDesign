@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.xuzilin.common.dao.RoomEntityMapper">
-  <resultMap id="BaseResultMap" type="cn.xuzilin.common.po.RoomEntity">
+<mapper namespace="cn.xuzilin.dao.RoomEntityMapper">
+  <resultMap id="BaseResultMap" type="cn.xuzilin.po.RoomEntity">
     <id column="roomId" jdbcType="INTEGER" property="roomId" />
     <result column="roomType" jdbcType="TINYINT" property="roomType" />
     <result column="checkIn" jdbcType="TINYINT" property="checkIn" />
@@ -19,13 +19,13 @@
     delete from room
     where roomId = #{roomId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="cn.xuzilin.common.po.RoomEntity">
+  <insert id="insert" parameterType="cn.xuzilin.po.RoomEntity">
     insert into room (roomId, roomType, checkIn
       )
     values (#{roomId,jdbcType=INTEGER}, #{roomType,jdbcType=TINYINT}, #{checkIn,jdbcType=TINYINT}
       )
   </insert>
-  <insert id="insertSelective" parameterType="cn.xuzilin.common.po.RoomEntity">
+  <insert id="insertSelective" parameterType="cn.xuzilin.po.RoomEntity">
     insert into room
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="roomId != null">
@@ -50,7 +50,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.xuzilin.common.po.RoomEntity">
+  <update id="updateByPrimaryKeySelective" parameterType="cn.xuzilin.po.RoomEntity">
     update room
     <set>
       <if test="roomType != null">
@@ -62,7 +62,7 @@
     </set>
     where roomId = #{roomId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.xuzilin.common.po.RoomEntity">
+  <update id="updateByPrimaryKey" parameterType="cn.xuzilin.po.RoomEntity">
     update room
     set roomType = #{roomType,jdbcType=TINYINT},
       checkIn = #{checkIn,jdbcType=TINYINT}

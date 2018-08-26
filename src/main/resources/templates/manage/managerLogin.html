@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>管理员登录</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/css/font-awesome.css" rel="stylesheet"/>
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/vue.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/vue-resource.js" type="text/javascript" charset="utf-8"></script>
+
+
+    <style>
+        .starry-middle{
+            vertical-align: middle;!important;
+            text-align: center;
+        }
+        .starry-footer{
+            height: 50px;
+        }
+        .starry-wrapper{
+            min-height: calc(100vh - 70px);
+        }
+        .starry-bigheader{
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 50%;
+            width: 100%;
+            background-color:black;
+            z-index: -1;
+        }
+        .starry-bigheader2{
+            position: absolute;
+            top: 40%;
+            left: 0;
+            height: 50%;
+            width: 100%;
+            background-color: black;
+            z-index: -1;
+            /*background: -webkit-linear-gradient(#28D5DD, #FAFBFB); !* Safari 5.1 - 6.0 *!*/
+            /*background: -o-linear-gradient(#28D5DD, #FAFBFB); !* Opera 11.1 - 12.0 *!*/
+            /*background: -moz-linear-gradient(#28D5DD, #FAFBFB); !* Firefox 3.6 - 15 *!*/
+            /*background: linear-gradient(#28D5DD, #FAFBFB); !* 标准的语法 *!*/
+            background: -webkit-linear-gradient(black, #FAFBFB); /* Safari 5.1 - 6.0 */
+            background: -o-linear-gradient(black, #FAFBFB); /* Opera 11.1 - 12.0 */
+            background: -moz-linear-gradient(black, #FAFBFB); /* Firefox 3.6 - 15 */
+            background: linear-gradient(black, #FAFBFB); /* 标准的语法 */
+        }
+        .starry-loginsqure{
+            display: block;
+            position: absolute;
+            top: calc(50vh - 250px);
+            left: calc(50vw - 200px);
+            height: 500px;
+            width: 400px;
+            background-color: white;
+            padding: 40px;
+            border-radius: 5px;
+            box-shadow: 0 1px 20px rgba(26,26,26,.8);
+            z-index: 2;
+        }
+        .starry-middletitle{
+            text-align: center;
+            color: whitesmoke;
+            margin-top: 70px;
+        }
+    </style>
+</head>
+<body style="background-color: #FAFBFB">
+<div id="app" class="starry-wrapper">
+    <div class="starry-bigheader">
+        <h1 class="starry-middletitle" style="font-family: Microsoft Yahei;">酒店后台管理登录</h1>
+    </div>
+    <!--<div class="starry-bigheader2">-->
+
+    <!--</div>-->
+    <div class="starry-loginsqure">
+        <div class="form-group" style="margin-bottom: 40px">
+            <h2 class="starry-middle"> 登录 </h2>
+        </div>
+        <div class="form-group">
+            <input id="signIdcardNo" class="form-control"  placeholder="用户名" v-model="managerName">
+        </div>
+        <br>
+        <div class="form-group">
+            <input id="signPhoneNum" class="form-control" type="password" placeholder="密码" v-model="password">
+        </div>
+        <br>
+        <div class="form-group starry-middle">
+            <div class="btn btn-default" @click="login">登录</div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid starry-middle starry-footer">
+    <p>@Author 徐子林 <a href="https://github.com/Starry316">@GitHub</a></p>
+    <p> <a href="http://www.miitbeian.gov.cn">鲁ICP备18016956号</a></p>
+</div>
+</body>
+<script>
+    let app = new Vue({
+        el: '#app',
+        data: {
+            //登录数据
+            managerName:'',
+            password:'',
+        },
+        methods: {
+            login(){
+                let reqData = {
+                    managerName : this.managerName,
+                    password : this.password
+                };
+                this.$http.post('/loginManager', reqData)
+                    .then(response => {
+                    let result = response.body;
+                if (result.status === 200) {
+                    window.location.href="/manage/main";
+                } else {
+                    alert(result.message);
+                }
+            })
+            .catch(resp => {
+                    alert("请求失败，请稍后再试");
+            });
+            }
+        },
+
+        mounted() {
+        },
+        created() {
+        }
+    });
+
+
+</script>
+</html>

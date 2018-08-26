@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.xuzilin.common.dao.ReserveEntityMapper">
-  <resultMap id="BaseResultMap" type="cn.xuzilin.common.po.ReserveEntity">
+<mapper namespace="cn.xuzilin.dao.ReserveEntityMapper">
+  <resultMap id="BaseResultMap" type="cn.xuzilin.po.ReserveEntity">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="roomId" jdbcType="INTEGER" property="roomId" />
     <result column="reserveCheckInTime" jdbcType="DATE" property="reserveCheckInTime" />
@@ -26,7 +26,7 @@
     delete from reserve
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="cn.xuzilin.common.po.ReserveEntity">
+  <insert id="insert" parameterType="cn.xuzilin.po.ReserveEntity">
     insert into reserve (id, roomId, reserveCheckInTime, 
       phone, name, status, 
       reserveCheckOutTime, reserveType, userId
@@ -36,7 +36,7 @@
       #{reserveCheckOutTime,jdbcType=DATE}, #{reserveType,jdbcType=TINYINT}, #{userId,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="cn.xuzilin.common.po.ReserveEntity">
+  <insert id="insertSelective" parameterType="cn.xuzilin.po.ReserveEntity">
     insert into reserve
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -97,7 +97,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.xuzilin.common.po.ReserveEntity">
+  <update id="updateByPrimaryKeySelective" parameterType="cn.xuzilin.po.ReserveEntity">
     update reserve
     <set>
       <if test="roomId != null">
@@ -127,7 +127,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.xuzilin.common.po.ReserveEntity">
+  <update id="updateByPrimaryKey" parameterType="cn.xuzilin.po.ReserveEntity">
     update reserve
     set roomId = #{roomId,jdbcType=INTEGER},
       reserveCheckInTime = #{reserveCheckInTime,jdbcType=DATE},

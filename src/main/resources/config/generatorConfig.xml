@@ -28,7 +28,7 @@
 
         <!-- targetProject:生成PO类的位置 -->
         <!-- 生成模型的包名和位置-->
-        <javaModelGenerator targetPackage="cn.xuzilin.common.po"
+        <javaModelGenerator targetPackage="cn.xuzilin.po"
                             targetProject="../../java/">
             <!-- enableSubPackages:是否让schema作为包的后缀 -->
             <property name="enableSubPackages" value="false" />
@@ -48,7 +48,7 @@
         <!-- targetPackage：mapper接口生成的位置 -->
         <!-- 生成DAO的包名和位置-->
         <javaClientGenerator type="XMLMAPPER"
-                             targetPackage="cn.xuzilin.common.dao"
+                             targetPackage="cn.xuzilin.dao"
                              targetProject="../../java/">
             <!-- enableSubPackages:是否让schema作为包的后缀 -->
             <property name="enableSubPackages" value="false" />
@@ -56,8 +56,17 @@
         <!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名-->
 
 
+        <!--<table schema="general"-->
+               <!--tableName="record" domainObjectName="RecordEntity"-->
+               <!--enableCountByExample="false"-->
+               <!--enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false" >-->
+            <!--<property name="useActualColumnNames" value="true"/>-->
+        <!--</table>-->
         <table schema="general"
-               tableName="record" domainObjectName="RecordEntity"
+               tableName="manager" domainObjectName="ManagerEntity"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"
@@ -65,24 +74,15 @@
                selectByExampleQueryId="false" >
             <property name="useActualColumnNames" value="true"/>
         </table>
-        <table schema="general"
-               tableName="reserve" domainObjectName="ReserveEntity"
-               enableCountByExample="false"
-               enableUpdateByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               selectByExampleQueryId="false" >
-            <property name="useActualColumnNames" value="true"/>
-        </table>
-        <table schema="general"
-               tableName="user" domainObjectName="UserEntity"
-               enableCountByExample="false"
-               enableUpdateByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               selectByExampleQueryId="false" >
-            <property name="useActualColumnNames" value="true"/>
-        </table>
+        <!--<table schema="general"-->
+               <!--tableName="user" domainObjectName="UserEntity"-->
+               <!--enableCountByExample="false"-->
+               <!--enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false" >-->
+            <!--<property name="useActualColumnNames" value="true"/>-->
+        <!--</table>-->
         <!--<table schema="general"-->
                <!--tableName="room" domainObjectName="RoomEntity"-->
                <!--enableCountByExample="false"-->
