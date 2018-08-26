@@ -15,6 +15,7 @@ import com.alibaba.fastjson.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -48,12 +49,8 @@ public class CommonControlller {
         String selectedRoomId =map.get("selectedRoomId");
 
         //首先判断预定信息
-        ReserveEntity reserve = reserveService.getByRoomId(Integer.parseInt(selectedRoomId));
-        if (reserve != null){
-            reserve.setStatus(ConstPool.COMPELETE);
-            reserveService.update(reserve);
-        }
-
+        if (!reserveService.canCheckIn(Integer.parseInt(selectedRoomId),DateUtil.getNowDate()))
+            return ResponesUtil.systemError("该房间今日有预定信息，不能入住！如果是预定顾客入住请到预定管理页面办理入住");
         //入住
         RecordEntity record = new RecordEntity();
         record.setCustomerName(signName);
@@ -64,11 +61,8 @@ public class CommonControlller {
         record.setStatus(ConstPool.CHECK_IN);
         record.setRoomId(Integer.parseInt(selectedRoomId));
         recordService.insert(record);
-
         //更新房间信息
         roomService.checkIn(Integer.parseInt(selectedRoomId));
-
-
         return ResponesUtil.success("success");
     }
 

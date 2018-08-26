@@ -75,7 +75,6 @@ public class RecordService {
         recordMapper.insertSelective(newRoomRecord);
         oldRoomRecord.setStatus(ConstPool.CHECK_OUT);
         recordMapper.updateByPrimaryKeySelective(oldRoomRecord);
-
         roomService.checkOut(oldRoomId);
         roomService.checkIn(newRoomId);
     }

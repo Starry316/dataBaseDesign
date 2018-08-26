@@ -19,9 +19,13 @@ public interface RecordEntityMapper {
 
     int updateByPrimaryKey(RecordEntity record);
 
-    @Select("SELECT * FROM record WHERE roomId = #{roomId} AND status != -1")
+    @Select("select * " +
+            "from record " +
+            "where roomId = #{roomId} AND status != -1")
     RecordEntity getByRoomId(@Param("roomId") int roomId);
 
-    @Select("SELECT * FROM record WHERE status = 1")
+    @Select("select * " +
+            "from record " +
+            "where status = 1")
     List<RecordEntity> getAll();
 }

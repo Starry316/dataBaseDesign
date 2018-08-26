@@ -19,22 +19,33 @@ public interface ReserveEntityMapper {
     int updateByPrimaryKeySelective(ReserveEntity record);
 
     int updateByPrimaryKey(ReserveEntity record);
-    @Update("UPDATE reserve SET status = #{status} WHERE roomId = #{roomId}")
+    @Update("update reserve set status = #{status} " +
+            "where roomId = #{roomId}")
     int updateStatusByRoomId(@Param("status") byte status, @Param("roomId") int roomId);
 
-    @Update("UPDATE reserve SET status = #{status} WHERE id = #{id}")
+    @Update("update reserve set status = #{status} " +
+            "where id = #{id}")
     int updateStatusById(@Param("status") byte status, @Param("id") int id);
 
-    @Select("SELECT * FROM reserve WHERE status = #{status}")
+    @Select("select * " +
+            "from reserve " +
+            "where status = #{status}")
     List<ReserveEntity> getAllByStatus(@Param("status") byte status);
 
-    @Select("SELECT * FROM reserve WHERE roomId = #{roomId} AND status = 1")
-    ReserveEntity getByRoomId(@Param("roomId") int roomId);
+    @Select("select * " +
+            "from reserve " +
+            "where roomId = #{roomId} and status = 1")
+    List<ReserveEntity> getByRoomId(@Param("roomId") int roomId);
 
-    @Select("SELECT count(*) FROM reserve WHERE  status = 1")
+
+    @Select("select count(*) " +
+            "from reserve " +
+            "where  status = 1")
     int getCount();
 
-    @Select("SELECT * FROM reserve WHERE userId = #{userId} AND status = 1")
+    @Select("select * " +
+            "from reserve " +
+            "where userId = #{userId} and status = 1")
     List<ReserveEntity> getActiveByUserId(@Param("userId") int userId);
 
 }

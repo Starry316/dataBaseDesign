@@ -18,12 +18,18 @@ public interface ManagerEntityMapper {
 
     int updateByPrimaryKey(ManagerEntity record);
 
-    @Select("SELECT password FROM manager WHERE managerName = #{managerName}")
+    @Select("select password " +
+            "from manager " +
+            "where managerName = #{managerName}")
     String selectPasswordByManagerName(@Param("managerName") String managerName);
 
-    @Select("SELECT count(*) FROM manager WHERE managerName = #{managerName}")
+    @Select("select count(*) " +
+            "from manager " +
+            "where managerName = #{managerName}")
     int getManagerNum(@Param("managerName") String managerName);
 
-    @Select("SELECT id, managerName FROM manager WHERE managerName = #{managerName}")
+    @Select("select id, managerName " +
+            "from manager " +
+            "where managerName = #{managerName}")
     ManagerEntity getByManagerName(@Param("managerName") String managerName);
 }

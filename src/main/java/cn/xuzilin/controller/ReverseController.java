@@ -38,22 +38,22 @@ public class ReverseController {
         int maxpage = (reserveService.getCount()+19)/20;
         return ResponesUtil.success("success",maxpage);
     }
-    /**
-     * 获取预定信息
-     * @param map
-     * @return
-     */
-    @PostMapping("/reserveInfo")
-    public MessageVo reserveInfo(@RequestBody Map<String ,String> map){
-        String selectedRoomId =map.get("selectedRoomId");
-        ReserveEntity reserve = reserveService.getByRoomId(Integer.parseInt(selectedRoomId));
-        JSONObject respData = new JSONObject();
-        if (reserve == null){
-            respData.put("isNull",true);
-        }
-        else respData = JSONUtil.toJSONObect(reserve);
-        return ResponesUtil.success("success",respData);
-    }
+//    /**
+//     * 获取预定信息
+//     * @param map
+//     * @return
+//     */
+//    @PostMapping("/reserveInfo")
+//    public MessageVo reserveInfo(@RequestBody Map<String ,String> map){
+//        String selectedRoomId =map.get("selectedRoomId");
+//        ReserveEntity reserve = reserveService.getByRoomId(Integer.parseInt(selectedRoomId));
+//        JSONObject respData = new JSONObject();
+//        if (reserve == null){
+//            respData.put("isNull",true);
+//        }
+//        else respData = JSONUtil.toJSONObect(reserve);
+//        return ResponesUtil.success("success",respData);
+//    }
     @PostMapping("/cancelReserve")
     public MessageVo cancelReserve(@RequestBody Map<String ,String> map){
         String id = map.get("id");
@@ -67,6 +67,7 @@ public class ReverseController {
          String telephone = map.get("telephone");
          String timeCheckIn = map.get("timeCheckin");
          String timeCheckOut = map.get("timeCheckOut");
+
          int userId = SessionUtil.get(request,"user",UserEntity.class).getId();
          Integer []roomIds = roomMapper.getRoomIdListByTypeAndCheckInTime(Byte.parseByte(type), DateUtil.strToDate(timeCheckIn),DateUtil.strToDate(timeCheckOut));
          if (roomIds.length==0)

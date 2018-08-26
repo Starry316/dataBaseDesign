@@ -17,12 +17,18 @@ public interface UserEntityMapper {
 
     int updateByPrimaryKey(UserEntity record);
 
-    @Select("SELECT password FROM user WHERE userName = #{userName}")
+    @Select("select password " +
+            "from user " +
+            "where userName = #{userName}")
     String selectPasswordByUserName(@Param("userName") String userName);
 
-    @Select("SELECT count(*) FROM user WHERE userName = #{userName}")
+    @Select("select count(*) " +
+            "from user " +
+            "where userName = #{userName}")
     int getUserNum(@Param("userName") String userName);
 
-    @Select("SELECT id, userName, phone FROM user WHERE userName = #{userName}")
+    @Select("select id, userName, phone " +
+            "from user " +
+            "where userName = #{userName}")
     UserEntity getByUserName(@Param("userName") String userName);
 }
