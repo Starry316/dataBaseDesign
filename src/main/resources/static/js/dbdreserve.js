@@ -22,7 +22,7 @@ let app = new Vue({
         showCheckModal(id,roomId){
             this.selectedId = id;
             this.selectedRoomId = roomId;
-            this.$http.post('/reserveInfo/'+id).then(resp =>{
+            this.$http.get('/reserveInfo/'+id).then(resp =>{
                 let result = resp.body;
                 if (result.status === 200) {
                     let data = result.data;

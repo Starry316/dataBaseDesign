@@ -12,6 +12,10 @@ th {
     text-align: center;
 }
 
+body{
+    background-color: whitesmoke;
+}
+
 .not-block {
     display: inline-block;
 }
@@ -28,7 +32,7 @@ th {
     height: 50px;
 }
 .starry-wrapper{
-    min-height: calc(100vh - 120px);
+    min-height: calc(100vh - 180px);
 }
 .starry-middle{
     vertical-align: middle;!important;
