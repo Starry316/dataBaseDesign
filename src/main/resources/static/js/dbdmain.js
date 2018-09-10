@@ -131,11 +131,7 @@ let app = new Vue({
             this.signPhoneNum='';
             this.signName='';
             this.signCheckOutTime='';
-            this.selectedRoomId='';
-            let reqData = {
-                selectedRoomId: this.selectedRoomId
-            };
-            this.$http.post('/reserveInfo', reqData).then(response =>{
+            this.$http.get('/reserveInfo/'+this.selectedRoomId).then(response =>{
                 let result = response.body;
             if (result.status === 200) {
                 let data = result.data;
