@@ -6,12 +6,14 @@ import cn.xuzilin.dao.RoomEntityMapper;
 import cn.xuzilin.po.CustomerEntity;
 import cn.xuzilin.po.RecordEntity;
 import cn.xuzilin.po.RoomEntity;
+import cn.xuzilin.utils.BigDecimalUtil;
 import cn.xuzilin.utils.DateUtil;
 import cn.xuzilin.utils.SwitchUtil;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -93,15 +95,16 @@ public class RecordService {
         JSONObject data = new JSONObject();
         RecordEntity record = recordMapper.getByRoomId(roomId);
         RoomEntity room = roomMapper.selectByPrimaryKey(roomId);
-        double paymentPerDay = SwitchUtil.switchTpyePayment(room.getRoomType());
+        BigDecimal paymentPerDay = SwitchUtil.switchTpyePayment(room.getRoomType());
         long days = DateUtil.subDateByDay(DateUtil.getNowDateStr(),DateUtil.dateToStr(record.getCheckInTime()));
+        //todo 折扣
         double discount = 59.00;
         data.put("quitCheckInTime",DateUtil.formatDate(record.getCheckInTime()));
         data.put("quitCheckOutTime",DateUtil.getNowDateStr());
         data.put("paymentPerDay",paymentPerDay);
-        data.put("paymentTotal",days*paymentPerDay);
+        data.put("paymentTotal",BigDecimalUtil.multiply(paymentPerDay,days));
         data.put("discount",discount);
-        data.put("actualPayment",days*paymentPerDay-discount);
+        data.put("actualPayment",BigDecimalUtil.subtract(BigDecimalUtil.multiply(paymentPerDay,days),discount));
         return data;
     }
 

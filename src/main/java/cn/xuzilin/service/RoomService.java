@@ -6,6 +6,7 @@ import cn.xuzilin.dao.ReserveEntityMapper;
 import cn.xuzilin.dao.RoomEntityMapper;
 import cn.xuzilin.po.RecordEntity;
 import cn.xuzilin.po.RoomEntity;
+import cn.xuzilin.utils.BigDecimalUtil;
 import cn.xuzilin.utils.DateUtil;
 import cn.xuzilin.utils.JSONUtil;
 import cn.xuzilin.utils.SwitchUtil;
@@ -95,12 +96,13 @@ public class RoomService {
             data.put("roomType",SwitchUtil.switchType(i.getRoomType()));
             data.put("roomStatus",i.getCheckIn());
             data.put("roomStatusName",SwitchUtil.switchStatus(i.getCheckIn()));
-            data.put("customerName",i.getCustomerName());
-            data.put("customerIdNo",i.getIdcardNo());
-            data.put("checkInTime",i.getCheckInTime());
-            data.put("checkOutTime",i.getCheckOutTime());
-            if (i.getCheckInTime() !=null)
-                data.put("payment",DateUtil.daysToNow(i.getCheckInTime()));
+            if (i.getCheckInTime()!=null){
+                data.put("checkInTime",DateUtil.formatDate(i.getCheckInTime()));
+                Long days = DateUtil.daysToNow(i.getCheckInTime());
+                data.put("payment", BigDecimalUtil.multiply(SwitchUtil.switchTpyePayment(i.getRoomType()),days));
+            }
+            if (i.getCheckOutTime()!=null)
+            data.put("checkOutTime",DateUtil.formatDate(i.getCheckOutTime()));
             res.add(data);
         }
         return res;

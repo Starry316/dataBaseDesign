@@ -2,6 +2,8 @@ package cn.xuzilin.utils;
 
 import cn.xuzilin.consts.ConstPool;
 
+import java.math.BigDecimal;
+
 public class SwitchUtil {
     public static  String switchType(byte type){
         switch (type){
@@ -19,12 +21,12 @@ public class SwitchUtil {
             default:return "暂不可用";
         }
     }
-    public static double switchTpyePayment(byte type){
+    public static BigDecimal switchTpyePayment(byte type){
         switch (type){
-            case 1:return 189.99;
-            case 2:return 199.99;
-            case 3:return 299.99;
-            default:return 399.99;
+            case 1:return BigDecimalUtil.create(189.99);
+            case 2:return BigDecimalUtil.create(199.99);
+            case 3:return BigDecimalUtil.create(299.99);
+            default:return BigDecimalUtil.create(399.99);
         }
     }
     public static double switchMemberDiscount(byte memberType){
