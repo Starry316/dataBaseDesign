@@ -1,5 +1,6 @@
 package cn.xuzilin.po;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class RecordEntity {
@@ -7,19 +8,17 @@ public class RecordEntity {
 
     private Integer roomId;
 
-    private String customerName;
-
-    private String idcardNo;
-
     private Date checkInTime;
 
     private Date checkOutTime;
 
     private Byte status;
 
-    private String phoneNum;
+    private BigDecimal discount;
 
-    private String discount;
+    private BigDecimal payment;
+
+    private Integer memberCardId;
 
     public Integer getId() {
         return id;
@@ -35,22 +34,6 @@ public class RecordEntity {
 
     public void setRoomId(Integer roomId) {
         this.roomId = roomId;
-    }
-
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName == null ? null : customerName.trim();
-    }
-
-    public String getIdcardNo() {
-        return idcardNo;
-    }
-
-    public void setIdcardNo(String idcardNo) {
-        this.idcardNo = idcardNo == null ? null : idcardNo.trim();
     }
 
     public Date getCheckInTime() {
@@ -77,19 +60,27 @@ public class RecordEntity {
         this.status = status;
     }
 
-    public String getPhoneNum() {
-        return phoneNum;
-    }
-
-    public void setPhoneNum(String phoneNum) {
-        this.phoneNum = phoneNum == null ? null : phoneNum.trim();
-    }
-
-    public String getDiscount() {
+    public BigDecimal getDiscount() {
         return discount;
     }
 
-    public void setDiscount(String discount) {
-        this.discount = discount == null ? null : discount.trim();
+    public void setDiscount(BigDecimal discount) {
+        this.discount = discount;
+    }
+
+    public BigDecimal getPayment() {
+        return payment;
+    }
+
+    public void setPayment(BigDecimal payment) {
+        this.payment = payment;
+    }
+
+    public Integer getMemberCardId() {
+        return memberCardId;
+    }
+
+    public void setMemberCardId(Integer memberCardId) {
+        this.memberCardId = memberCardId;
     }
 }

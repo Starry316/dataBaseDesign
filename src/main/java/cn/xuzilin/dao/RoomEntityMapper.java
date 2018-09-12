@@ -51,33 +51,37 @@ public interface RoomEntityMapper {
 
     @Select("select * \n" +
             "from room a left join record b on (a.roomId = b.roomId  and b.status != -1) \n" +
-            "where (a.roomId = #{roomId} or #{roomIdFlag} = 0) " +
-            "and (a.checkIn = #{checkIn} or #{checkInFlag} = 0)\n" +
-            "and (b.checkInTime = #{checkInTime} or #{checkInTimeFlag} = 0) " +
-            "and (b.checkOutTime = #{checkOutTime} or #{checkOutTimeFlag} = 0)\n" +
-            "and (b.customerName = #{customerName} or #{customerNameFlag} = 0) " +
-            "and (b.idcardNo = #{idcardNo} or #{idcardNoFlag} = 0) " +
+            "where (  #{roomIdFlag} = true or a.roomId = #{roomId})"  +
+            "and (#{checkInFlag}= true or a.checkIn = #{checkIn})\n" +
+            "and (#{checkInTimeFlag}= true or b.checkInTime = #{checkInTime}) " +
+            "and (#{checkOutTimeFlag}= true or b.checkOutTime = #{checkOutTime})\n" +
+            "and (exists(select * from customer c where c.recordId = b.id " +
+            "           and  (#{customerNameFlag}= true or c.name = #{customerName}) " +
+            "           and (#{idcardNoFlag}= true or c.idcardNo = #{idcardNo}) " +
+            "           ) or ( #{idcardNoFlag}= true and #{customerNameFlag}= true))" +
             "order by a.roomId")
-    List<RoomRecordVo> getData(@Param("roomId") int roomId,@Param("roomIdFlag") int roomIdFlag,
-                                  @Param("checkIn") byte checkIn,@Param("checkInFlag") int checkInFlag,
-                                  @Param("checkInTime") String checkInTime ,@Param("checkInTimeFlag") int checkInTimeFlag,
-                                  @Param("checkOutTime") String checkOutTime ,@Param("checkOutTimeFlag") int checkOutTimeFlag,
-                                  @Param("customerName") String customerName ,@Param("customerNameFlag") int customerNameFlag,
-                                  @Param("idcardNo") String idcardNo ,@Param("idcardNoFlag") int idcardNoFlag);
+    List<RoomRecordVo> getData(@Param("roomId") int roomId,@Param("roomIdFlag") boolean roomIdFlag,
+                               @Param("checkIn") byte checkIn,@Param("checkInFlag") boolean checkInFlag,
+                               @Param("checkInTime") String checkInTime ,@Param("checkInTimeFlag") boolean checkInTimeFlag,
+                               @Param("checkOutTime") String checkOutTime ,@Param("checkOutTimeFlag") boolean checkOutTimeFlag,
+                               @Param("customerName") String customerName ,@Param("customerNameFlag") boolean customerNameFlag,
+                               @Param("idcardNo") String idcardNo ,@Param("idcardNoFlag") boolean idcardNoFlag);
 
     @Select("select count(*) \n" +
-            "from room a left join record b on (a.roomId = b.roomId and b.status != -1) \n" +
-            "where (a.roomId = #{roomId} or #{roomIdFlag} = 0) " +
-            "and (a.checkIn = #{checkIn} or #{checkInFlag} = 0)\n" +
-            "and (b.checkInTime = #{checkInTime} or #{checkInTimeFlag} = 0) " +
-            "and (b.checkOutTime = #{checkOutTime} or #{checkOutTimeFlag} = 0)\n" +
-            "and (b.customerName = #{customerName} or #{customerNameFlag} = 0) " +
-            "and (b.idcardNo = #{idcardNo} or #{idcardNoFlag} = 0)" +
+            "from room a left join record b on (a.roomId = b.roomId  and b.status != -1) \n" +
+            "where (  #{roomIdFlag} = true or a.roomId = #{roomId})"  +
+            "and (#{checkInFlag}= true or a.checkIn = #{checkIn})\n" +
+            "and (#{checkInTimeFlag}= true or b.checkInTime = #{checkInTime}) " +
+            "and (#{checkOutTimeFlag}= true or b.checkOutTime = #{checkOutTime})\n" +
+            "and (exists(select * from customer c where c.recordId = b.id " +
+            "           and  (#{customerNameFlag}= true or c.name = #{customerName}) " +
+            "           and (#{idcardNoFlag}= true or c.idcardNo = #{idcardNo}) " +
+            "           ) or ( #{idcardNoFlag}= true and #{customerNameFlag}= true))" +
             "order by a.roomId")
-    int getDataCount(@Param("roomId") int roomId,@Param("roomIdFlag") int roomIdFlag,
-                                  @Param("checkIn") byte checkIn,@Param("checkInFlag") int checkInFlag,
-                                  @Param("checkInTime") String checkInTime ,@Param("checkInTimeFlag") int checkInTimeFlag,
-                                  @Param("checkOutTime") String checkOutTime ,@Param("checkOutTimeFlag") int checkOutTimeFlag,
-                                  @Param("customerName") String customerName ,@Param("customerNameFlag") int customerNameFlag,
-                                  @Param("idcardNo") String idcardNo ,@Param("idcardNoFlag") int idcardNoFlag);
+    int getDataCount(@Param("roomId") int roomId,@Param("roomIdFlag") boolean roomIdFlag,
+                     @Param("checkIn") byte checkIn,@Param("checkInFlag") boolean checkInFlag,
+                     @Param("checkInTime") String checkInTime ,@Param("checkInTimeFlag") boolean checkInTimeFlag,
+                     @Param("checkOutTime") String checkOutTime ,@Param("checkOutTimeFlag") boolean checkOutTimeFlag,
+                     @Param("customerName") String customerName ,@Param("customerNameFlag") boolean customerNameFlag,
+                     @Param("idcardNo") String idcardNo ,@Param("idcardNoFlag") boolean idcardNoFlag);
 }

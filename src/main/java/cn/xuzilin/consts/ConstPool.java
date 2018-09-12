@@ -1,5 +1,7 @@
 package cn.xuzilin.consts;
 
+import java.math.BigDecimal;
+
 /**
  * Created by Starry on 2018/7/18.
  */
@@ -31,4 +33,20 @@ public class ConstPool {
     public final static byte COMPLETE = 0;
     //预定正在进行
     public final static byte ACTIVE = 1;
+
+    /**
+     * 会员卡类型
+     */
+    //白银会员
+    public final static byte SILVER= 1;
+    //黄金会员
+    public final static byte GOLD = 2;
+    //钻石会员
+    public final static byte DIAMOND = 3;
+    //狂拽炫酷吊炸天会员
+    public final static byte DIAO = 4;
+    //会员各阶段花费金额
+    public final static BigDecimal GOLDCONSUMPTION = new BigDecimal("1000");
+    public final static BigDecimal DIAMONDCONSUMPTION = new BigDecimal("5000");
+    public final static BigDecimal DIAOCONSUMPTION = new BigDecimal("10000");
 }

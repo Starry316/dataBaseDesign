@@ -70,15 +70,15 @@ public class RoomService {
                                  String customerName,
                                  String customerIdNo){
         String params[]={roomId,roomStatus,checkInTime,checkOutTime,customerName,customerIdNo};
-        int flags[]=new int[6];
+        boolean flags[]=new boolean[6];
         for (int i=0;i<6;i++){
             if (params[i].length() == 0){
                 params[i]="0";
-                flags[i]=0;
+                flags[i]=true;
             }
-            else flags[i]=1;
+            else flags[i]=false;
         }
-        if (params[1].equals("3")) flags[1]=0;
+        if (params[1].equals("3")) flags[1]=true;
         PageHelper.startPage(page, 20);
         List<RoomRecordVo> list = roomMapper.getData(Integer.parseInt(params[0]),flags[0],
                 Byte.parseByte(params[1]),flags[1],
@@ -90,6 +90,7 @@ public class RoomService {
         JSONArray res = new JSONArray();
         for (RoomRecordVo i : list){
             JSONObject data = new JSONObject();
+            data.put("recordId",i.getId());
             data.put("roomId",i.getRoomId());
             data.put("roomType",SwitchUtil.switchType(i.getRoomType()));
             data.put("roomStatus",i.getCheckIn());
@@ -98,6 +99,8 @@ public class RoomService {
             data.put("customerIdNo",i.getIdcardNo());
             data.put("checkInTime",i.getCheckInTime());
             data.put("checkOutTime",i.getCheckOutTime());
+            if (i.getCheckInTime() !=null)
+                data.put("payment",DateUtil.daysToNow(i.getCheckInTime()));
             res.add(data);
         }
         return res;
@@ -114,15 +117,15 @@ public class RoomService {
                            String customerName,
                            String customerIdNo){
         String params[]={roomId,roomStatus,checkInTime,checkOutTime,customerName,customerIdNo};
-        int flags[]=new int[6];
+        boolean flags[]=new boolean[6];
         for (int i=0;i<6;i++){
             if (params[i].length() == 0){
                 params[i]="0";
-                flags[i]=0;
+                flags[i]=true;
             }
-            else flags[i]=1;
+            else flags[i]=false;
         }
-        if (params[1].equals("3")) flags[1]=0;
+        if (params[1].equals("3")) flags[1]=true;
         int count = roomMapper.getDataCount(Integer.parseInt(params[0]),flags[0],
                 Byte.parseByte(params[1]),flags[1],
                 params[2],flags[2],

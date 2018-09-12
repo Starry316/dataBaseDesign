@@ -31,6 +31,16 @@ public class DateUtil {
         long res = (newDateTime - oldDateTime) / (1000 * 60 * 60 * 24);
         return res;
     }
+    public static long subDateByDay(Date newDate,Date oldDate){
+        long oldDateTime = oldDate.getTime();
+        long newDateTime = newDate.getTime();
+        long res = (newDateTime - oldDateTime) / (1000 * 60 * 60 * 24);
+        return res;
+    }
+    public static long daysToNow(Date oldDate){
+        Date currentTime = new Date();
+        return subDateByDay(currentTime,oldDate);
+    }
     public static String formatDate(Date date){
         return dateToStr(date);
     }

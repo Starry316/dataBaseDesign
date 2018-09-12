@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.xuzilin.dao.CouponEntityMapper">
+  <resultMap id="BaseResultMap" type="cn.xuzilin.po.CouponEntity">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="userId" jdbcType="INTEGER" property="userId" />
+    <result column="recordId" jdbcType="INTEGER" property="recordId" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="expiry" jdbcType="DATE" property="expiry" />
+    <result column="discount" jdbcType="DOUBLE" property="discount" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, userId, recordId, status, expiry, discount
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from coupon
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from coupon
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.xuzilin.po.CouponEntity">
+    insert into coupon (id, userId, recordId, 
+      status, expiry, discount
+      )
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{recordId,jdbcType=INTEGER}, 
+      #{status,jdbcType=TINYINT}, #{expiry,jdbcType=DATE}, #{discount,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.xuzilin.po.CouponEntity">
+    insert into coupon
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        userId,
+      </if>
+      <if test="recordId != null">
+        recordId,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="expiry != null">
+        expiry,
+      </if>
+      <if test="discount != null">
+        discount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="recordId != null">
+        #{recordId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="expiry != null">
+        #{expiry,jdbcType=DATE},
+      </if>
+      <if test="discount != null">
+        #{discount,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.xuzilin.po.CouponEntity">
+    update coupon
+    <set>
+      <if test="userId != null">
+        userId = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="recordId != null">
+        recordId = #{recordId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="expiry != null">
+        expiry = #{expiry,jdbcType=DATE},
+      </if>
+      <if test="discount != null">
+        discount = #{discount,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.xuzilin.po.CouponEntity">
+    update coupon
+    set userId = #{userId,jdbcType=INTEGER},
+      recordId = #{recordId,jdbcType=INTEGER},
+      status = #{status,jdbcType=TINYINT},
+      expiry = #{expiry,jdbcType=DATE},
+      discount = #{discount,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

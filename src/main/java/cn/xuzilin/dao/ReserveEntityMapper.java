@@ -47,5 +47,4 @@ public interface ReserveEntityMapper {
             "from reserve " +
             "where userId = #{userId} and status = 1")
     List<ReserveEntity> getActiveByUserId(@Param("userId") int userId);
-
 }

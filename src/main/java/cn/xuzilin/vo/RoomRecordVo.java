@@ -1,5 +1,7 @@
 package cn.xuzilin.vo;
 
+import java.util.Date;
+
 public class RoomRecordVo {
     private Integer id;
 
@@ -9,9 +11,9 @@ public class RoomRecordVo {
 
     private String idcardNo;
 
-    private String checkInTime;
+    private Date checkInTime;
 
-    private String checkOutTime;
+    private Date checkOutTime;
 
     private Byte status;
 
@@ -22,7 +24,21 @@ public class RoomRecordVo {
 
     private Byte checkIn;
 
+    public Date getCheckInTime() {
+        return checkInTime;
+    }
 
+    public void setCheckInTime(Date checkInTime) {
+        this.checkInTime = checkInTime;
+    }
+
+    public Date getCheckOutTime() {
+        return checkOutTime;
+    }
+
+    public void setCheckOutTime(Date checkOutTime) {
+        this.checkOutTime = checkOutTime;
+    }
 
     public Byte getRoomType() {
         return roomType;
@@ -71,21 +87,7 @@ public class RoomRecordVo {
         this.idcardNo = idcardNo == null ? null : idcardNo.trim();
     }
 
-    public String getCheckInTime() {
-        return checkInTime;
-    }
 
-    public void setCheckInTime(String checkInTime) {
-        this.checkInTime = checkInTime == null ? null : checkInTime.trim();
-    }
-
-    public String getCheckOutTime() {
-        return checkOutTime;
-    }
-
-    public void setCheckOutTime(String checkOutTime) {
-        this.checkOutTime = checkOutTime == null ? null : checkOutTime.trim();
-    }
 
     public Byte getStatus() {
         return status;

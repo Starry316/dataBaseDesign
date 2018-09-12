@@ -1,5 +1,7 @@
 package cn.xuzilin.utils;
 
+import cn.xuzilin.consts.ConstPool;
+
 public class SwitchUtil {
     public static  String switchType(byte type){
         switch (type){
@@ -23,6 +25,19 @@ public class SwitchUtil {
             case 2:return 199.99;
             case 3:return 299.99;
             default:return 399.99;
+        }
+    }
+    public static double switchMemberDiscount(byte memberType){
+        switch (memberType){
+            case ConstPool.SILVER:
+                return 0.9;
+            case ConstPool.GOLD:
+                return 0.8;
+            case ConstPool.DIAMOND:
+                return 0.7;
+            case ConstPool.DIAO:
+                return 0.6;
+            default:return 1;
         }
     }
 }

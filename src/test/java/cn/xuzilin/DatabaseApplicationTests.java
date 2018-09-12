@@ -5,6 +5,7 @@ import cn.xuzilin.dao.RoomEntityMapper;
 import cn.xuzilin.po.ReserveEntity;
 import cn.xuzilin.po.RoomEntity;
 import cn.xuzilin.service.ReserveService;
+import cn.xuzilin.service.RoomService;
 import cn.xuzilin.utils.DateUtil;
 import cn.xuzilin.utils.PasswordUtil;
 import org.junit.Test;
@@ -22,16 +23,11 @@ public class DatabaseApplicationTests {
 	private RoomEntityMapper roomMapper;
 	@Resource
 	private ReserveService reserveService;
+	@Resource
+	private RoomService roomService;
 	@Test
 	public void contextLoads() {
-		System.out.println(PasswordUtil.createHash("316289"));
-		List<RoomEntity> list = roomMapper.getRoomList();
-		for (RoomEntity i :list){
-			if (i.getCheckIn() == 2){
-				i.setCheckIn(ConstPool.EMPTY);
-				roomMapper.updateByPrimaryKeySelective(i);
-			}
-		}
+		//System.out.println(roomService.getDataList(0,"","","","121","","")) ;
 	}
 
 }

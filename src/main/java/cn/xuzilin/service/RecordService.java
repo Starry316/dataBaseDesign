@@ -3,6 +3,7 @@ package cn.xuzilin.service;
 import cn.xuzilin.consts.ConstPool;
 import cn.xuzilin.dao.RecordEntityMapper;
 import cn.xuzilin.dao.RoomEntityMapper;
+import cn.xuzilin.po.CustomerEntity;
 import cn.xuzilin.po.RecordEntity;
 import cn.xuzilin.po.RoomEntity;
 import cn.xuzilin.utils.DateUtil;
@@ -11,6 +12,7 @@ import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class RecordService {
@@ -22,6 +24,9 @@ public class RecordService {
 
     @Resource
     private RoomService roomService;
+
+    @Resource
+    private CustomerService customerService;
 
     public int insert(RecordEntity record){
         return recordMapper.insertSelective(record);
@@ -65,11 +70,11 @@ public class RecordService {
     public void changeRoom(int newRoomId, int oldRoomId){
         RecordEntity oldRoomRecord = getByRoomId(oldRoomId);
         RecordEntity newRoomRecord = new RecordEntity();
+
         newRoomRecord.setCheckInTime(DateUtil.getNowDate());
         newRoomRecord.setCheckOutTime(oldRoomRecord.getCheckOutTime());
-        newRoomRecord.setPhoneNum(oldRoomRecord.getPhoneNum());
-        newRoomRecord.setIdcardNo(oldRoomRecord.getIdcardNo());
-        newRoomRecord.setCustomerName(oldRoomRecord.getCustomerName());
+
+        customerService.copyCustomerInfo(newRoomRecord.getId(),oldRoomRecord.getId());
         newRoomRecord.setStatus(ConstPool.CHECK_IN);
         newRoomRecord.setRoomId(newRoomId);
         recordMapper.insertSelective(newRoomRecord);

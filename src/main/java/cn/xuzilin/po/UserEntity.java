@@ -9,6 +9,8 @@ public class UserEntity {
 
     private String phone;
 
+    private Integer memberCardId;
+
     public Integer getId() {
         return id;
     }
@@ -39,5 +41,13 @@ public class UserEntity {
 
     public void setPhone(String phone) {
         this.phone = phone == null ? null : phone.trim();
+    }
+
+    public Integer getMemberCardId() {
+        return memberCardId;
+    }
+
+    public void setMemberCardId(Integer memberCardId) {
+        this.memberCardId = memberCardId;
     }
 }

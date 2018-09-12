@@ -3,6 +3,7 @@ package cn.xuzilin.controller;
 import cn.xuzilin.consts.ConstPool;
 import cn.xuzilin.po.RecordEntity;
 import cn.xuzilin.po.ReserveEntity;
+import cn.xuzilin.service.CustomerService;
 import cn.xuzilin.service.RecordService;
 import cn.xuzilin.service.ReserveService;
 import cn.xuzilin.service.RoomService;
@@ -15,6 +16,7 @@ import com.alibaba.fastjson.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -29,10 +31,14 @@ public class CommonControlller {
     @Resource
     private RoomService roomService;
 
+    @Resource
+    private CustomerService customerService;
+
     @PostMapping("/search")
     public MessageVo search(@RequestBody Map<String ,String> map){
         return ResponesUtil.success("success");
     }
+
 
     /**
      * 入住
@@ -42,9 +48,7 @@ public class CommonControlller {
     @PostMapping("/checkIn")
     public MessageVo checkIn(@RequestBody Map<String ,String> map){
         //接收参数
-        String signIdcardNo = map.get("signIdcardNo");
-        String signPhoneNum = map.get("signPhoneNum");
-        String signName = map.get("signName");
+        JSONArray customerInfo = JSONArray.parseArray(map.get("customerInfo"));
         String signCheckOutTime = map.get("signCheckOutTime");
         String selectedRoomId =map.get("selectedRoomId");
 
@@ -53,39 +57,61 @@ public class CommonControlller {
             return ResponesUtil.systemError("该房间今日有预定信息，不能入住！如果是预定顾客入住请到预定管理页面办理入住");
         //入住
         RecordEntity record = new RecordEntity();
-        record.setCustomerName(signName);
-        record.setIdcardNo(signIdcardNo);
-        record.setPhoneNum(signPhoneNum);
+
         record.setCheckOutTime(DateUtil.strToDate(signCheckOutTime));
         record.setCheckInTime(DateUtil.getNowDate());
         record.setStatus(ConstPool.CHECK_IN);
         record.setRoomId(Integer.parseInt(selectedRoomId));
         recordService.insert(record);
+
+        int recordId = record.getId();
+        for (int i = 0 ;i < customerInfo.size();i++){
+            JSONObject jsonObject = customerInfo.getJSONObject(i);
+            String signIdcardNo = jsonObject.getString("signIdcardNo");
+            String signPhoneNum = jsonObject.getString("signPhoneNum");
+            String signName = jsonObject.getString("signName");
+            customerService.saveCustomer(signName,signIdcardNo,signPhoneNum,recordId);
+        }
+
         //更新房间信息
         roomService.checkIn(Integer.parseInt(selectedRoomId));
+        return ResponesUtil.success("success");
+    }
+
+    @GetMapping("/judgeReserve/{roomId}")
+    public MessageVo judgeReserve(@PathVariable("roomId")int roomId){
+        if (!reserveService.canCheckIn(roomId,DateUtil.getNowDate()))
+            return ResponesUtil.systemError("该房间今日有预定信息，如果是预定顾客入住请到预定管理页面办理入住，是否继续办理入住？");
         return ResponesUtil.success("success");
     }
 
     @PostMapping("/checkInReserve")
     public MessageVo checkInReserve(@RequestBody Map<String ,String> map){
         //接收参数
-        String signIdcardNo = map.get("signIdcardNo");
-        String signPhoneNum = map.get("signPhoneNum");
-        String signName = map.get("signName");
+        JSONArray customerInfo = JSONArray.parseArray(map.get("customerInfo"));
         String signCheckOutTime = map.get("signCheckOutTime");
         String selectedRoomId =map.get("selectedRoomId");
         String id = map.get("selectedId");
-
         //入住
         RecordEntity record = new RecordEntity();
-        record.setCustomerName(signName);
-        record.setIdcardNo(signIdcardNo);
-        record.setPhoneNum(signPhoneNum);
+
+
         record.setCheckOutTime(DateUtil.strToDate(signCheckOutTime));
         record.setCheckInTime(DateUtil.getNowDate());
         record.setStatus(ConstPool.CHECK_IN);
         record.setRoomId(Integer.parseInt(selectedRoomId));
         recordService.insert(record);
+
+
+        int recordId = record.getId();
+        for (int i = 0 ;i < customerInfo.size();i++){
+            JSONObject jsonObject = customerInfo.getJSONObject(i);
+            String signIdcardNo = jsonObject.getString("signIdcardNo");
+            String signPhoneNum = jsonObject.getString("signPhoneNum");
+            String signName = jsonObject.getString("signName");
+            customerService.saveCustomer(signName,signIdcardNo,signPhoneNum,recordId);
+        }
+
         //更新房间信息
         roomService.checkIn(Integer.parseInt(selectedRoomId));
         //更新预定信息
@@ -159,6 +185,16 @@ public class CommonControlller {
         return ResponesUtil.success("success",respData);
     }
 
+    /**
+     * 获取入住
+     * @param recordId
+     * @return
+     */
+    @GetMapping("/getCustomerInfo/{recordId}")
+    public MessageVo getCustomerInfo(@PathVariable ("recordId") int recordId){
+        JSONArray respData = customerService.getCustomerInfoJson(recordId);
+        return ResponesUtil.success("success",respData);
+    }
     /**
      * 获取可更换的房间列表
      * @param page

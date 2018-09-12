@@ -8,6 +8,7 @@ let app = new Vue({
         roomId: '',
         customerName: '',
         customerIdNo: '',
+        customerNum:1,
 
         //页面控制参数
         page: 1,
@@ -47,32 +48,82 @@ let app = new Vue({
 
         //换房的参数
         changeList: [],
-
-        list: [],
+        customerInfoList:[
+          {
+            name:'adv',
+            idcardNo:'123412334134',
+            phoneNum:'123123412341'
+          },
+          {
+            name:'adv',
+            idcardNo:'123412334134',
+            phoneNum:'123123412341'
+          }
+        ],
+        list: [
+          {
+            roomId:1,
+            roomType:1,
+            roomStatusName:'已入住',
+            customerName:'aaa',
+            customerIdNo:'12121212121212',
+            checkInTime:'2018-06-14',
+            checkOutTime:'2018-06-14',
+            roomStatus:1
+          },
+          {
+            roomId:2,
+            roomType:1,
+            roomStatusName:'已入住',
+            customerName:'bbb',
+            customerIdNo:'2121212121212',
+            checkInTime:'2018-06-14',
+            checkOutTime:'2018-06-14',
+            roomStatus:0
+          }
+        ],
     },
     methods: {
+        addCustomer(){
+            this.customerNum = this.customerNum+1;
+        },
         reserveInfo(roomId) {
             let reqData = {
                 selectedRoomId: roomId
             };
             this.$http.post('/reserveInfo', reqData).then(response =>{
                 let result = response.body;
-            if (result.status === 200) {
-                let data = result.data;
-                this.reserveRoomId = data.roomId;
-                this.reserveName = data.name;
-                this.reservePhone = data.phone;
-                this.reserveCheckInTime = data.reserveCheckInTime;
-                this.reserveCheckOutTime = data.reserveCheckOutTime;
+                if (result.status === 200) {
+                    let data = result.data;
+                    this.reserveRoomId = data.roomId;
+                    this.reserveName = data.name;
+                    this.reservePhone = data.phone;
+                    this.reserveCheckInTime = data.reserveCheckInTime;
+                    this.reserveCheckOutTime = data.reserveCheckOutTime;
 
-            } else {
-                alert(result.message);
-            }
-        }).
-            catch(resp =>{
+                } else {
+                    alert(result.message);
+                }
+            }).catch(resp =>{
                 alert("请求失败，请稍后重试");
-        });
+            });
             $('#reserveInfoModal').modal();
+
+        },
+        showCustomerInfo(roomId){
+          this.$http.get('/getCustomerInfo/'+roomId).then(response =>{
+            let result = response.body;
+            if (result.status === 200) {
+              let data = result.data;
+              this.customerInfoList = data;
+            }
+            else {
+              alert(result.message);
+            }
+          }).catch(resp =>{
+              alert("请求失败，请稍后重试");
+          });
+          $('#customerInfoModal').modal();
 
         },
         //搜索
@@ -122,58 +173,71 @@ let app = new Vue({
 
         //入住
         showCheckInModal(roomId) {
+
             this.selectedRoomId = roomId;
-            $('#idNoCheck').removeClass('showMes');
-            $('#idNoCheck').addClass('hide');
-            $('#phoneCheck').removeClass('showMes');
-            $('#phoneCheck').addClass('hide');
+            for(let i = 1;i<=this.customerNum;i++){
+              $('#'+i+'idNoCheck').removeClass('showMes');
+              $('#'+i+'idNoCheck').addClass('hide');
+              $('#'+i+'phoneCheck').removeClass('showMes');
+              $('#'+i+'phoneCheck').addClass('hide');
+            }
+
+            this.customerNum = 1;
             this.signIdcardNo='';
             this.signPhoneNum='';
             this.signName='';
             this.signCheckOutTime='';
-            this.$http.get('/reserveInfo/'+this.selectedRoomId).then(response =>{
+            this.$http.get('/judgeReserve/'+this.selectedRoomId).then(response =>{
                 let result = response.body;
-            if (result.status === 200) {
-                let data = result.data;
-                if (data.isNull) {
-                    $('#checkInModal').modal();
-                    return;
-                }
-                this.signName = data.name;
-                this.signPhoneNum = data.phone;
-                this.signCheckOutTime = data.reserveCheckOutTime;
-
-            } else {
-                alert(result.message);
-            }
-        }).
-            catch(resp =>{
-                alert("请求失败，请稍后重试");
-        });
+                    if (result.status === 200) {
+                        $('#checkInModal').modal();
+                        return;
+                    } else {
+                        alert(result.message);
+                    }
+                }).catch(resp =>{
+                        alert("请求失败，请稍后重试");
+                });
             $('#checkInModal').modal();
         },
         checkIn() {
             this.signCheckOutTime = $('#signCheckOutTime').val();
-            if (! (this.signIdcardNo && this.signPhoneNum && this.signName && this.signCheckOutTime)) {
+            let customerInfo = [];
+            for (let i = 1 ;i<=this.customerNum;i++){
+              let signIdcardNo = $('#'+i+'signIdcardNo').val();
+              let signPhoneNum = $('#'+i+'signPhoneNum').val();
+              let signName = $('#'+i+'signName').val();
+              if (! (signIdcardNo && signPhoneNum && signName && this.signCheckOutTime)) {
                 alert("请填写完整信息！");
                 return;
-            }
-            if (this.signIdcardNo.length != 18) {
+              }
+              if (signIdcardNo.length != 18) {
                 alert("请正确的身份证号码！");
-                $('#idNoCheck').removeClass('hide');
-                $('#idNoCheck').addClass('showMes');
+                $('#'+i+'idNoCheck').removeClass('hide');
+                $('#'+i+'idNoCheck').addClass('showMes');
                 return;
-            }
-            if (this.signPhoneNum.length != 11) {
+              }
+              if (signPhoneNum.length != 11) {
                 alert("请正确的手机号码！");
-                $('#phoneCheck').removeClass('hide');
-                $('#phoneCheck').addClass('showMes');
+                $('#'+i+'phoneCheck').removeClass('hide');
+                $('#'+i+'phoneCheck').addClass('showMes');
                 return;
+              }
+              let data = {
+                signIdcardNo: signIdcardNo,
+                signPhoneNum: signPhoneNum,
+                signName: signName,
+              };
+              customerInfo.push(data);
             }
+
+
+
+
+            customerInfo = JSON.stringify(customerInfo);
+            console.log(customerInfo);
             let reqData = {
-                signIdcardNo: this.signIdcardNo,
-                signPhoneNum: this.signPhoneNum,
-                signName: this.signName,
+                customerInfo:customerInfo,
                 signCheckOutTime: this.signCheckOutTime,
                 selectedRoomId: this.selectedRoomId
             };

@@ -6,9 +6,10 @@
     <result column="userName" jdbcType="VARCHAR" property="userName" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="memberCardId" jdbcType="INTEGER" property="memberCardId" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, userName, password, phone
+    id, userName, password, phone, memberCardId
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -22,9 +23,9 @@
   </delete>
   <insert id="insert" parameterType="cn.xuzilin.po.UserEntity">
     insert into user (id, userName, password, 
-      phone)
+      phone, memberCardId)
     values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{phone,jdbcType=VARCHAR})
+      #{phone,jdbcType=VARCHAR}, #{memberCardId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="cn.xuzilin.po.UserEntity">
     insert into user
@@ -41,6 +42,9 @@
       <if test="phone != null">
         phone,
       </if>
+      <if test="memberCardId != null">
+        memberCardId,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -54,6 +58,9 @@
       </if>
       <if test="phone != null">
         #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="memberCardId != null">
+        #{memberCardId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -69,6 +76,9 @@
       <if test="phone != null">
         phone = #{phone,jdbcType=VARCHAR},
       </if>
+      <if test="memberCardId != null">
+        memberCardId = #{memberCardId,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -76,7 +86,8 @@
     update user
     set userName = #{userName,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
-      phone = #{phone,jdbcType=VARCHAR}
+      phone = #{phone,jdbcType=VARCHAR},
+      memberCardId = #{memberCardId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

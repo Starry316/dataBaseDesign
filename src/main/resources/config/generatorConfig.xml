@@ -56,17 +56,8 @@
         <!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名-->
 
 
-        <!--<table schema="general"-->
-               <!--tableName="record" domainObjectName="RecordEntity"-->
-               <!--enableCountByExample="false"-->
-               <!--enableUpdateByExample="false"-->
-               <!--enableDeleteByExample="false"-->
-               <!--enableSelectByExample="false"-->
-               <!--selectByExampleQueryId="false" >-->
-            <!--<property name="useActualColumnNames" value="true"/>-->
-        <!--</table>-->
         <table schema="general"
-               tableName="manager" domainObjectName="ManagerEntity"
+               tableName="record" domainObjectName="RecordEntity"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"
@@ -74,6 +65,15 @@
                selectByExampleQueryId="false" >
             <property name="useActualColumnNames" value="true"/>
         </table>
+        <!--<table schema="general"-->
+               <!--tableName="manager" domainObjectName="ManagerEntity"-->
+               <!--enableCountByExample="false"-->
+               <!--enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false" >-->
+            <!--<property name="useActualColumnNames" value="true"/>-->
+        <!--</table>-->
         <!--<table schema="general"-->
                <!--tableName="user" domainObjectName="UserEntity"-->
                <!--enableCountByExample="false"-->
@@ -92,6 +92,54 @@
                <!--selectByExampleQueryId="false" >-->
             <!--<property name="useActualColumnNames" value="true"/>-->
         <!--</table>-->
+        <!--<table schema="general"-->
+                         <!--tableName="member_card" domainObjectName="MemberCardEntity"-->
+                         <!--enableCountByExample="false"-->
+                         <!--enableUpdateByExample="false"-->
+                         <!--enableDeleteByExample="false"-->
+                         <!--enableSelectByExample="false"-->
+                         <!--selectByExampleQueryId="false" >-->
+            <!--<property name="useActualColumnNames" value="true"/>-->
+        <!--</table>-->
+        <!--<table schema="general"-->
+               <!--tableName="coupon" domainObjectName="CouponEntity"-->
+               <!--enableCountByExample="false"-->
+               <!--enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false" >-->
+            <!--<property name="useActualColumnNames" value="true"/>-->
+        <!--</table>-->
+        <!--<table schema="general"-->
+               <!--tableName="reserve" domainObjectName="ReserveEntity"-->
+               <!--enableCountByExample="false"-->
+               <!--enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false" >-->
+            <!--<property name="useActualColumnNames" value="true"/>-->
+        <!--</table>-->
+
+        <table schema="general"
+               tableName="feedback" domainObjectName="FeedBackEntity"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false" >
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+
+        <table schema="general"
+               tableName="customer" domainObjectName="CustomerEntity"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false" >
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+
 
 
     </context>

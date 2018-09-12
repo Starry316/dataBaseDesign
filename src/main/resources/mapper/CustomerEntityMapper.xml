@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.xuzilin.dao.CustomerEntityMapper">
+  <resultMap id="BaseResultMap" type="cn.xuzilin.po.CustomerEntity">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="idcardNo" jdbcType="VARCHAR" property="idcardNo" />
+    <result column="phoneNum" jdbcType="VARCHAR" property="phoneNum" />
+    <result column="recordId" jdbcType="INTEGER" property="recordId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, idcardNo, phoneNum, recordId
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from customer
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from customer
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.xuzilin.po.CustomerEntity">
+    insert into customer (id, name, idcardNo, 
+      phoneNum, recordId)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{idcardNo,jdbcType=VARCHAR}, 
+      #{phoneNum,jdbcType=VARCHAR}, #{recordId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.xuzilin.po.CustomerEntity">
+    insert into customer
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="idcardNo != null">
+        idcardNo,
+      </if>
+      <if test="phoneNum != null">
+        phoneNum,
+      </if>
+      <if test="recordId != null">
+        recordId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="idcardNo != null">
+        #{idcardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNum != null">
+        #{phoneNum,jdbcType=VARCHAR},
+      </if>
+      <if test="recordId != null">
+        #{recordId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.xuzilin.po.CustomerEntity">
+    update customer
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="idcardNo != null">
+        idcardNo = #{idcardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNum != null">
+        phoneNum = #{phoneNum,jdbcType=VARCHAR},
+      </if>
+      <if test="recordId != null">
+        recordId = #{recordId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.xuzilin.po.CustomerEntity">
+    update customer
+    set name = #{name,jdbcType=VARCHAR},
+      idcardNo = #{idcardNo,jdbcType=VARCHAR},
+      phoneNum = #{phoneNum,jdbcType=VARCHAR},
+      recordId = #{recordId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
