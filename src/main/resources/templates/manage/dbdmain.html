@@ -28,6 +28,9 @@
       <ul class="nav navbar-nav">
         <li role="presentation" class="active"><a href="/manage/main">入住管理</a></li>
         <li role="presentation"><a href="/manage/reserve">预定管理 <span class="badge badge-warning">{{reserveNum}}</span></a></li>
+        <li role="presentation"><a href="/manage/member">会员管理</a></li>
+        <li role="presentation"><a href="/manage/record">入住记录</a></li>
+        <li role="presentation"><a href="/manage/feedback">反馈处理</a></li>
       </ul>
     </div>
   </nav>
@@ -294,16 +297,16 @@
                 <tr>
                   <th>入住日期</th>
                   <th>预计退房日期</th>
+                  <th>房型</th>
                   <th>消费金额</th>
-                  <th>押金</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                  <td>2018-08-02</td>
-                  <td>2018-08-05</td>
-                  <td>1000.12</td>
-                  <td>200.00</td>
+                  <td>{{dCheckInTime}}</td>
+                  <td>{{dCheckOutTime}}</td>
+                  <td>{{dType}}</td>
+                  <td>{{dPayment}}</td>
                 </tr>
                 </tbody>
               </table>
@@ -461,6 +464,6 @@
   <p>Project For Database Curriculum Design</p>
   <p> <a href="http://www.miitbeian.gov.cn">鲁ICP备18016956号</a></p>
 </div>
-<script src="/js/dbdmain.js"></script>
+<script src="/js/dbmain.js"></script>
 </body>
 </html>

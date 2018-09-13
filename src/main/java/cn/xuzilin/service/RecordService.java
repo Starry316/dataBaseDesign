@@ -9,7 +9,10 @@ import cn.xuzilin.po.RoomEntity;
 import cn.xuzilin.utils.BigDecimalUtil;
 import cn.xuzilin.utils.DateUtil;
 import cn.xuzilin.utils.SwitchUtil;
+import cn.xuzilin.vo.DelayInfoVo;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.annotation.JsonAlias;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -75,11 +78,10 @@ public class RecordService {
 
         newRoomRecord.setCheckInTime(DateUtil.getNowDate());
         newRoomRecord.setCheckOutTime(oldRoomRecord.getCheckOutTime());
-
-        customerService.copyCustomerInfo(newRoomRecord.getId(),oldRoomRecord.getId());
         newRoomRecord.setStatus(ConstPool.CHECK_IN);
         newRoomRecord.setRoomId(newRoomId);
         recordMapper.insertSelective(newRoomRecord);
+        customerService.copyCustomerInfo(newRoomRecord.getId(),oldRoomRecord.getId());
         oldRoomRecord.setStatus(ConstPool.CHECK_OUT);
         recordMapper.updateByPrimaryKeySelective(oldRoomRecord);
         roomService.checkOut(oldRoomId);
@@ -106,6 +108,20 @@ public class RecordService {
         data.put("discount",discount);
         data.put("actualPayment",BigDecimalUtil.subtract(BigDecimalUtil.multiply(paymentPerDay,days),discount));
         return data;
+    }
+
+    public JSONObject getDelayInfo(int roomId){
+        DelayInfoVo delayInfoVo = recordMapper.getDelayInfoByRoomId(roomId);
+        if (delayInfoVo != null){
+            delayInfoVo.setPayment(
+                    BigDecimalUtil.getPayment(delayInfoVo.getCheckInTime(),
+                            delayInfoVo.getCheckOutTime(),
+                            delayInfoVo.getRoomType())
+            );
+            return JSON.parseObject(JSON.toJSONString(delayInfoVo));
+        }
+
+        return null;
     }
 
 

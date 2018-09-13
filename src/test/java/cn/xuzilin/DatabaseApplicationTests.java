@@ -4,6 +4,7 @@ import cn.xuzilin.consts.ConstPool;
 import cn.xuzilin.dao.RoomEntityMapper;
 import cn.xuzilin.po.ReserveEntity;
 import cn.xuzilin.po.RoomEntity;
+import cn.xuzilin.service.RecordService;
 import cn.xuzilin.service.ReserveService;
 import cn.xuzilin.service.RoomService;
 import cn.xuzilin.utils.DateUtil;
@@ -25,9 +26,12 @@ public class DatabaseApplicationTests {
 	private ReserveService reserveService;
 	@Resource
 	private RoomService roomService;
+	@Resource
+	private RecordService recordService;
 	@Test
 	public void contextLoads() {
-		//System.out.println(roomService.getDataList(0,"","","","121","","")) ;
+		recordService.changeRoom(305,105);
+		//System.out.println(recordService.getDelayInfo(106)) ;
 	}
 
 }

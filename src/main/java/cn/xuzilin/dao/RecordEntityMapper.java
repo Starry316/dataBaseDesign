@@ -1,6 +1,7 @@
 package cn.xuzilin.dao;
 
 import cn.xuzilin.po.RecordEntity;
+import cn.xuzilin.vo.DelayInfoVo;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
@@ -28,4 +29,9 @@ public interface RecordEntityMapper {
             "from record " +
             "where status = 1")
     List<RecordEntity> getAll();
+
+    @Select("select roomId,roomType,checkInTime,checkOutTime " +
+            "from room natural join record " +
+            "where status != -1 and roomId = #{roomId}")
+    DelayInfoVo getDelayInfoByRoomId(@Param("roomId") int roomId);
 }

@@ -185,6 +185,12 @@ public class CommonControlller {
         return ResponesUtil.success("success",respData);
     }
 
+    @GetMapping("/getDelayInfo/{roomId}")
+    public MessageVo getDelayInfo(@PathVariable("roomId") int roomId){
+        JSONObject respData = recordService.getDelayInfo(roomId);
+        return ResponesUtil.success("success",respData);
+    }
+
     /**
      * 获取入住
      * @param recordId

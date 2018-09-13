@@ -24,7 +24,12 @@ public class BigDecimalUtil {
         BigDecimal B = new BigDecimal(b.toString());
         return a.multiply(B).setScale(2,BigDecimal.ROUND_HALF_DOWN);
     }
+
     public static BigDecimal create(Double a){
         return new BigDecimal(a.toString()).setScale(2,BigDecimal.ROUND_HALF_DOWN);
+    }
+    public static BigDecimal getPayment(String checkInTime,String checkOutTime,byte type){
+        Long days = DateUtil.subDateByDay(checkOutTime,checkInTime);
+        return multiply(SwitchUtil.switchTpyePayment(type),days);
     }
 }

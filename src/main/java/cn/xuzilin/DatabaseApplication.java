@@ -10,7 +10,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @ServletComponentScan
 @EnableScheduling
-@MapperScan(basePackageClasses = RoomEntityMapper.class)
+//@MapperScan(basePackageClasses = RoomEntityMapper.class)
+@MapperScan(basePackages = {"cn.xuzilin.dao"})
 public class DatabaseApplication {
 
 	public static void main(String[] args) {
