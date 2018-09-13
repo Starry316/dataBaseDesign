@@ -42,6 +42,12 @@ let app = new Vue({
         paymentTotal: '',
         discount: '',
         actualPayment: '',
+        memberCardId:'',
+        memberCardPass:'',
+        useMemberCard:false,
+        useCoupon:false,
+        couponCode:'',
+
 
         //展示预定信息用参数
         reserveRoomId: '',
@@ -88,6 +94,30 @@ let app = new Vue({
         ],
     },
     methods: {
+        checkMemberCard(i){
+            let res = $('#useMemberCard'+i).is(':checked');
+            this.useMemberCard = res;
+            if (res){
+                $('#memberCardInput'+i).removeClass("starry-hide");
+                //$('#memberCardPass').removeClass("starry-hide");
+                // $('#memberCardInput').removeAttr("disabled");
+            }
+            else{
+                $('#memberCardInput'+i).addClass("starry-hide");
+                // $('#memberCardPass').addClass("starry-hide");
+                //$('#memberCardInput').attr("disabled",true);
+            }
+        },
+        checkCoupon(i){
+            let res = $('#useCoupon'+i).is(':checked');
+            this.useCoupon = res;
+            if (res){
+                $('#couponInput'+i).removeClass("starry-hide");
+            }
+            else{
+                $('#couponInput'+i).addClass("starry-hide");
+            }
+        },
         addCustomer(){
             this.customerNum = this.customerNum+1;
         },
@@ -337,6 +367,11 @@ let app = new Vue({
         checkOut() {
             let reqData = {
                 selectedRoomId: this.selectedRoomId,
+                useMemberCard: this.useMemberCard,
+                memberCardId:this.memberCardId,
+                password:this.memberCardPass,
+                useCoupon:this.useCoupon,
+                couponCode:this.couponCode
             }
             this.$http.post('/checkOut', reqData).then(response =>{
                 let result = response.body;
