@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -30,8 +31,8 @@ public class DatabaseApplicationTests {
 	private RecordService recordService;
 	@Test
 	public void contextLoads() {
-		recordService.changeRoom(305,105);
-		//System.out.println(recordService.getDelayInfo(106)) ;
+		//recordService.changeRoom(305,105);
+		System.out.println(new Date()) ;
 	}
 
 }

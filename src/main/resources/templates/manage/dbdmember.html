@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>预定管理</title>
+  <link href="/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="/css/font-awesome.css" rel="stylesheet" />
+  <link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+  <link href="/css/dbdmain.css" rel="stylesheet" />
+  <script src="/js/jquery-3.2.1.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  <script src="/js/bootstrap-datetimepicker.js"></script>
+  <script src="/js/vue.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/js/vue-resource.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<div id="main" class="starry-wrapper">
+  <!--导航条开始-->
+  <nav class="navbar navbar-collapse navbar-inverse  navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand ">宾馆后台管理系统</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <ul class="nav navbar-nav">
+          <li role="presentation" ><a href="/manage/main">入住管理</a></li>
+          <li role="presentation"><a href="/manage/reserve">预定管理 <span class="badge badge-warning">{{reserveNum}}</span></a></li>
+          <li role="presentation" class="active"><a href="/manage/member">会员管理</a></li>
+          <li role="presentation"><a href="/manage/record">入住记录</a></li>
+          <li role="presentation"><a href="/manage/feedback">反馈处理</a></li>
+        </ul>
+      </ul>
+    </div>
+  </nav>
+  <!--表格开始-->
+  <div class="container-fluid" style="margin-top: 60px">
+    <h3><strong>会员管理</strong></h3>
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        筛选
+      </div>
+      <form class=".form-inline">
+        <div class="form-group not-block" style="padding: 10px">
+          会员卡级别：
+          <select id="level" class="form-control" v-model="level">
+            <option value="1" selected="">银卡</option>
+            <option value="2" selected="">金卡</option>
+            <option value="3" selected="">钻石</option>
+          </select>
+        </div>
+        <div class="form-group not-block">
+          会员卡号：
+          <input id="memberCardId" class="form-control"  placeholder="会员卡号" v-model="memberCardId"/>
+        </div>
+        <div class="form-group not-block">
+          会员姓名：
+          <input id="memberName" class="form-control"  placeholder="会员姓名" v-model="memberName"/>
+        </div>
+        <div class="form-group not-block">
+          会员手机号：
+          <input id="memberPhone" class="form-control"  placeholder="会员手机号" v-model="memberPhone"/>
+        </div>
+        <div class=" not-block">
+          <button id="earch" class="btn btn-primary not-block" type="button" v-on:click="getData">搜索 </button>
+          <button class="btn btn-default" type="button" style="margin-left: 30px" v-on:click="showCreateModal">办理新卡</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+
+    <div>
+      <table class="table table-striped table-bordered table-hover">
+        <thead>
+        <tr>
+          <th class="center" >会员卡号</th>
+          <th class="center">会员级别</th>
+          <th class="center">会员姓名</th>
+          <th class="center" >会员手机号</th>
+          <th class="center" >会员身份证号</th>
+          <th class="center">累计消费金额</th>
+          <th class="center">卡内余额</th>
+          <th class="center">充值</th>
+          <th class="center">注销</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="item in list">
+          <td>{{item.id}}</td>
+          <td>{{item.type}}</td>
+          <td>{{item.name}}</td>
+          <td>{{item.phoneNum}}</td>
+          <td>{{item.idcardNo}}</td>
+          <td>{{item.consumption}}</td>
+          <td>{{item.balance}}</td>
+          <td> <button class="btn btn-warning" @click="showRechargeModal(item.id)">充值</button> </td>
+          <td> <button class="btn btn-danger" @click="showCancelModal(item.id)">注销</button> </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!--表格结束-->
+  <!--充值弹窗-->
+  <div class="modal fade" id="rechargeModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">请填写充值金额</h3>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>充值金额：</label>
+            <input class="form-control" placeholder="充值金额" v-model="money" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" @click="recharge">确认充值</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--充值弹窗结束-->
+  <!--注销弹窗-->
+  <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">注意！</h3>
+        </div>
+        <div class="modal-body">
+          <div class="alert alert-danger" role="alert">
+            注销前将用户卡内余额应返还给用户。
+            注销后该用户记录将被删除，无法恢复，请再次确认是否注销。
+            是否确认注销该用户？
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" @click="cancel">确认</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--注销弹窗结束-->
+  <!--开卡弹窗-->
+  <div class="modal fade" id="createModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">请填写充值金额</h3>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>会员姓名：</label>
+            <input class="form-control" placeholder="会员姓名" v-model="name" />
+          </div>
+          <div class="form-group">
+            <label>会员手机号：</label>
+            <input class="form-control" placeholder="会员手机号" v-model="phone" />
+          </div>
+          <div class="form-group">
+            <label>会员身份证号：</label>
+            <input class="form-control" placeholder="会员身份证号" v-model="idcardNo" />
+          </div>
+          <div class="form-group">
+            <label>会员密码：</label>
+            <input class="form-control" type="password" placeholder="会员密码" v-model="password" />
+          </div>
+          <div class="form-group">
+            <label>首充金额：</label>
+            <input class="form-control" placeholder="首充金额" v-model="firstMoney" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" @click="create">确认充值</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--开卡弹窗结束-->
+
+  <!--页码-->
+  <div class="container-fluid starry-middle">
+    <nav aria-label="Page navigation" class=" starry-middle">
+      <ul class="pagination pagination-lg">
+        <li @click="frontPage" id="frontBtn">
+          <a href="#" aria-label="Previous" >
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li v-for="i in maxPage" v-bind:id =i+'page'><a href="#" @click="turnTo(i)">{{i}}</a></li>
+        <li @click="nextPage" id="nextBtn">
+          <a href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <!--页码-->
+</div>
+<div class="container-fluid starry-middle starry-footer">
+  <p>@Author 徐子林 <a href="https://github.com/Starry316/dataBaseDesign">@GitHub</a></p>
+  <p>Project For Database Curriculum Design</p>
+  <p> <a href="http://www.miitbeian.gov.cn">鲁ICP备18016956号</a></p>
+</div>
+
+<script src="/js/dbmember.js"></script>
+
+</body>
+</html>
