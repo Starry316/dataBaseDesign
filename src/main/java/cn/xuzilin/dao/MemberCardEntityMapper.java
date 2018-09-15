@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public interface MemberCardEntityMapper {
     int deleteByPrimaryKey(Integer id);
@@ -25,6 +26,29 @@ public interface MemberCardEntityMapper {
             "form member_card" +
             "where id = #{id}")
     String selectPassById(@Param("id") int id);
+
+    @Select("select * " +
+            "form member_card " +
+            "where (#{idFlag} = false or id = #{id}) " +
+            "and (#{levelFlag} = false or type = #{level}) " +
+            "and (#{nameFlag} = false or name = #{name}) " +
+            "and (#{phoneFlag} = false or phoneNum = #{phone}) ")
+    List<MemberCardEntity> getData(@Param("id") int id, @Param("idFlag") boolean idFlag,
+                 @Param("level") byte level, @Param("levelFlag") boolean levelFlag,
+                 @Param("name") String name, @Param("nameFlag") boolean nameFlag,
+                 @Param("phone") String phone, @Param("phoneFlag") boolean phoneFlag);
+    @Select("select count(*) " +
+            "form member_card " +
+            "where (#{idFlag} = false or id = #{id}) " +
+            "and (#{levelFlag} = false or type = #{level}) " +
+            "and (#{nameFlag} = false or name = #{name}) " +
+            "and (#{phoneFlag} = false or phoneNum = #{phone}) ")
+    int  getCount(@Param("id") int id, @Param("idFlag") boolean idFlag,
+                                   @Param("level") byte level, @Param("levelFlag") boolean levelFlag,
+                                   @Param("name") String name, @Param("nameFlag") boolean nameFlag,
+                                   @Param("phone") String phone, @Param("phoneFlag") boolean phoneFlag);
+
+
 
     @Update("update member_card" +
             "set balance = balance + #{money}" +

@@ -1,6 +1,7 @@
 package cn.xuzilin;
 
 import cn.xuzilin.consts.ConstPool;
+import cn.xuzilin.dao.MemberCardEntityMapper;
 import cn.xuzilin.dao.RoomEntityMapper;
 import cn.xuzilin.po.ReserveEntity;
 import cn.xuzilin.po.RoomEntity;
@@ -29,6 +30,8 @@ public class DatabaseApplicationTests {
 	private RoomService roomService;
 	@Resource
 	private RecordService recordService;
+	@Resource
+	private MemberCardEntityMapper memberCardEntityMapper;
 	@Test
 	public void contextLoads() {
 		//recordService.changeRoom(305,105);
