@@ -29,6 +29,17 @@ public class SwitchUtil {
             default:return BigDecimalUtil.create(399.99);
         }
     }
+    public static String switchMemberCardTypeName(byte memberType ){
+        switch (memberType){
+            case ConstPool.SILVER:
+                return "银卡会员";
+            case ConstPool.GOLD:
+                return "金卡会员";
+            case ConstPool.DIAMOND:
+                return "钻石卡会员";
+            default:return "";
+        }
+    }
     public static double switchMemberDiscount(byte memberType){
         switch (memberType){
             case ConstPool.SILVER:

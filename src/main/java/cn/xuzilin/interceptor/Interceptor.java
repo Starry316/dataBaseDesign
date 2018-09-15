@@ -34,7 +34,7 @@ public class Interceptor implements HandlerInterceptor {
          */
         ManagerEntity manager = SessionUtil.get(request,"managerToken", ManagerEntity.class);
         if (manager == null){
-            request.getRequestDispatcher("/manage/login").forward(request, response);
+            request.getRequestDispatcher("/manager/login").forward(request, response);
             return false;
         }
         return true;

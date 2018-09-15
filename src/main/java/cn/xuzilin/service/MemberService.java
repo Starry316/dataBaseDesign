@@ -4,6 +4,7 @@ import cn.xuzilin.consts.ConstPool;
 import cn.xuzilin.dao.MemberCardEntityMapper;
 import cn.xuzilin.po.MemberCardEntity;
 import cn.xuzilin.utils.PasswordUtil;
+import cn.xuzilin.utils.SwitchUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.PageHelper;
@@ -68,8 +69,11 @@ public class MemberService {
             type = Byte.parseByte(level);
             levelFlag = true;
         }
-//        PageHelper.startPage(page,15);
+        PageHelper.startPage(page,15);
         List<MemberCardEntity> list = memberCardMapper.getData(memberId,idFlag,type,levelFlag,name,nameFlag,phone,phoneFlag);
+        for(MemberCardEntity i : list){
+            i.setTypeName(SwitchUtil.switchMemberCardTypeName(i.getType()));
+        }
         JSONArray data = JSON.parseArray(JSON.toJSONString(list));
         return data;
     }

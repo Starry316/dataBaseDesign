@@ -21,7 +21,6 @@ public class WebSecurityConfig extends WebMvcConfigurerAdapter {
     public void addInterceptors(InterceptorRegistry registry) {
         InterceptorRegistration addInterceptor = registry.addInterceptor(getInterceptor());
         // 拦截配置
-        addInterceptor.addPathPatterns("/manage/main");
-        addInterceptor.addPathPatterns("/manage/reserve");
+        addInterceptor.addPathPatterns("/manage/**");
     }
 }
