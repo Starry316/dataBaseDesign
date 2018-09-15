@@ -22,13 +22,13 @@ public interface MemberCardEntityMapper {
 
     int updateByPrimaryKey(MemberCardEntity record);
 
-    @Select("select password" +
-            "form member_card" +
+    @Select("select password " +
+            "from member_card " +
             "where id = #{id}")
     String selectPassById(@Param("id") int id);
 
     @Select("select * " +
-            "form member_card " +
+            "from member_card " +
             "where (#{idFlag} = false or id = #{id}) " +
             "and (#{levelFlag} = false or type = #{level}) " +
             "and (#{nameFlag} = false or name = #{name}) " +
@@ -38,7 +38,7 @@ public interface MemberCardEntityMapper {
                  @Param("name") String name, @Param("nameFlag") boolean nameFlag,
                  @Param("phone") String phone, @Param("phoneFlag") boolean phoneFlag);
     @Select("select count(*) " +
-            "form member_card " +
+            "from member_card " +
             "where (#{idFlag} = false or id = #{id}) " +
             "and (#{levelFlag} = false or type = #{level}) " +
             "and (#{nameFlag} = false or name = #{name}) " +
@@ -50,13 +50,11 @@ public interface MemberCardEntityMapper {
 
 
 
-    @Update("update member_card" +
-            "set balance = balance + #{money}" +
-            "where id = #{id}")
+    @Update("update member_card set balance = balance + #{money} where id = #{id}")
     int addMoneyById(@Param("money")BigDecimal money,@Param("id")int id );
 
-    @Select("select balance" +
-            "form member_card" +
+    @Select("select balance " +
+            "from member_card " +
             "where id = #{id}")
     BigDecimal selectBalanceById(@Param("id") int id);
 }

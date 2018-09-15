@@ -67,6 +67,10 @@ let app = new Vue({
                 let result = resp.body;
             if (result.status === 200) {
                 alert('创建成功,卡号为：'+result.data);
+                this.getData();
+                this.getReserveNum();
+                this.getMaxPage();
+                $("#createModal").modal();
             }
             else alert(result.message);
         }).

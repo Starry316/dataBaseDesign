@@ -5,6 +5,7 @@ import cn.xuzilin.dao.MemberCardEntityMapper;
 import cn.xuzilin.dao.RoomEntityMapper;
 import cn.xuzilin.po.ReserveEntity;
 import cn.xuzilin.po.RoomEntity;
+import cn.xuzilin.service.MemberService;
 import cn.xuzilin.service.RecordService;
 import cn.xuzilin.service.ReserveService;
 import cn.xuzilin.service.RoomService;
@@ -31,11 +32,12 @@ public class DatabaseApplicationTests {
 	@Resource
 	private RecordService recordService;
 	@Resource
-	private MemberCardEntityMapper memberCardEntityMapper;
+	private MemberService memberService;
 	@Test
 	public void contextLoads() {
 		//recordService.changeRoom(305,105);
-		System.out.println(new Date()) ;
+		memberService.recharge(1,ConstPool.DIAMONDCONSUMPTION);
+		//System.out.println(memberService.getData(1,"","","","")) ;
 	}
 
 }

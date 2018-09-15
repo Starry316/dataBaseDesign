@@ -54,21 +54,21 @@ public class MemberService {
         boolean levelFlag = false;
         int memberId = 0 ;
         byte type = 0 ;
-        if (id !=null){
+        if (!id.equals("")){
             memberId = Integer.parseInt(id);
             idFlag = true;
         }
-        if (name!=null){
+        if (!name.equals("")){
             nameFlag = true;
         }
-        if (phone!=null){
+        if (!phone.equals("")){
             phoneFlag = true;
         }
-        if (level!=null){
+        if (!level.equals("")){
             type = Byte.parseByte(level);
             levelFlag = true;
         }
-        PageHelper.startPage(page,15);
+//        PageHelper.startPage(page,15);
         List<MemberCardEntity> list = memberCardMapper.getData(memberId,idFlag,type,levelFlag,name,nameFlag,phone,phoneFlag);
         JSONArray data = JSON.parseArray(JSON.toJSONString(list));
         return data;
@@ -81,17 +81,17 @@ public class MemberService {
         boolean levelFlag = false;
         int memberId = 0 ;
         byte type = 0 ;
-        if (id !=null){
+        if (!id.equals("")){
             memberId = Integer.parseInt(id);
             idFlag = true;
         }
-        if (name!=null){
+        if (!name.equals("")){
             nameFlag = true;
         }
-        if (phone!=null){
+        if (!phone.equals("")){
             phoneFlag = true;
         }
-        if (level!=null){
+        if (!level.equals("")){
             type = Byte.parseByte(level);
             levelFlag = true;
         }
