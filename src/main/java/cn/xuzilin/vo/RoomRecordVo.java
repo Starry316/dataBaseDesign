@@ -6,6 +6,7 @@ public class RoomRecordVo {
     private Integer id;
 
     private Integer roomId;
+    private Integer memberCardId;
 
     private String customerName;
 
@@ -18,11 +19,27 @@ public class RoomRecordVo {
     private Byte status;
 
     private String phoneNum;
-
+    private String roomTypeName;
     private String sex;
     private Byte roomType;
 
     private Byte checkIn;
+
+    public String getRoomTypeName() {
+        return roomTypeName;
+    }
+
+    public void setRoomTypeName(String roomTypeName) {
+        this.roomTypeName = roomTypeName;
+    }
+
+    public Integer getMemberCardId() {
+        return memberCardId;
+    }
+
+    public void setMemberCardId(Integer memberCardId) {
+        this.memberCardId = memberCardId;
+    }
 
     public Date getCheckInTime() {
         return checkInTime;

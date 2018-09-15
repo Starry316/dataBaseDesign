@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>预定管理</title>
+  <title>会员管理</title>
   <link href="/css/bootstrap.min.css" rel="stylesheet" />
   <link href="/css/font-awesome.css" rel="stylesheet" />
   <link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
@@ -69,7 +69,7 @@
     </div>
   </div>
 
-
+<div class="container-fluid">
     <div>
       <table class="table table-striped table-bordered table-hover">
         <thead>
@@ -100,6 +100,26 @@
         </tbody>
       </table>
     </div>
+  <!--页码-->
+  <div class="container-fluid starry-middle">
+    <nav aria-label="Page navigation" class=" starry-middle">
+      <ul class="pagination pagination-lg">
+        <li @click="frontPage" id="frontBtn">
+          <a href="#" aria-label="Previous" >
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li v-for="i in maxPage" v-bind:id =i+'page'><a href="#" @click="turnTo(i)">{{i}}</a></li>
+        <li @click="nextPage" id="nextBtn">
+          <a href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <!--页码-->
+</div>
   <!--表格结束-->
   <!--充值弹窗-->
   <div class="modal fade" id="rechargeModal" tabindex="-1" role="dialog">
@@ -181,26 +201,6 @@
     </div>
   </div>
   <!--开卡弹窗结束-->
-
-  <!--页码-->
-  <div class="container-fluid starry-middle">
-    <nav aria-label="Page navigation" class=" starry-middle">
-      <ul class="pagination pagination-lg">
-        <li @click="frontPage" id="frontBtn">
-          <a href="#" aria-label="Previous" >
-            <span aria-hidden="true">&laquo;</span>
-          </a>
-        </li>
-        <li v-for="i in maxPage" v-bind:id =i+'page'><a href="#" @click="turnTo(i)">{{i}}</a></li>
-        <li @click="nextPage" id="nextBtn">
-          <a href="#" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
-  </div>
-  <!--页码-->
 </div>
 <div class="container-fluid starry-middle starry-footer">
   <p>@Author 徐子林 <a href="https://github.com/Starry316/dataBaseDesign">@GitHub</a></p>
