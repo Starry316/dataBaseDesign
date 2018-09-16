@@ -134,7 +134,7 @@ public class RecordService {
         return JSONArray.parseArray(JSON.toJSONString(list));
     }
     public int getRecordMaxPage(String roomId,String checkInTime ,String checkOutTime ,String customerName){
-        judgeNull(roomId); judgeNull(checkInTime); judgeNull(checkOutTime); judgeNull(customerName);
+        roomId = judgeNull(roomId); checkInTime = judgeNull(checkInTime);checkOutTime =  judgeNull(checkOutTime); customerName = judgeNull(customerName);
         int res = recordMapper.getRecordMaxPage(roomId,checkInTime,checkOutTime,customerName);
         return (res+14)/15;
     }
