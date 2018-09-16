@@ -10,9 +10,12 @@ import cn.xuzilin.utils.BigDecimalUtil;
 import cn.xuzilin.utils.DateUtil;
 import cn.xuzilin.utils.SwitchUtil;
 import cn.xuzilin.vo.DelayInfoVo;
+import cn.xuzilin.vo.RecordVo;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.annotation.JsonAlias;
+import com.github.pagehelper.PageHelper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -124,7 +127,23 @@ public class RecordService {
         return null;
     }
 
+    public JSONArray getCompleteRecord(String page ,String roomId,String checkInTime ,String checkOutTime ,String customerName){
+        roomId = judgeNull(roomId); checkInTime = judgeNull(checkInTime);checkOutTime =  judgeNull(checkOutTime); customerName = judgeNull(customerName);
+        PageHelper.startPage(Integer.parseInt(page),15);
+        List<RecordVo> list = recordMapper.getCompleteRecord(roomId,checkInTime,checkOutTime,customerName);
+        return JSONArray.parseArray(JSON.toJSONString(list));
+    }
+    public int getRecordMaxPage(String roomId,String checkInTime ,String checkOutTime ,String customerName){
+        judgeNull(roomId); judgeNull(checkInTime); judgeNull(checkOutTime); judgeNull(customerName);
+        int res = recordMapper.getRecordMaxPage(roomId,checkInTime,checkOutTime,customerName);
+        return (res+14)/15;
+    }
 
+    private String judgeNull(String s){
+        if (s==null||s.length()<1)
+            return null;
+        return s;
+    }
     public RecordEntity getByRoomId(int roomId){
         return recordMapper.getByRoomId(roomId);
     }

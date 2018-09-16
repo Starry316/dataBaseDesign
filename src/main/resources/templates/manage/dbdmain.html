@@ -50,11 +50,11 @@
                         </div>
                         <div class="form-group not-block">
                             入住日期：
-                            <input id="checkInTime" name="checkInTime"  class="form-control" style="width: 10rem" placeholder="入住日期" data-bv-field="startDate" />
+                            <input id="checkInTime" name="checkInTime"  type="date" class="form-control" placeholder="入住日期" data-bv-field="startDate" />
                         </div>
                         <div class="form-group not-block">
                             离店日期：
-                            <input id="checkOutTime" name="checkOutTime" class="form-control" style="width: 10rem" placeholder="离店日期" data-bv-field="checkOutTime" />
+                            <input id="checkOutTime" name="checkOutTime" type="date" class="form-control"  placeholder="离店日期" data-bv-field="checkOutTime" />
                         </div>
                         <div class="form-group not-block">
                             房间号：
@@ -215,7 +215,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>预计退房时间：</label>
-                        <input id="signCheckOutTime" name="signCheckOutTime" class="form-control" data-bv-field="signCheckOutTime" placeholder="退房时间" />
+                        <input id="signCheckOutTime" type="date" name="signCheckOutTime" class="form-control" data-bv-field="signCheckOutTime" placeholder="退房时间" />
                     </div>
                     <div v-for="i in customerNum">
                         <div class="form-group">
@@ -314,7 +314,7 @@
                     </div>
                     <div class="form-group">
                         <label for="delayCheckOutTime">续住到</label>
-                        <input id="delayCheckOutTime"  name="delayCheckOutTime" class="form-control" data-bv-field="delayCheckOutTime" placeholder="退房时间" />
+                        <input id="delayCheckOutTime" type="date" name="delayCheckOutTime" class="form-control" data-bv-field="delayCheckOutTime" placeholder="退房时间" />
                     </div>
                 </div>
                 <div class="modal-footer">

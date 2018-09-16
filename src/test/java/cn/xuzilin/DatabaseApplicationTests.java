@@ -36,8 +36,7 @@ public class DatabaseApplicationTests {
 	@Test
 	public void contextLoads() {
 		//recordService.changeRoom(305,105);
-		memberService.recharge(1,ConstPool.DIAMONDCONSUMPTION);
-		//System.out.println(memberService.getData(1,"","","","")) ;
+		System.out.println(recordService.getCompleteRecord(1+"",null,null,null,null)) ;
 	}
 
 }

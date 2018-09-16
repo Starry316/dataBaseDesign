@@ -2,16 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>入住记录</title>
-  <link href="css/bootstrap.min.css" rel="stylesheet" />
-  <link href="css/font-awesome.css" rel="stylesheet" />
-  <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
-  <link href="css/dbdmain.css" rel="stylesheet" />
-  <script src="js/jquery-3.2.1.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/bootstrap-datetimepicker.js"></script>
-  <script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
-  <script src="js/vue-resource.js" type="text/javascript" charset="utf-8"></script>
+  <title>预定管理</title>
+  <link href="/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="/css/font-awesome.css" rel="stylesheet" />
+  <link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+  <link href="/css/dbdmain.css" rel="stylesheet" />
+  <link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+  <script src="/js/jquery-3.2.1.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  <script src="/js/bootstrap-datetimepicker.js"></script>
+  <script src="/js/bootstrap-datetimepicker.js"></script>
+  <script src="/js/vue.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/js/vue-resource.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
 <div id="main" class="starry-wrapper">
@@ -49,8 +51,12 @@
           <input id="memberName" class="form-control"  placeholder="顾客姓名" v-model="customerName"/>
         </div>
         <div class="form-group not-block">
-          <label>顾客手机号：</label>
-          <input id="memberPhone" class="form-control"  placeholder="顾客手机号" v-model="customerPhone"/>
+          <label>入住时间：</label>
+          <input id="checkInTime" class="form-control" type="date" placeholder="入住时间" v-model="checkInTime" data-bv-field="checkOutTime"/>
+        </div>
+        <div class="form-group not-block">
+          <label>退房时间：</label>
+          <input id="checkOutTime" class="form-control" type="date" placeholder="退房时间" v-model="checkOutTime" data-bv-field="checkOutTime"/>
         </div>
         <div class=" not-block">
           <button id="earch" class="btn btn-primary not-block" type="button" v-on:click="getData">搜索 </button>
@@ -79,8 +85,8 @@
           <td>{{item.checkInTime}}</td>
           <td>{{item.checkOutTime}}</td>
           <td>{{item.payment}}</td>
-          <td>{{item.roomType}}</td>
-          <td><a href="javascript:void(0);" @click="showCustomerInfo(item.recordId)" >查看</a> </td>
+          <td>{{item.typeName}}</td>
+          <td><a href="javascript:void(0);" @click="showCustomerInfo(item.id)" >查看</a> </td>
           <td>{{item.memberCardId}}</td>
         </tr>
         </tbody>
@@ -136,7 +142,7 @@
           </table>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" @click="checkIn">确认</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal">确认</button>
           <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
         </div>
       </div>
@@ -152,7 +158,7 @@
   <p> <a href="http://www.miitbeian.gov.cn">鲁ICP备18016956号</a></p>
 </div>
 
-<script src="js/dbrecord.js"></script>
+<script src="/js/dbrecord.js"></script>
 
 </body>
 </html>
