@@ -1,13 +1,19 @@
-package cn.xuzilin.po;
+package cn.xuzilin.vo;
+
+import cn.xuzilin.utils.SwitchUtil;
 
 import java.util.Date;
 
-public class FeedBackEntity {
+public class FeedbackVo {
     private Integer id;
 
     private Integer userId;
 
     private Byte status;
+
+    private String statusName;
+
+
 
     private Integer managerId;
 
@@ -15,7 +21,9 @@ public class FeedBackEntity {
 
     private Date dealTime;
 
-    private String content;
+    private String managerName;
+
+    private String userName;
 
     public Integer getId() {
         return id;
@@ -24,7 +32,13 @@ public class FeedBackEntity {
     public void setId(Integer id) {
         this.id = id;
     }
+    public String getStatusName() {
+        return statusName;
+    }
 
+    public void setStatusName(String statusName) {
+        this.statusName = statusName;
+    }
     public Integer getUserId() {
         return userId;
     }
@@ -39,6 +53,7 @@ public class FeedBackEntity {
 
     public void setStatus(Byte status) {
         this.status = status;
+        setStatusName(SwitchUtil.switchFeedbackStatusName(status));
     }
 
     public Integer getManagerId() {
@@ -65,11 +80,19 @@ public class FeedBackEntity {
         this.dealTime = dealTime;
     }
 
-    public String getContent() {
-        return content;
+    public String getManagerName() {
+        return managerName;
     }
 
-    public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
+    public void setManagerName(String managerName) {
+        this.managerName = managerName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

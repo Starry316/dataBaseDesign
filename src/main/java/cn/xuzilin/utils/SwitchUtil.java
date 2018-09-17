@@ -48,9 +48,18 @@ public class SwitchUtil {
                 return 0.8;
             case ConstPool.DIAMOND:
                 return 0.7;
-            case ConstPool.DIAO:
-                return 0.6;
             default:return 1;
         }
+    }
+    public static String switchFeedbackStatusName(byte status){
+        switch (status){
+            case ConstPool.FEEDBACK_COMPLETE:
+                return "已处理";
+            case ConstPool.FEEDBACK_DEALING:
+                return "处理中";
+            case ConstPool.FEEDBACK_SUBMITED:
+                return "未处理";
+        }
+        return "未处理";
     }
 }

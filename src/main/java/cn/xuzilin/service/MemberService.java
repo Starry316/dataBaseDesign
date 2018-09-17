@@ -107,7 +107,7 @@ public class MemberService {
         return memberCardMapper.deleteByPrimaryKey(id);
     }
     private byte judgeLevel(BigDecimal totalConsumption){
-        if (totalConsumption.compareTo(ConstPool.DIAOCONSUMPTION) > 0)return ConstPool.DIAO;
+//        if (totalConsumption.compareTo(ConstPool.DIAOCONSUMPTION) > 0)return ConstPool.DIAO;
         if (totalConsumption.compareTo(ConstPool.DIAMONDCONSUMPTION) > 0)return ConstPool.DIAMOND;
         if (totalConsumption.compareTo(ConstPool.GOLDCONSUMPTION) > 0)return ConstPool.GOLD;
         return ConstPool.SILVER;

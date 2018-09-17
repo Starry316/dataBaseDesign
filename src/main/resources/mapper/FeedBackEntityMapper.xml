@@ -6,12 +6,14 @@
     <result column="userId" jdbcType="INTEGER" property="userId" />
     <result column="status" jdbcType="TINYINT" property="status" />
     <result column="managerId" jdbcType="INTEGER" property="managerId" />
+    <result column="submitTime" jdbcType="TIMESTAMP" property="submitTime" />
+    <result column="dealTime" jdbcType="TIMESTAMP" property="dealTime" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.xuzilin.po.FeedBackEntity">
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, userId, status, managerId
+    id, userId, status, managerId, submitTime, dealTime
   </sql>
   <sql id="Blob_Column_List">
     content
@@ -30,9 +32,11 @@
   </delete>
   <insert id="insert" parameterType="cn.xuzilin.po.FeedBackEntity">
     insert into feedback (id, userId, status, 
-      managerId, content)
+      managerId, submitTime, dealTime, 
+      content)
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, 
-      #{managerId,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR})
+      #{managerId,jdbcType=INTEGER}, #{submitTime,jdbcType=TIMESTAMP}, #{dealTime,jdbcType=TIMESTAMP}, 
+      #{content,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.xuzilin.po.FeedBackEntity">
     insert into feedback
@@ -48,6 +52,12 @@
       </if>
       <if test="managerId != null">
         managerId,
+      </if>
+      <if test="submitTime != null">
+        submitTime,
+      </if>
+      <if test="dealTime != null">
+        dealTime,
       </if>
       <if test="content != null">
         content,
@@ -66,6 +76,12 @@
       <if test="managerId != null">
         #{managerId,jdbcType=INTEGER},
       </if>
+      <if test="submitTime != null">
+        #{submitTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dealTime != null">
+        #{dealTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="content != null">
         #{content,jdbcType=LONGVARCHAR},
       </if>
@@ -83,6 +99,12 @@
       <if test="managerId != null">
         managerId = #{managerId,jdbcType=INTEGER},
       </if>
+      <if test="submitTime != null">
+        submitTime = #{submitTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dealTime != null">
+        dealTime = #{dealTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="content != null">
         content = #{content,jdbcType=LONGVARCHAR},
       </if>
@@ -94,6 +116,8 @@
     set userId = #{userId,jdbcType=INTEGER},
       status = #{status,jdbcType=TINYINT},
       managerId = #{managerId,jdbcType=INTEGER},
+      submitTime = #{submitTime,jdbcType=TIMESTAMP},
+      dealTime = #{dealTime,jdbcType=TIMESTAMP},
       content = #{content,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -101,7 +125,9 @@
     update feedback
     set userId = #{userId,jdbcType=INTEGER},
       status = #{status,jdbcType=TINYINT},
-      managerId = #{managerId,jdbcType=INTEGER}
+      managerId = #{managerId,jdbcType=INTEGER},
+      submitTime = #{submitTime,jdbcType=TIMESTAMP},
+      dealTime = #{dealTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

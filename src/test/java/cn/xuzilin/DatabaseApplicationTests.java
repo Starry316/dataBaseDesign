@@ -5,10 +5,7 @@ import cn.xuzilin.dao.MemberCardEntityMapper;
 import cn.xuzilin.dao.RoomEntityMapper;
 import cn.xuzilin.po.ReserveEntity;
 import cn.xuzilin.po.RoomEntity;
-import cn.xuzilin.service.MemberService;
-import cn.xuzilin.service.RecordService;
-import cn.xuzilin.service.ReserveService;
-import cn.xuzilin.service.RoomService;
+import cn.xuzilin.service.*;
 import cn.xuzilin.utils.DateUtil;
 import cn.xuzilin.utils.PasswordUtil;
 import org.junit.Test;
@@ -33,10 +30,12 @@ public class DatabaseApplicationTests {
 	private RecordService recordService;
 	@Resource
 	private MemberService memberService;
+	@Resource
+	private FeedbackService feedbackService;
 	@Test
 	public void contextLoads() {
 		//recordService.changeRoom(305,105);
-		System.out.println(recordService.getCompleteRecord(1+"",null,null,null,null)) ;
+//		System.out.println(feedbackService.getData((byte)3)) ;
 	}
 
 }

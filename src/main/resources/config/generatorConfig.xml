@@ -101,15 +101,15 @@
                          <!--selectByExampleQueryId="false" >-->
             <!--<property name="useActualColumnNames" value="true"/>-->
         <!--</table>-->
-        <!--<table schema="general"-->
-               <!--tableName="coupon" domainObjectName="CouponEntity"-->
-               <!--enableCountByExample="false"-->
-               <!--enableUpdateByExample="false"-->
-               <!--enableDeleteByExample="false"-->
-               <!--enableSelectByExample="false"-->
-               <!--selectByExampleQueryId="false" >-->
-            <!--<property name="useActualColumnNames" value="true"/>-->
-        <!--</table>-->
+        <table schema="general"
+               tableName="coupon" domainObjectName="CouponEntity"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false" >
+            <property name="useActualColumnNames" value="true"/>
+        </table>
         <!--<table schema="general"-->
                <!--tableName="reserve" domainObjectName="ReserveEntity"-->
                <!--enableCountByExample="false"-->
@@ -130,15 +130,15 @@
             <property name="useActualColumnNames" value="true"/>
         </table>
 
-        <table schema="general"
-               tableName="customer" domainObjectName="CustomerEntity"
-               enableCountByExample="false"
-               enableUpdateByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               selectByExampleQueryId="false" >
-            <property name="useActualColumnNames" value="true"/>
-        </table>
+        <!--<table schema="general"-->
+               <!--tableName="customer" domainObjectName="CustomerEntity"-->
+               <!--enableCountByExample="false"-->
+               <!--enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false" >-->
+            <!--<property name="useActualColumnNames" value="true"/>-->
+        <!--</table>-->
 
 
 

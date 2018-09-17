@@ -43,10 +43,19 @@ public class ConstPool {
     public final static byte GOLD = 2;
     //钻石会员
     public final static byte DIAMOND = 3;
-    //狂拽炫酷吊炸天会员
-    public final static byte DIAO = 4;
+//    //狂拽炫酷吊炸天会员
+//    public final static byte DIAO = 4;
     //会员各阶段花费金额
     public final static BigDecimal GOLDCONSUMPTION = new BigDecimal("1000");
     public final static BigDecimal DIAMONDCONSUMPTION = new BigDecimal("5000");
     public final static BigDecimal DIAOCONSUMPTION = new BigDecimal("10000");
+
+
+    /**
+     * 反馈状态
+     */
+    public final static byte FEEDBACK_SUBMITED= 0;
+    public final static byte FEEDBACK_DEALING= 1;
+    public final static byte FEEDBACK_COMPLETE= 2;
+
 }

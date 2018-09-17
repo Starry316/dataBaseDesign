@@ -7,10 +7,11 @@
     <result column="recordId" jdbcType="INTEGER" property="recordId" />
     <result column="status" jdbcType="TINYINT" property="status" />
     <result column="expiry" jdbcType="DATE" property="expiry" />
-    <result column="discount" jdbcType="DOUBLE" property="discount" />
+    <result column="discount" jdbcType="DECIMAL" property="discount" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, userId, recordId, status, expiry, discount
+    id, userId, recordId, status, expiry, discount, code
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -24,11 +25,11 @@
   </delete>
   <insert id="insert" parameterType="cn.xuzilin.po.CouponEntity">
     insert into coupon (id, userId, recordId, 
-      status, expiry, discount
-      )
+      status, expiry, discount, 
+      code)
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{recordId,jdbcType=INTEGER}, 
-      #{status,jdbcType=TINYINT}, #{expiry,jdbcType=DATE}, #{discount,jdbcType=DOUBLE}
-      )
+      #{status,jdbcType=TINYINT}, #{expiry,jdbcType=DATE}, #{discount,jdbcType=DECIMAL}, 
+      #{code,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.xuzilin.po.CouponEntity">
     insert into coupon
@@ -51,6 +52,9 @@
       <if test="discount != null">
         discount,
       </if>
+      <if test="code != null">
+        code,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -69,7 +73,10 @@
         #{expiry,jdbcType=DATE},
       </if>
       <if test="discount != null">
-        #{discount,jdbcType=DOUBLE},
+        #{discount,jdbcType=DECIMAL},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -89,7 +96,10 @@
         expiry = #{expiry,jdbcType=DATE},
       </if>
       <if test="discount != null">
-        discount = #{discount,jdbcType=DOUBLE},
+        discount = #{discount,jdbcType=DECIMAL},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -100,7 +110,8 @@
       recordId = #{recordId,jdbcType=INTEGER},
       status = #{status,jdbcType=TINYINT},
       expiry = #{expiry,jdbcType=DATE},
-      discount = #{discount,jdbcType=DOUBLE}
+      discount = #{discount,jdbcType=DECIMAL},
+      code = #{code,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

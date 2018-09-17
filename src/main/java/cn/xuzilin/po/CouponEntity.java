@@ -1,5 +1,6 @@
 package cn.xuzilin.po;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class CouponEntity {
@@ -13,7 +14,9 @@ public class CouponEntity {
 
     private Date expiry;
 
-    private Double discount;
+    private BigDecimal discount;
+
+    private String code;
 
     public Integer getId() {
         return id;
@@ -55,11 +58,19 @@ public class CouponEntity {
         this.expiry = expiry;
     }
 
-    public Double getDiscount() {
+    public BigDecimal getDiscount() {
         return discount;
     }
 
-    public void setDiscount(Double discount) {
+    public void setDiscount(BigDecimal discount) {
         this.discount = discount;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code == null ? null : code.trim();
     }
 }

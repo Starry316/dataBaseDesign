@@ -15,7 +15,7 @@
     id, roomId, checkInTime, checkOutTime, status, discount, payment, memberCardId
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from record
     where id = #{id,jdbcType=INTEGER}
@@ -25,11 +25,11 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="cn.xuzilin.po.RecordEntity" keyProperty="id" useGeneratedKeys="true">
-    insert into record (id, roomId, checkInTime, 
-      checkOutTime, status, discount, 
+    insert into record (id, roomId, checkInTime,
+      checkOutTime, status, discount,
       payment, memberCardId)
-    values (#{id,jdbcType=INTEGER}, #{roomId,jdbcType=INTEGER}, #{checkInTime,jdbcType=DATE}, 
-      #{checkOutTime,jdbcType=DATE}, #{status,jdbcType=TINYINT}, #{discount,jdbcType=DECIMAL}, 
+    values (#{id,jdbcType=INTEGER}, #{roomId,jdbcType=INTEGER}, #{checkInTime,jdbcType=DATE},
+      #{checkOutTime,jdbcType=DATE}, #{status,jdbcType=TINYINT}, #{discount,jdbcType=DECIMAL},
       #{payment,jdbcType=DECIMAL}, #{memberCardId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="cn.xuzilin.po.RecordEntity" keyProperty="id" useGeneratedKeys="true">
