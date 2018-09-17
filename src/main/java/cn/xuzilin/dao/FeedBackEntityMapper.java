@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import java.util.Date;
 import java.util.List;
 
 public interface FeedBackEntityMapper {
@@ -25,6 +26,12 @@ public interface FeedBackEntityMapper {
 
     @Update("update feedback set status = #{status} where id = #{id}")
     int updateStatusById(@Param("status") byte status,@Param("id") int id);
+
+    @Update("update feedback set status = #{status} , dealTime = #{dealTime} ,managerId = #{managerId} where id = #{id}")
+    int updateStatusDealTimeById(@Param("status") byte status, @Param("id") int id, @Param("managerId") int managerId,@Param("dealTime")Date dealTime);
+
+    @Update("update feedback set managerId = #{managerId} where id = #{id}")
+    int updateManagerById(@Param("managerId") int managerId,@Param("id") int id);
 
     @Select("select content from feedback where id = #{id}")
     String getContentById(@Param("id") int id);
