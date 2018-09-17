@@ -42,6 +42,7 @@ public class DateUtil {
         return subDateByDay(currentTime,oldDate);
     }
     public static String formatDate(Date date){
+        if (date ==null)return null;
         return dateToStr(date);
     }
 }

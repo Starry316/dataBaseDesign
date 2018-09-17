@@ -1,5 +1,6 @@
 package cn.xuzilin.vo;
 
+import cn.xuzilin.utils.DateUtil;
 import cn.xuzilin.utils.SwitchUtil;
 
 import java.util.Date;
@@ -64,16 +65,16 @@ public class FeedbackVo {
         this.managerId = managerId;
     }
 
-    public Date getSubmitTime() {
-        return submitTime;
+    public String getSubmitTime() {
+        return DateUtil.formatDate(submitTime);
     }
 
     public void setSubmitTime(Date submitTime) {
         this.submitTime = submitTime;
     }
 
-    public Date getDealTime() {
-        return dealTime;
+    public String getDealTime() {
+        return DateUtil.formatDate(dealTime);
     }
 
     public void setDealTime(Date dealTime) {
