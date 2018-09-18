@@ -3,11 +3,16 @@ package cn.xuzilin.service;
 import cn.xuzilin.consts.ConstPool;
 import cn.xuzilin.dao.CouponEntityMapper;
 import cn.xuzilin.po.CouponEntity;
+import cn.xuzilin.po.UserEntity;
+import cn.xuzilin.utils.SessionUtil;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -42,6 +47,12 @@ public class CouponService {
 
     public boolean validate(String code){
         return couponMapper.selectCountByCode(code) == 1;
+    }
+
+    public JSONArray getCouponListByUserId(int userId){
+        List<CouponEntity> list = couponMapper.selectByUserId(userId);
+        JSONArray data = JSON.parseArray(JSON.toJSONString(list));
+        return data;
     }
     private static String createRandomCode(){
         String chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";

@@ -12,7 +12,7 @@ let app = new Vue({
         memberCardId:'',
         memberName:'',
         memberPhone:'',
-        level:'',
+        level:'0',
 
         //开卡数据
         name: '',
@@ -66,11 +66,11 @@ let app = new Vue({
             this.$http.post('/createMemberCard', reqData).then(resp =>{
                 let result = resp.body;
             if (result.status === 200) {
+                $("#createModal").modal();
                 alert('创建成功,卡号为：'+result.data);
                 this.getData();
                 this.getReserveNum();
                 this.getMaxPage();
-                $("#createModal").modal();
             }
             else alert(result.message);
         }).
@@ -89,6 +89,7 @@ let app = new Vue({
             this.$http.post('/deleteCard', reqData).then(resp =>{
                 let result = resp.body;
             if (result.status === 200) {
+                $("#cancelModal").modal();
                 alert('注销成功');
             } else alert(result.message);
         }).
@@ -107,6 +108,7 @@ let app = new Vue({
             this.$http.post('/recharge', reqData).then(resp =>{
                 let result = resp.body;
             if (result.status === 200) {
+                $("#rechargeModal").modal();
                 alert('充值成功，目前余额为:'+result.data+'元');
             } else alert(result.message);
         }).

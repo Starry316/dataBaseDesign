@@ -35,7 +35,8 @@ public class DatabaseApplicationTests {
 	@Test
 	public void contextLoads() {
 		//recordService.changeRoom(305,105);
-		System.out.println(memberService.validate(4,"123456")) ;
+		String delayCheckOutTime = "2018-9-19";
+		System.out.println(DateUtil.getNowDate().after(DateUtil.strToDate(delayCheckOutTime))) ;
 	}
 
 }

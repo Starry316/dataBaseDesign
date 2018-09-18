@@ -69,7 +69,7 @@ public class MemberService {
         if (!phone.equals("")){
             phoneFlag = true;
         }
-        if (!level.equals("")){
+        if (!level.equals("")&&!level.equals("0")){
             type = Byte.parseByte(level);
             levelFlag = true;
         }
@@ -103,7 +103,7 @@ public class MemberService {
         if (!phone.equals("")){
             phoneFlag = true;
         }
-        if (!level.equals("")){
+        if (!level.equals("")&&!level.equals("0")){
             type = Byte.parseByte(level);
             levelFlag = true;
         }

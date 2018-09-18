@@ -56,6 +56,7 @@ public class RecordService {
     public boolean delay(int roomId,String delayCheckOutTime){
         RecordEntity record = getByRoomId(roomId);
         if (record == null) return false;
+        if (DateUtil.getNowDate().after(DateUtil.strToDate(delayCheckOutTime)))return false;
         record.setCheckOutTime(DateUtil.strToDate(delayCheckOutTime));
         update(record);
         return true;

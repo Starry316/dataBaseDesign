@@ -131,7 +131,7 @@ public class CommonControlller {
         result = recordService.delay(Integer.parseInt(selectedRoomId),delayCheckOutTime);
         if (result)
             return ResponesUtil.success("success");
-        return ResponesUtil.systemError("更新出错，请稍后重试");
+        return ResponesUtil.systemError("更新出错，续住时间不能比当前时间早");
     }
 
     /**
