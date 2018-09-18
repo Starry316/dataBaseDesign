@@ -22,7 +22,7 @@ body{
 .modal-content {
     padding: 20px;
 }
-.hide {
+.starry-hide {
     display: none;
 }
 .showMes {

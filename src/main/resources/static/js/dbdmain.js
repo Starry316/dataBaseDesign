@@ -323,7 +323,7 @@ let app = new Vue({
                 let result = response.body;
             if (result.status === 200) {
                 this.getData();
-                alert("退房成功！");
+                alert(result.data);
             } else {
                 this.getData();
                 alert(result.message);

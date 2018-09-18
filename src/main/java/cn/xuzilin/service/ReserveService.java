@@ -41,7 +41,7 @@ public class ReserveService {
     }
 
     public JSONArray getReserveDataList(int page){
-        PageHelper.startPage(page, 20);
+        PageHelper.startPage(page, 15);
         List<ReserveEntity> list = reserveMapper.getAllByStatus(ConstPool.ACTIVE);
         JSONArray res = new JSONArray();
         for (ReserveEntity i:list){

@@ -80,7 +80,7 @@ public class RoomService {
             else flags[i]=false;
         }
         if (params[1].equals("3")) flags[1]=true;
-        PageHelper.startPage(page, 20);
+        PageHelper.startPage(page, 15);
         List<RoomRecordVo> list = roomMapper.getData(Integer.parseInt(params[0]),flags[0],
                 Byte.parseByte(params[1]),flags[1],
                 params[2],flags[2],
@@ -135,7 +135,7 @@ public class RoomService {
                 params[4],flags[4],
                 params[5],flags[5]
         );
-        int res = (count+19) / 20;
+        int res = (count+14) / 15;
         return res;
     }
 

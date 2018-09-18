@@ -58,4 +58,11 @@ public class ConstPool {
     public final static byte FEEDBACK_DEALING= 1;
     public final static byte FEEDBACK_COMPLETE= 2;
 
+
+    /**
+     * 优惠券状态
+     */
+    public final static byte COUPON_UNUSED= 0;
+    public final static byte COUPON_USED= 1;
+    public final static byte COUPON_OUTOFDATE= 2;
 }

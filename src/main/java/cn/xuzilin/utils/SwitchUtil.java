@@ -40,15 +40,15 @@ public class SwitchUtil {
             default:return "";
         }
     }
-    public static double switchMemberDiscount(byte memberType){
+    public static BigDecimal switchMemberDiscount(byte memberType){
         switch (memberType){
             case ConstPool.SILVER:
-                return 0.9;
+                return new BigDecimal("0.9");
             case ConstPool.GOLD:
-                return 0.8;
+                return new BigDecimal("0.8");
             case ConstPool.DIAMOND:
-                return 0.7;
-            default:return 1;
+                return new BigDecimal("0.7");
+            default:return new BigDecimal("1");
         }
     }
     public static String switchFeedbackStatusName(byte status){

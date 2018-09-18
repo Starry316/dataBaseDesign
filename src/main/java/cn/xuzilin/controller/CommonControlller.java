@@ -92,16 +92,15 @@ public class CommonControlller {
         String signCheckOutTime = map.get("signCheckOutTime");
         String selectedRoomId =map.get("selectedRoomId");
         String id = map.get("selectedId");
+
         //入住
         RecordEntity record = new RecordEntity();
-
 
         record.setCheckOutTime(DateUtil.strToDate(signCheckOutTime));
         record.setCheckInTime(DateUtil.getNowDate());
         record.setStatus(ConstPool.CHECK_IN);
         record.setRoomId(Integer.parseInt(selectedRoomId));
         recordService.insert(record);
-
 
         int recordId = record.getId();
         for (int i = 0 ;i < customerInfo.size();i++){
@@ -114,7 +113,6 @@ public class CommonControlller {
 
         //更新房间信息
         roomService.checkIn(Integer.parseInt(selectedRoomId));
-        //更新预定信息
         reserveService.updateComplete(Integer.parseInt(id));
         return ResponesUtil.success("success");
     }
@@ -144,13 +142,15 @@ public class CommonControlller {
     @PostMapping("/checkOut")
     public MessageVo checkOut(@RequestBody Map<String ,String> map){
         String selectedRoomId =map.get("selectedRoomId");
-        try {
-            recordService.checkOut(Integer.parseInt(selectedRoomId));
-        }catch (Exception e){
-            e.printStackTrace();
-            return ResponesUtil.systemError("退房出错，请稍后重试");
-        }
-        return ResponesUtil.success("success");
+        String useMemberCardStr = map.get("useMemberCard");
+        String memberCardId = map.get("memberCardId");
+        String password = map.get("password");
+        String useCouponStr = map.get("useCoupon");
+        String couponCode = map.get("couponCode");
+        Boolean useMemberCard = Boolean.parseBoolean(useMemberCardStr);
+        Boolean useCoupon = Boolean.parseBoolean(useCouponStr);
+        String message = recordService.checkOut(Integer.parseInt(selectedRoomId),useMemberCard,memberCardId,password,useCoupon,couponCode);
+        return ResponesUtil.success("success",message);
     }
 
     /**

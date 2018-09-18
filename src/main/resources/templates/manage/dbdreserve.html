@@ -63,7 +63,7 @@
           <td>{{item.checkInTime}}</td>
           <td>{{item.checkOutTime}}</td>
           <td> <button class="btn btn-danger" @click="cancel(item.roomId,item.id)">取消</button> </td>
-          <td> <button class="btn btn-primary" @click="showCheckModal(item.id)">入住</button> </td>
+          <td> <button class="btn btn-primary" @click="showCheckInModal(item.id,item.roomId)">入住</button> </td>
         </tr>
         </tbody>
       </table>
@@ -79,25 +79,29 @@
         </div>
         <div class="modal-body">
           <div class="form-group">
-            <label>顾客姓名：</label>
-            <input id="signName" class="form-control" placeholder="顾客姓名" v-model="signName" />
-          </div>
-          <div class="form-group">
-            <label>身份证号码：</label>
-            <input id="signIdcardNo" class="form-control" placeholder="身份证号码" v-model="signIdcardNo" />
-          </div>
-          <div class="alert alert-danger hide" role="alert" id="idNoCheck">请输入正确的身份证号码</div>
-          <div class="form-group">
-            <label>手机号码：</label>
-            <input id="signPhoneNum" class="form-control" placeholder="手机号码" v-model="signPhoneNum" />
-          </div>
-          <div class="alert alert-danger hide" role="alert" id="phoneCheck">请输入正确的手机号码</div>
-          <div class="form-group">
             <label>预计退房时间：</label>
             <input id="signCheckOutTime" name="signCheckOutTime" class="form-control" data-bv-field="signCheckOutTime" placeholder="退房时间" />
           </div>
+          <div v-for="i in customerNum">
+            <div class="form-group">
+              <label>顾客姓名：</label>
+              <input v-bind:id =i+'signName' class="form-control" placeholder="顾客姓名"/>
+            </div>
+            <div class="form-group">
+              <label>身份证号码：</label>
+              <input v-bind:id =i+'signIdcardNo' class="form-control" placeholder="身份证号码"/>
+            </div>
+            <div class="alert alert-danger hide" role="alert" v-bind:id =i+"idNoCheck">请输入正确的身份证号码</div>
+            <div class="form-group">
+              <label>手机号码：</label>
+              <input v-bind:id =i+'signPhoneNum' class="form-control" placeholder="手机号码"/>
+            </div>
+            <div class="alert alert-danger hide" role="alert" v-bind:id =i+"phoneCheck">请输入正确的手机号码</div>
+            <hr>
+          </div>
         </div>
         <div class="modal-footer">
+          <button type="button" class="btn btn-default" @click="addCustomer">添加新顾客</button>
           <button type="button" class="btn btn-primary" @click="checkIn">确认</button>
           <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
         </div>
@@ -105,23 +109,64 @@
     </div>
   </div>
   <!--入住弹窗结束-->
+
+
+
+
+
+
+  <!--&lt;!&ndash;入住弹窗&ndash;&gt;-->
+  <!--<div class="modal fade" id="checkInModal" tabindex="-1" role="dialog">-->
+  <!--<div class="modal-dialog" role="document">-->
+  <!--<div class="modal-content">-->
+  <!--<div class="modal-header">-->
+  <!--<h3 class="modal-title">请登记入住顾客的基本信息</h3>-->
+  <!--</div>-->
+  <!--<div class="modal-body">-->
+  <!--<div class="form-group">-->
+  <!--<label>顾客姓名：</label>-->
+  <!--<input id="signName" class="form-control" placeholder="顾客姓名" v-model="signName" />-->
+  <!--</div>-->
+  <!--<div class="form-group">-->
+  <!--<label>身份证号码：</label>-->
+  <!--<input id="signIdcardNo" class="form-control" placeholder="身份证号码" v-model="signIdcardNo" />-->
+  <!--</div>-->
+  <!--<div class="alert alert-danger hide" role="alert" id="idNoCheck">请输入正确的身份证号码</div>-->
+  <!--<div class="form-group">-->
+  <!--<label>手机号码：</label>-->
+  <!--<input id="signPhoneNum" class="form-control" placeholder="手机号码" v-model="signPhoneNum" />-->
+  <!--</div>-->
+  <!--<div class="alert alert-danger hide" role="alert" id="phoneCheck">请输入正确的手机号码</div>-->
+  <!--<div class="form-group">-->
+  <!--<label>预计退房时间：</label>-->
+  <!--<input id="signCheckOutTime" name="signCheckOutTime" class="form-control" data-bv-field="signCheckOutTime" placeholder="退房时间" />-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--<div class="modal-footer">-->
+  <!--<button type="button" class="btn btn-primary" @click="checkIn">确认</button>-->
+  <!--<button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--&lt;!&ndash;入住弹窗结束&ndash;&gt;-->
   <!--页码-->
   <div class="container-fluid starry-middle">
-        <nav aria-label="Page navigation" class=" starry-middle">
-          <ul class="pagination pagination-lg">
-            <li @click="frontPage" id="frontBtn">
-              <a href="#" aria-label="Previous" >
-                <span aria-hidden="true">&laquo;</span>
-              </a>
-            </li>
-            <li v-for="i in maxPage" v-bind:id =i+'page'><a href="#" @click="turnTo(i)">{{i}}</a></li>
-            <li @click="nextPage" id="nextBtn">
-              <a href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
+    <nav aria-label="Page navigation" class=" starry-middle">
+      <ul class="pagination pagination-lg">
+        <li @click="frontPage" id="frontBtn">
+          <a href="#" aria-label="Previous" >
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li v-for="i in maxPage" v-bind:id =i+'page'><a href="#" @click="turnTo(i)">{{i}}</a></li>
+        <li @click="nextPage" id="nextBtn">
+          <a href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
   </div>
 </div>
 <div class="container-fluid starry-middle starry-footer">
@@ -129,6 +174,6 @@
   <p>Project For Database Curriculum Design</p>
   <p> <a href="http://www.miitbeian.gov.cn">鲁ICP备18016956号</a></p>
 </div>
-<script src="/js/dbdreserve.js"></script>
+<script src="/js/dbreserve.js"></script>
 </body>
 </html>

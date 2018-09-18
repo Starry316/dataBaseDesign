@@ -35,7 +35,7 @@ public class DatabaseApplicationTests {
 	@Test
 	public void contextLoads() {
 		//recordService.changeRoom(305,105);
-//		System.out.println(feedbackService.getData((byte)3)) ;
+		System.out.println(memberService.validate(4,"123456")) ;
 	}
 
 }

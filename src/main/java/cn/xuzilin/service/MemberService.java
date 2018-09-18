@@ -25,6 +25,10 @@ public class MemberService {
         return memberCard.getId();
     }
 
+    public int update (MemberCardEntity memberCardEntity){
+        return memberCardMapper.updateByPrimaryKeySelective(memberCardEntity);
+    }
+
     /**
      * 充值，返回充值后余额
      * @param id
@@ -78,6 +82,10 @@ public class MemberService {
         return data;
     }
 
+    public MemberCardEntity getMemberCardById(int id){
+        return memberCardMapper.selectByPrimaryKey(id);
+    }
+
     public int getMaxPages(int page,String id , String name ,String phone ,String level){
         boolean idFlag = false;
         boolean nameFlag = false;
@@ -106,7 +114,7 @@ public class MemberService {
     public int deleteCard(int id){
         return memberCardMapper.deleteByPrimaryKey(id);
     }
-    private byte judgeLevel(BigDecimal totalConsumption){
+    public byte judgeLevel(BigDecimal totalConsumption){
 //        if (totalConsumption.compareTo(ConstPool.DIAOCONSUMPTION) > 0)return ConstPool.DIAO;
         if (totalConsumption.compareTo(ConstPool.DIAMONDCONSUMPTION) > 0)return ConstPool.DIAMOND;
         if (totalConsumption.compareTo(ConstPool.GOLDCONSUMPTION) > 0)return ConstPool.GOLD;
@@ -123,4 +131,5 @@ public class MemberService {
         memberCardEntity.setPassword(PasswordUtil.createHash(password));
         return memberCardEntity;
     }
+
 }

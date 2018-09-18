@@ -34,7 +34,7 @@ public class ReverseController {
     }
     @GetMapping("/getReverseMaxPage")
     public MessageVo getReverseMaxPage(){
-        int maxpage = (reserveService.getCount()+19)/20;
+        int maxpage = (reserveService.getCount()+14)/15;
         return ResponesUtil.success("success",maxpage);
     }
 //    /**
