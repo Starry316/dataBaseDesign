@@ -387,6 +387,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-default" @click="reflashCheckOutInfo">刷新价格</button>
                     <button type="button" class="btn btn-danger" @click="checkOut">退房</button>
                     <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
                 </div>
@@ -458,6 +459,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
+                            <button type="button" class="btn btn-default" @click="reflashCheckOutInfo">刷新价格</button>
                             <button type="button" class="btn btn-primary" @click="changePage">下一步</button>
                             <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
                         </div>
@@ -514,6 +516,6 @@
     <p>Project For Database Curriculum Design</p>
     <p> <a href="http://www.miitbeian.gov.cn">鲁ICP备18016956号</a></p>
 </div>
-<script src="/js/dbmain.js"></script>
+<script src="/js/dbdmain.js"></script>
 </body>
 </html>

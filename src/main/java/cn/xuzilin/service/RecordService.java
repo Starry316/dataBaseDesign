@@ -103,7 +103,7 @@ public class RecordService {
             //更新余额
             memberCard.setBalance(memberCard.getBalance().subtract(paymentTotal));
             //更新消费总额
-            memberCard.setConsumption(memberCard.getBalance().add(paymentTotal));
+            memberCard.setConsumption(memberCard.getConsumption().add(paymentTotal));
             message+="会员卡级别为: " +SwitchUtil.switchMemberCardTypeName(memberCard.getType());
             //更新会员卡等级
             memberCard.setType(memberService.judgeLevel(memberCard.getConsumption()));
@@ -151,20 +151,33 @@ public class RecordService {
      * @param roomId
      * @return
      */
-    public JSONObject getCheckOutInfo(int roomId){
+    public JSONObject getCheckOutInfo(int roomId,boolean useMemberCard,String memberCardId,boolean useCoupon,String couponCode){
         JSONObject data = new JSONObject();
         RecordEntity record = recordMapper.getByRoomId(roomId);
         RoomEntity room = roomMapper.selectByPrimaryKey(roomId);
         BigDecimal paymentPerDay = SwitchUtil.switchTpyePayment(room.getRoomType());
         long days = DateUtil.subDateByDay(DateUtil.getNowDateStr(),DateUtil.dateToStr(record.getCheckInTime()));
-        //todo 折扣
-        double discount = 59.00;
         data.put("quitCheckInTime",DateUtil.formatDate(record.getCheckInTime()));
         data.put("quitCheckOutTime",DateUtil.getNowDateStr());
         data.put("paymentPerDay",paymentPerDay);
-        data.put("paymentTotal",BigDecimalUtil.multiply(paymentPerDay,days));
-        data.put("discount",discount);
-        data.put("actualPayment",BigDecimalUtil.subtract(BigDecimalUtil.multiply(paymentPerDay,days),discount));
+        BigDecimal paymentTotal = BigDecimalUtil.multiply(paymentPerDay,days);
+        data.put("paymentTotal", paymentTotal);
+        BigDecimal actualPayment = paymentTotal;
+        if (useMemberCard&&memberCardId!=null){
+            MemberCardEntity memberCard = memberService.getMemberCardById(Integer.parseInt(memberCardId));
+            if (memberCard!=null){
+                actualPayment = actualPayment.multiply(SwitchUtil.switchMemberDiscount(memberCard.getType()))
+                        .setScale(2,BigDecimal.ROUND_HALF_DOWN);
+            }
+        }
+        if (useCoupon&&couponCode!=null){
+            BigDecimal couponDiscount = couponService.getDiscountByCode(couponCode);
+            if (couponDiscount!=null){
+                actualPayment = actualPayment.subtract(couponDiscount).setScale(2,BigDecimal.ROUND_HALF_DOWN);
+            }
+        }
+        data.put("discount",paymentTotal.subtract(actualPayment).setScale(2,BigDecimal.ROUND_HALF_DOWN));
+        data.put("actualPayment",actualPayment);
         return data;
     }
 

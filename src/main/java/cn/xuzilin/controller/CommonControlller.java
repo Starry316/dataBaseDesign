@@ -251,7 +251,14 @@ public class CommonControlller {
     @PostMapping("/checkOutInfo")
     public MessageVo checkOutInfo(@RequestBody Map<String,String>map){
         int roomId = Integer.parseInt(map.get("selectedRoomId"));
-        JSONObject respData = recordService.getCheckOutInfo(roomId);
+        String useMemberCardStr = map.get("useMemberCard");
+        String memberCardId = map.get("memberCardId");
+        String useCouponStr = map.get("useCoupon");
+        String couponCode = map.get("couponCode");
+        Boolean useMemberCard = Boolean.parseBoolean(useMemberCardStr);
+        Boolean useCoupon = Boolean.parseBoolean(useCouponStr);
+
+        JSONObject respData = recordService.getCheckOutInfo(roomId,useMemberCard,memberCardId,useCoupon,couponCode);
         return ResponesUtil.success("success",respData);
     }
 

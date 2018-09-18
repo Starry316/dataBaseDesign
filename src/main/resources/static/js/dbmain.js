@@ -344,6 +344,11 @@ let app = new Vue({
             this.selectedRoomId = roomId;
             let reqData = {
                 selectedRoomId: this.selectedRoomId,
+                selectedRoomId: this.selectedRoomId,
+                useMemberCard: this.useMemberCard,
+                memberCardId:this.memberCardId,
+                useCoupon:this.useCoupon,
+                couponCode:this.couponCode
             };
             this.$http.post('/checkOutInfo', reqData).then(response =>{
                 let result = response.body;
@@ -363,6 +368,33 @@ let app = new Vue({
                 alert("请求失败，请稍后重试");
         });
             $('#checkOut').modal();
+        },
+        reflashCheckOutInfo(){
+            let reqData = {
+                selectedRoomId: this.selectedRoomId,
+                selectedRoomId: this.selectedRoomId,
+                useMemberCard: this.useMemberCard,
+                memberCardId:this.memberCardId,
+                useCoupon:this.useCoupon,
+                couponCode:this.couponCode
+            };
+            this.$http.post('/checkOutInfo', reqData).then(response =>{
+                let result = response.body;
+            if (result.status === 200) {
+                let data = result.data;
+                this.quitCheckInTime = data.quitCheckInTime;
+                this.quitCheckOutTime = data.quitCheckOutTime;
+                this.paymentPerDay = data.paymentPerDay;
+                this.paymentTotal = data.paymentTotal;
+                this.discount = data.discount;
+                this.actualPayment = data.actualPayment;
+            } else {
+                alert(result.message);
+            }
+        }).
+            catch(resp =>{
+                alert("请求失败，请稍后重试");
+        });
         },
         checkOut() {
             let reqData = {
