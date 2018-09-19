@@ -2,6 +2,7 @@ package cn.xuzilin;
 
 import cn.xuzilin.consts.ConstPool;
 import cn.xuzilin.dao.MemberCardEntityMapper;
+import cn.xuzilin.dao.RecordEntityMapper;
 import cn.xuzilin.dao.RoomEntityMapper;
 import cn.xuzilin.po.ReserveEntity;
 import cn.xuzilin.po.RoomEntity;
@@ -35,6 +36,8 @@ public class DatabaseApplicationTests {
 	private FeedbackService feedbackService;
 	@Resource
 	private CouponService couponService;
+	@Resource
+	private RecordEntityMapper recordMapper;
 	@Test
 	public void contextLoads() {
 		couponService.create(2, BigDecimal.TEN,DateUtil.getNowDate());

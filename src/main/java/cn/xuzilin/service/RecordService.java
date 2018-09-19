@@ -3,6 +3,10 @@ package cn.xuzilin.service;
 import cn.xuzilin.consts.ConstPool;
 import cn.xuzilin.dao.RecordEntityMapper;
 import cn.xuzilin.dao.RoomEntityMapper;
+import cn.xuzilin.exception.BalanceNotEncoughException;
+import cn.xuzilin.exception.CouponCodeNotExistException;
+import cn.xuzilin.exception.MemberCardException;
+import cn.xuzilin.exception.WrongPasswordException;
 import cn.xuzilin.po.CustomerEntity;
 import cn.xuzilin.po.MemberCardEntity;
 import cn.xuzilin.po.RecordEntity;
@@ -18,6 +22,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.github.pagehelper.PageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
@@ -68,7 +73,7 @@ public class RecordService {
      */
     public String checkOut(int roomId,boolean useMemberCard,
                          String memberCardId,String memberCardPass,
-                         boolean useCoupon,String couponCode){
+                         boolean useCoupon,String couponCode) throws WrongPasswordException, BalanceNotEncoughException, CouponCodeNotExistException {
         String message = "退房成功！ ";
 
         //更新record记录
@@ -83,14 +88,16 @@ public class RecordService {
 
         if (useMemberCard){
             int mcardId =Integer.parseInt(memberCardId);
-            if (!memberService.validate( mcardId,memberCardPass))return "会员卡卡号或密码错误";
+            if (!memberService.validate( mcardId,memberCardPass)){
+                throw new WrongPasswordException("会员卡卡号或密码错误");
+            }
             record.setMemberCardId( mcardId);
             MemberCardEntity memberCard = memberService.getMemberCardById( mcardId);
             paymentTotal = paymentTotal.multiply(SwitchUtil.switchMemberDiscount(memberCard.getType()))
                     .setScale(2,BigDecimal.ROUND_HALF_DOWN);
         }
         if (useCoupon){
-            if (!couponService.validate(couponCode))return "优惠码不存在";
+            if (!couponService.validate(couponCode))throw new CouponCodeNotExistException("优惠码不存在");
             BigDecimal discount = couponService.getDiscountByCode(couponCode);
             paymentTotal = paymentTotal.subtract(discount).setScale(2,BigDecimal.ROUND_HALF_DOWN);
         }
@@ -100,7 +107,9 @@ public class RecordService {
         if (useMemberCard){
             int mcardId =Integer.parseInt(memberCardId);
             MemberCardEntity memberCard = memberService.getMemberCardById( mcardId );
-            if (memberCard.getBalance().compareTo(paymentTotal)<0)return "用户会员卡余额不足，请充值或使用现金支付";
+            if (memberCard.getBalance().compareTo(paymentTotal)<0)
+                throw new BalanceNotEncoughException("余额不足！");
+
             //更新余额
             memberCard.setBalance(memberCard.getBalance().subtract(paymentTotal));
             //更新消费总额
@@ -129,22 +138,83 @@ public class RecordService {
     /**
      * 换房
      * @param newRoomId
-     * @param oldRoomId
+     * @param roomId
      */
-    public void changeRoom(int newRoomId, int oldRoomId){
-        RecordEntity oldRoomRecord = getByRoomId(oldRoomId);
-        RecordEntity newRoomRecord = new RecordEntity();
+    @Transactional
+    public String changeRoom(int newRoomId, int roomId,boolean useMemberCard,
+                           String memberCardId,String memberCardPass,
+                           boolean useCoupon,String couponCode) throws WrongPasswordException, BalanceNotEncoughException, CouponCodeNotExistException {
+        String message = "换房成功！ ";
 
+        //更新record记录
+        RecordEntity record = recordMapper.getByRoomId(roomId);
+        record.setStatus(ConstPool.CHECK_OUT);
+        //价格计算
+        long days = DateUtil.subDateByDay(DateUtil.getNowDateStr(),DateUtil.dateToStr(record.getCheckInTime()));
+        RoomEntity room = roomMapper.selectByPrimaryKey(roomId);
+        BigDecimal paymentPerDay = SwitchUtil.switchTpyePayment(room.getRoomType());
+        BigDecimal paymentTotal = BigDecimalUtil.multiply(paymentPerDay,days);
+
+        if (useMemberCard){
+            int mcardId =Integer.parseInt(memberCardId);
+            if (!memberService.validate( mcardId,memberCardPass)){
+                throw new WrongPasswordException("会员卡卡号或密码错误");
+            }
+            record.setMemberCardId( mcardId);
+            MemberCardEntity memberCard = memberService.getMemberCardById( mcardId);
+            paymentTotal = paymentTotal.multiply(SwitchUtil.switchMemberDiscount(memberCard.getType()))
+                    .setScale(2,BigDecimal.ROUND_HALF_DOWN);
+        }
+        if (useCoupon){
+            if (!couponService.validate(couponCode))throw new CouponCodeNotExistException("优惠码不存在");
+            BigDecimal discount = couponService.getDiscountByCode(couponCode);
+            paymentTotal = paymentTotal.subtract(discount).setScale(2,BigDecimal.ROUND_HALF_DOWN);
+        }
+        record.setPayment(paymentTotal);
+        record.setDiscount(BigDecimalUtil.multiply(paymentPerDay,days).subtract(paymentTotal));
+
+
+        RecordEntity oldRoomRecord = getByRoomId(roomId);
+        RecordEntity newRoomRecord = new RecordEntity();
         newRoomRecord.setCheckInTime(DateUtil.getNowDate());
         newRoomRecord.setCheckOutTime(oldRoomRecord.getCheckOutTime());
+        record.setCheckOutTime(DateUtil.getNowDate());
+
         newRoomRecord.setStatus(ConstPool.CHECK_IN);
         newRoomRecord.setRoomId(newRoomId);
         recordMapper.insertSelective(newRoomRecord);
         customerService.copyCustomerInfo(newRoomRecord.getId(),oldRoomRecord.getId());
-//        oldRoomRecord.setStatus(ConstPool.CHECK_OUT);
-//        recordMapper.updateByPrimaryKeySelective(oldRoomRecord);
-//        roomService.checkOut(oldRoomId);
+        //更新会员卡余额信息
+        if (useMemberCard){
+            int mcardId =Integer.parseInt(memberCardId);
+            MemberCardEntity memberCard = memberService.getMemberCardById( mcardId );
+            if (memberCard.getBalance().compareTo(paymentTotal)<0)
+                throw new BalanceNotEncoughException("余额不足！");
+
+            //更新余额
+            memberCard.setBalance(memberCard.getBalance().subtract(paymentTotal));
+            //更新消费总额
+            memberCard.setConsumption(memberCard.getConsumption().add(paymentTotal));
+            message+="会员卡级别为: " +SwitchUtil.switchMemberCardTypeName(memberCard.getType());
+            //更新会员卡等级
+            memberCard.setType(memberService.judgeLevel(memberCard.getConsumption()));
+            message+=" ，本次消费:"+paymentTotal+"元,卡内余额:"+memberCard.getBalance()+"元";
+            message+=" ，目前会员卡级别为："+SwitchUtil.switchMemberCardTypeName(memberCard.getType());
+            memberService.update(memberCard);
+
+        }
+        //更新优惠码信息
+        if (useCoupon){
+            couponService.useCoupon(record.getId(),couponCode);
+            message+="本次使用优惠券优惠："+couponService.getDiscountByCode(couponCode)+"元";
+        }
+        //更新记录
+        update(record);
+        //更新房间信息
+        roomMapper.selectByPrimaryKey(roomId);
+        roomService.checkOut(roomId);
         roomService.checkIn(newRoomId);
+        return message;
     }
 
     /**

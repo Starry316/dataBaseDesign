@@ -1,6 +1,10 @@
 package cn.xuzilin.controller;
 
 import cn.xuzilin.consts.ConstPool;
+import cn.xuzilin.exception.BalanceNotEncoughException;
+import cn.xuzilin.exception.CouponCodeNotExistException;
+import cn.xuzilin.exception.MemberCardException;
+import cn.xuzilin.exception.WrongPasswordException;
 import cn.xuzilin.po.RecordEntity;
 import cn.xuzilin.po.ReserveEntity;
 import cn.xuzilin.service.CustomerService;
@@ -149,7 +153,16 @@ public class CommonControlller {
         String couponCode = map.get("couponCode");
         Boolean useMemberCard = Boolean.parseBoolean(useMemberCardStr);
         Boolean useCoupon = Boolean.parseBoolean(useCouponStr);
-        String message = recordService.checkOut(Integer.parseInt(selectedRoomId),useMemberCard,memberCardId,password,useCoupon,couponCode);
+        String message = "";
+        try {
+            message = recordService.checkOut(Integer.parseInt(selectedRoomId),useMemberCard,memberCardId,password,useCoupon,couponCode);
+        }catch (BalanceNotEncoughException e){
+            return ResponesUtil.systemError("会员卡余额不足!");
+        }catch (WrongPasswordException e){
+            return ResponesUtil.systemError("会员卡密码错误!");
+        }catch (CouponCodeNotExistException e){
+            return ResponesUtil.systemError("优惠码不存在!");
+        }
         return ResponesUtil.success("success",message);
     }
 
@@ -170,8 +183,17 @@ public class CommonControlller {
         String couponCode = map.get("couponCode");
         Boolean useMemberCard = Boolean.parseBoolean(useMemberCardStr);
         Boolean useCoupon = Boolean.parseBoolean(useCouponStr);
-        recordService.changeRoom(Integer.parseInt(roomId),Integer.parseInt(selectedRoomId));
-        String message = recordService.checkOut(Integer.parseInt(selectedRoomId),useMemberCard,memberCardId,password,useCoupon,couponCode);
+        String message="";
+        try{
+            message = recordService.changeRoom(Integer.parseInt(roomId),Integer.parseInt(selectedRoomId),useMemberCard,memberCardId,password,useCoupon,couponCode);
+        }catch (BalanceNotEncoughException e){
+            return ResponesUtil.systemError("会员卡余额不足!");
+        }catch (WrongPasswordException e){
+            return ResponesUtil.systemError("会员卡密码错误!");
+        }catch (CouponCodeNotExistException e){
+            return ResponesUtil.systemError("优惠码不存在!");
+        }
+
         return ResponesUtil.success("success",message);
     }
 

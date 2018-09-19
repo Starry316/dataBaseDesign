@@ -1,5 +1,7 @@
 package cn.xuzilin.po;
 
+import cn.xuzilin.utils.DateUtil;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -50,8 +52,8 @@ public class CouponEntity {
         this.status = status;
     }
 
-    public Date getExpiry() {
-        return expiry;
+    public String getExpiry() {
+        return DateUtil.formatDate(expiry);
     }
 
     public void setExpiry(Date expiry) {

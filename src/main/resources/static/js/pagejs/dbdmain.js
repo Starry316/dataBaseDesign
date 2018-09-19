@@ -454,8 +454,7 @@ let app = new Vue({
             this.$http.get('/judgeReserve/'+roomId).then(response =>{
                 let result = response.body;
             if (result.status === 200) {
-                $('#checkInModal').modal();
-                return;
+
             } else {
                 alert(result.message);
             }
@@ -475,7 +474,7 @@ let app = new Vue({
                 let result = response.body;
             if (result.status === 200) {
                 this.getData();
-                alert(result.message);
+                alert(result.data);
             } else {
                 this.getData();
                 alert(result.message);
