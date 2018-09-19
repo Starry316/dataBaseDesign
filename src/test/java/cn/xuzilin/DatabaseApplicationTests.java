@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -32,11 +33,13 @@ public class DatabaseApplicationTests {
 	private MemberService memberService;
 	@Resource
 	private FeedbackService feedbackService;
+	@Resource
+	private CouponService couponService;
 	@Test
 	public void contextLoads() {
-		//recordService.changeRoom(305,105);
-		String delayCheckOutTime = "2018-9-19";
-		System.out.println(DateUtil.getNowDate().after(DateUtil.strToDate(delayCheckOutTime))) ;
+		couponService.create(2, BigDecimal.TEN,DateUtil.getNowDate());
+//		String delayCheckOutTime = "2018-9-19";
+//		System.out.println(DateUtil.getNowDate().after(DateUtil.strToDate(delayCheckOutTime))) ;
 	}
 
 }

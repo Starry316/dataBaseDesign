@@ -33,7 +33,7 @@ public class CouponService {
         String code = "";
         do {
             code = createRandomCode();
-        }while (!validate(code));
+        }while (validate(code));
         coupon.setCode(code);
         return couponMapper.insertSelective(coupon);
     }

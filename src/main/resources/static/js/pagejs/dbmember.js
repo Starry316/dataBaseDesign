@@ -66,7 +66,7 @@ let app = new Vue({
             this.$http.post('/createMemberCard', reqData).then(resp =>{
                 let result = resp.body;
             if (result.status === 200) {
-                $("#createModal").modal();
+                $("#createModal").modal('hide');
                 alert('创建成功,卡号为：'+result.data);
                 this.getData();
                 this.getReserveNum();
@@ -89,7 +89,7 @@ let app = new Vue({
             this.$http.post('/deleteCard', reqData).then(resp =>{
                 let result = resp.body;
             if (result.status === 200) {
-                $("#cancelModal").modal();
+                $("#cancelModal").modal('hide');
                 alert('注销成功');
             } else alert(result.message);
         }).
@@ -108,7 +108,7 @@ let app = new Vue({
             this.$http.post('/recharge', reqData).then(resp =>{
                 let result = resp.body;
             if (result.status === 200) {
-                $("#rechargeModal").modal();
+                $("#rechargeModal").modal('hide');
                 alert('充值成功，目前余额为:'+result.data+'元');
             } else alert(result.message);
         }).
@@ -123,21 +123,21 @@ let app = new Vue({
             if (this.page == 1) return;
             $('#' + this.page + 'page').removeClass("active");
             this.page = this.page - 1;
-            getData();
+            this.getData();
             $('#' + this.page + 'page').addClass("active");
         },
         nextPage() {
             if (this.page == this.maxPage) return;
             $('#' + this.page + 'page').removeClass("active");
             this.page = this.page + 1;
-            getData();
+            this.getData();
 
             $('#' + this.page + 'page').addClass("active");
         },
         turnTo(page) {
             $('#' + this.page + 'page').removeClass("active");
             this.page = page;
-            getData();
+            this.getData();
             $('#' + this.page + 'page').addClass("active");
         },
         getData() {

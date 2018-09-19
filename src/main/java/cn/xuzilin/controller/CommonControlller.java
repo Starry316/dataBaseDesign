@@ -163,8 +163,16 @@ public class CommonControlller {
     public MessageVo changeRoom(@RequestBody Map<String ,String> map){
         String roomId = map.get("roomId");
         String selectedRoomId = map.get("selectedRoomId");
+        String useMemberCardStr = map.get("useMemberCard");
+        String memberCardId = map.get("memberCardId");
+        String password = map.get("password");
+        String useCouponStr = map.get("useCoupon");
+        String couponCode = map.get("couponCode");
+        Boolean useMemberCard = Boolean.parseBoolean(useMemberCardStr);
+        Boolean useCoupon = Boolean.parseBoolean(useCouponStr);
         recordService.changeRoom(Integer.parseInt(roomId),Integer.parseInt(selectedRoomId));
-        return ResponesUtil.success("success");
+        String message = recordService.checkOut(Integer.parseInt(selectedRoomId),useMemberCard,memberCardId,password,useCoupon,couponCode);
+        return ResponesUtil.success("success",message);
     }
 
     /**

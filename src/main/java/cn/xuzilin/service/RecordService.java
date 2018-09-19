@@ -141,9 +141,9 @@ public class RecordService {
         newRoomRecord.setRoomId(newRoomId);
         recordMapper.insertSelective(newRoomRecord);
         customerService.copyCustomerInfo(newRoomRecord.getId(),oldRoomRecord.getId());
-        oldRoomRecord.setStatus(ConstPool.CHECK_OUT);
-        recordMapper.updateByPrimaryKeySelective(oldRoomRecord);
-        roomService.checkOut(oldRoomId);
+//        oldRoomRecord.setStatus(ConstPool.CHECK_OUT);
+//        recordMapper.updateByPrimaryKeySelective(oldRoomRecord);
+//        roomService.checkOut(oldRoomId);
         roomService.checkIn(newRoomId);
     }
 
@@ -164,14 +164,14 @@ public class RecordService {
         BigDecimal paymentTotal = BigDecimalUtil.multiply(paymentPerDay,days);
         data.put("paymentTotal", paymentTotal);
         BigDecimal actualPayment = paymentTotal;
-        if (useMemberCard&&memberCardId!=null){
+        if (useMemberCard&&memberCardId!=null&&memberCardId.length()>0){
             MemberCardEntity memberCard = memberService.getMemberCardById(Integer.parseInt(memberCardId));
             if (memberCard!=null){
                 actualPayment = actualPayment.multiply(SwitchUtil.switchMemberDiscount(memberCard.getType()))
                         .setScale(2,BigDecimal.ROUND_HALF_DOWN);
             }
         }
-        if (useCoupon&&couponCode!=null){
+        if (useCoupon&&couponCode!=null&&couponCode.length()>0){
             BigDecimal couponDiscount = couponService.getDiscountByCode(couponCode);
             if (couponDiscount!=null){
                 actualPayment = actualPayment.subtract(couponDiscount).setScale(2,BigDecimal.ROUND_HALF_DOWN);

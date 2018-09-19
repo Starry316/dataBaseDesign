@@ -451,15 +451,31 @@ let app = new Vue({
             this.getChangeRoomMaxPage();
         },
         changeRoom(roomId) {
+            this.$http.get('/judgeReserve/'+roomId).then(response =>{
+                let result = response.body;
+            if (result.status === 200) {
+                $('#checkInModal').modal();
+                return;
+            } else {
+                alert(result.message);
+            }
+        }).catch(resp =>{
+                alert("请求失败，请稍后重试");
+        });
             let reqData = {
                 roomId: roomId,
-                selectedRoomId: this.selectedRoomId
+                selectedRoomId: this.selectedRoomId,
+                useMemberCard: this.useMemberCard,
+                memberCardId:this.memberCardId,
+                password:this.memberCardPass,
+                useCoupon:this.useCoupon,
+                couponCode:this.couponCode
             };
             this.$http.post('/changeRoom', reqData).then(response =>{
                 let result = response.body;
             if (result.status === 200) {
                 this.getData();
-                alert("换房成功！");
+                alert(result.message);
             } else {
                 this.getData();
                 alert(result.message);

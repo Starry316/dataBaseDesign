@@ -20,6 +20,9 @@ let app = new Vue({
       this.$http.get('/receviceFeedback/'+id).then(resp =>{
         let result = resp.body;
         if (result.status === 200) {
+            this.getData();
+            this.getReserveNum();
+            this.getMaxPage();
           alert('处理成功!');
         }
         else alert(result.message);
@@ -32,6 +35,9 @@ let app = new Vue({
       this.$http.get('/completeFeedback/'+id).then(resp =>{
         let result = resp.body;
         if (result.status === 200) {
+            this.getData();
+            this.getReserveNum();
+            this.getMaxPage();
           alert('处理成功！');
         }
         else alert(result.message);
@@ -58,21 +64,21 @@ let app = new Vue({
       if (this.page == 1) return;
       $('#' + this.page + 'page').removeClass("active");
       this.page = this.page - 1;
-      getData();
+        this.getData();
       $('#' + this.page + 'page').addClass("active");
     },
     nextPage() {
       if (this.page == this.maxPage) return;
       $('#' + this.page + 'page').removeClass("active");
       this.page = this.page + 1;
-      getData();
+        this.getData();
 
       $('#' + this.page + 'page').addClass("active");
     },
     turnTo(page) {
       $('#' + this.page + 'page').removeClass("active");
       this.page = page;
-      getData();
+        this.getData();
       $('#' + this.page + 'page').addClass("active");
     },
     getData() {

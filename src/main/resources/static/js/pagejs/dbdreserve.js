@@ -37,17 +37,21 @@ let app = new Vue({
             this.signPhoneNum='';
             this.signName='';
             this.signCheckOutTime='';
-        //     this.$http.get('/judgeReserve/'+this.selectedRoomId).then(response =>{
-        //         let result = response.body;
-        //     if (result.status === 200) {
-        //         $('#checkInModal').modal();
-        //         return;
-        //     } else {
-        //         alert(result.message);
-        //     }
-        // }).catch(resp =>{
-        //         alert("请求失败，请稍后重试");
-        // });
+            this.$http.get('/reserveInfo/'+id).then(response =>{
+                let result = response.body;
+            if (result.status === 200) {
+                let data = result.data;
+                console.log(data);
+                $('#signCheckOutTime').val(data.signCheckOutTime);
+                $('#1signIdcardNo').val(data.signIdcardNo);
+                $('#1signPhoneNum').val(data.signPhoneNum);
+                $('#1signName').val(data.signName);
+            } else {
+                alert(result.message);
+            }
+        }).catch(resp =>{
+                alert("请求失败，请稍后重试");
+        });
             $('#checkInModal').modal();
         },
         checkIn() {
