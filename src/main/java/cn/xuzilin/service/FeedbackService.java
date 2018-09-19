@@ -11,6 +11,7 @@ import com.github.pagehelper.PageHelper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class FeedbackService {
@@ -50,6 +51,20 @@ public class FeedbackService {
     public int getMaxPage(byte status){
         int count = feedBackMapper.getCount(status);
         return (count+14)/15;
+    }
+
+    public JSONArray getByUserId(int userId){
+        List<FeedBackEntity> list = feedBackMapper.getByUserId(userId);
+        return JSONArray.parseArray(JSON.toJSONString(list));
+    }
+
+    public void addFeedback(int userId,String content){
+        FeedBackEntity feedBackEntity = new FeedBackEntity();
+        feedBackEntity.setUserId(userId);
+        feedBackEntity.setContent(content);
+        feedBackEntity.setSubmitTime(DateUtil.getNowDate());
+        feedBackEntity.setStatus(ConstPool.FEEDBACK_SUBMITED);
+        feedBackMapper.insertSelective(feedBackEntity);
     }
 
 }

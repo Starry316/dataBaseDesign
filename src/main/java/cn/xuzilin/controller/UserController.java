@@ -60,9 +60,15 @@ public class UserController {
     public MessageVo bindMemberCard(HttpServletRequest request,@RequestBody Map<String,String> map){
         String memberCardId= map.get("memberCardId");
         String password = map.get("memberCardPass");
+        UserEntity user = SessionUtil.get(request,"user", UserEntity.class);
+        if (user==null)
+            return ResponesUtil.systemError("用户未登录");
         boolean res = memberService.validate(Integer.parseInt(memberCardId),password);
         if (res){
-            return ResponesUtil.success("success");
+            res = userService.bindMemberCard(Integer.parseInt(memberCardId),user.getId());
+            if (res)
+                return ResponesUtil.success("success");
+            return ResponesUtil.systemError("该卡已经被绑定!");
         }
         return ResponesUtil.systemError("会员卡和密码不匹配！");
     }
@@ -75,9 +81,10 @@ public class UserController {
         JSONObject respData = new JSONObject();
         respData.put("infoName",user.getUserName());
         respData.put("infoPhone",user.getPhone());
-        if (user.getMemberCardId()==null)
+        Integer memberCardId = userService.getMemberCardId(user.getId());
+        if (memberCardId==null)
             respData.put("infoMemberCardId","尚未绑定会员卡");
-        respData.put("infoMemberCardId",user.getMemberCardId());
+        else respData.put("infoMemberCardId",memberCardId);
         return ResponesUtil.success("success",respData);
     }
 }

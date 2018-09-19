@@ -118,7 +118,7 @@
 
 
 <div class="starry-container starry-shadow starry-nav"style="padding: 0" id="header">
-  <h3 style="margin-bottom: 10px;margin-top: 10px">奥伦治酒店</h3>
+  <h3 style="margin-bottom: 10px;margin-top: 10px">酒店预定</h3>
 </div>
 
 <div class="swiper-container" style="margin-top: 1.5rem">
@@ -144,31 +144,100 @@
   </div>
   <!--酒店介绍结束-->
 
-  <!--已预定房间-->
-  <div class="container-fluid starry-panel" style="background-color: white; padding-right: 15px;
-    padding-left: 15px;">
-    <div class="row" @click="showHadReverse">
-      <div class="col-xs-11"><label>查看已预定房间</label></div>
-      <span id="arrowIcon" class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
-    </div>
-    <div id="reverseList" class="starry-hide">
-      <div class="row starry-middle">
-        <div class="col-xs-4"><strong>预订房型：</strong></div>
-        <div class="col-xs-5"><strong>入住时间：</strong></div>
-        <div class="divider"></div>
-      </div>
-      <div class="row starry-middle" v-for="item in reservelist">
-        <div class="col-xs-4">{{item.roomType}}</div>
-        <div class="col-xs-5">{{item.checkInTime}}</div>
-        <div class="col-xs-3">
-          <button  class="btn btn-sm btn-danger " type="button" v-on:click="cancel(item.id)">取消预定</button>
-        </div>
-        <div class="divider"></div>
-      </div>
+  <div class="container-fluid starry-panel"  style="background-color: white; padding-right: 15px;
+      padding-left: 15px;margin-bottom: 5px;">
+    <div class="row" @click="showUserInfo">
+      <div class="col-xs-11" v-if="isLogin == true"><label>{{userName}}</label></div>
+      <div class="col-xs-11" v-if="isLogin == false"><label>登录/注册</label></div>
+      <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
     </div>
   </div>
-  <!--已预定房间结束-->
+  <div v-if="isLogin == true">
+    <!--已预定房间-->
+    <div class="container-fluid starry-panel"  style="background-color: white; padding-right: 15px;
+      padding-left: 15px;margin-bottom: 5px;">
+      <div class="row" @click="showHadReverse">
+        <div class="col-xs-11" ><label>查看已预定房间</label></div>
+        <span id="arrowIcon" class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+      </div>
+      <div id="reverseList" class="starry-hide">
+        <div class="row starry-middle">
+          <div class="col-xs-4"><strong>预订房型：</strong></div>
+          <div class="col-xs-5"><strong>入住时间：</strong></div>
+          <div class="divider"></div>
+        </div>
+        <div class="row starry-middle" v-for="item in reservelist">
+          <div class="col-xs-4">{{item.roomType}}</div>
+          <div class="col-xs-5">{{item.checkInTime}}</div>
+          <div class="col-xs-3">
+            <button  class="btn btn-sm btn-danger " type="button" v-on:click="cancel(item.id)">取消预定</button>
+          </div>
+          <div class="divider"></div>
+        </div>
+      </div>
+    </div>
+    <!--已预定房间结束-->
 
+    <!--优惠券展示-->
+    <div class="container-fluid starry-panel"  style="background-color: white; padding-right: 15px;
+      padding-left: 15px;margin-bottom: 5px;">
+      <div class="row" @click="showCoupon">
+        <div class="col-xs-11" ><label>我的优惠券</label></div>
+        <span id="couponIcon" class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+      </div>
+      <div id="couponList" class="starry-hide">
+        <div class="row starry-middle">
+          <div class="col-xs-3"><strong>优惠码</strong></div>
+          <div class="col-xs-3"><strong>折扣额</strong></div>
+          <div class="col-xs-5"><strong>到期时间</strong></div>
+          <div class="divider"></div>
+        </div>
+        <div class="row starry-middle" v-for="item in couponDataList">
+          <div class="col-xs-3">{{item.code}}</div>
+          <div class="col-xs-3">{{item.discount}}元</div>
+          <div class="col-xs-5">{{item.expiry}}</div>
+        </div>
+      </div>
+    </div>
+    <!--优惠券展示结束-->
+    <!--反馈-->
+    <div class="container-fluid starry-panel"  style="background-color: white; padding-right: 15px;
+      padding-left: 15px;margin-bottom: 5px;">
+      <div class="row" @click="showFeedback">
+        <div class="col-xs-11" ><label>提交反馈意见</label></div>
+        <span id="feedbackIcon" class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+      </div>
+      <!--<div class="starry-hide">-->
+      <div id="feedback" class="starry-hide">
+        <div id="feedbackForm">
+          <div class="form-group">
+            <textarea class="form-control" rows="3" placeholder="您提交的信息将会被反馈给客服人员，您可以查看处理进度" v-model="feedbackContent"></textarea>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-default pull-right" @click="submitFeedback">提交</button>
+          </div>
+          <div class="form-group" style="margin-right: 5px;">
+            <button class="btn btn-default pull-right" @click="showFeedbackStatus">处理进度</button>
+          </div>
+        </div>
+        <div id="feedbackStatus" class="starry-hide">
+          <div class="row starry-middle">
+            <div class="col-xs-5"><strong>反馈</strong></div>
+            <div class="col-xs-3"><strong>状态</strong></div>
+            <div class="col-xs-4"><strong>提交时间</strong></div>
+            <div class="divider"></div>
+          </div>
+          <div class="row starry-middle" v-for="item in feedbackList">
+            <div class="col-xs-5">{{item.content}}</div>
+            <div class="col-xs-3">{{item.statusName}}</div>
+            <div class="col-xs-4">{{item.submitTime}}</div>
+            <div class="divider"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--反馈结束-->
+  </div>
 
   <!--预定-->
   <div class="container-fluid">
@@ -439,6 +508,58 @@
   </div>
   <!--登录或注册弹窗结束-->
 
+  <!--用户信息弹窗-->
+  <div class="modal fade" id="userModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content" >
+        <div class="modal-header">
+          <h3 class="modal-title">用户信息</h3>
+        </div>
+
+          <div id="userInfoBody">
+            <div class="modal-body">
+              <div class="form-group">
+                <label>用户名：</label>
+                {{infoName}}
+              </div>
+              <div class="form-group">
+                <label>电话号码：</label>
+                {{infoPhone}}
+              </div>
+              <div class="form-group">
+                <label>绑定的会员卡：</label>
+                {{infoMemberCardId}}
+              </div>
+              <a @click="showBind">点击绑定会员卡</a>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" @click="login">确认</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+            </div>
+          </div>
+          <div id="bindBody">
+            <div class="modal-body">
+              <div class="form-group">
+                <label>会员卡号：</label>
+                <input class="form-control"  placeholder="会员卡号" v-model="memberCardId">
+              </div>
+              <div class="form-group">
+                <label>会员卡密码：</label>
+                <input class="form-control" type="password"  placeholder="会员卡密码" v-model="memberCardPass">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" @click="bind">确认</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!--用户信息弹窗结束-->
+
 </div>
 <script src="/js/fastclick.js"></script>
 <script>
@@ -476,6 +597,12 @@
             isLogin:false,
 
             isShown:false,
+            couponIsShown:false,
+
+            //feedback的数据
+            feedbackContent:'',
+            feedbackIsShown:false,
+            feedbackList:[],
 
             //loginModal中的errorMes
             sError0:'',
@@ -490,11 +617,134 @@
             timeCheckin:'',
             timeCheckOut:'',
 
+            //userinfo中的数据
+            infoName:'',
+            infoPhone:'',
+            infoMemberCardId:'',
+            memberCardId:'',
+            memberCardPass:'',
+
+
+
+
             //已预定数据
-            reservelist:[]
+            reservelist:[],
+            couponDataList:[]
 
         },
         methods: {
+            showFeedback(){
+                if (!this.isLogin){
+                    $('#loginModal').modal();
+                    return;
+                }
+                if (!this.feedbackIsShown){
+                    $('#feedback').removeClass('starry-hide');
+                    $('#feedback').addClass('starry-show');
+                    $('#feedbackIcon').removeClass('glyphicon-menu-right');
+                    $('#feedbackIcon').addClass('glyphicon-menu-down');
+                    $('#feedbackForm').removeClass('starry-hide');
+                    $('#feedbackStatus').addClass('starry-hide');
+                    this.feedbackIsShown = true;
+                }
+                else {
+                    $('#feedback').removeClass('starry-show');
+                    $('#feedback').addClass('starry-hide');
+                    $('#feedbackIcon').addClass('glyphicon-menu-right');
+                    $('#feedbackIcon').removeClass('glyphicon-menu-down');
+                    this.feedbackIsShown = false;
+                }
+            },
+            showFeedbackStatus(){
+                $('#feedbackForm').addClass('starry-hide');
+                $('#feedbackStatus').removeClass('starry-hide');
+
+                this.$http.get('/feedbackStatus').then(resp =>{
+                    let result = resp.body;
+                if (result.status === 200) {
+                    this.feedbackList = result.data;
+                } else{
+                    alert(result.message);
+                }
+            }).
+                catch(resp =>{
+                    alert("请求失败，请稍后重试");
+            });
+
+                // this.$http.get('/feedbackStatus').then(resp =>{
+                //     let result = resp.body;
+                //     if (result.status === 200) {
+                //         this.feedbackList = result.data;
+                //     } else{
+                //         alert(result.message);
+                //     }
+                // }).
+                // catch(resp =>{
+                //     alert("请求失败，请稍后重试");
+                // });
+            },
+            submitFeedback(){
+                let data = {
+                    feedbackContent:this.feedbackContent
+                };
+                this.$http.post('/submitFeedback',data).then(resp =>{
+                    let result = resp.body;
+                if (result.status === 200) {
+                    alert("提交成功！");
+                } else{
+                    alert(result.message);
+                }
+            }).
+                catch(resp =>{
+                    alert("请求失败，请稍后重试");
+            });
+            },
+            showUserInfo(){
+                if (!this.isLogin){
+                    $('#loginModal').modal();
+                    return;
+                }
+                $('#userInfoBody').removeClass("starry-hide");
+                $('#bindBody').addClass("starry-hide");
+                this.$http.get('/userInfo').then(resp =>{
+                    let result = resp.body;
+                if (result.status === 200) {
+                    let data = result.data;
+                    this.infoName = data.infoName;
+                    this.infoPhone = data.infoPhone;
+                    this.infoMemberCardId = data.infoMemberCardId;
+                } else{
+                    alert(result.message);
+                }
+            }).
+                catch(resp =>{
+                    alert("请求失败，请稍后重试");
+            });
+                $('#userModal').modal();
+            },
+            showBind(){
+                this.memberCardId='';
+                this.memberCardPass='';
+                $('#userInfoBody').addClass("starry-hide");
+                $('#bindBody').removeClass("starry-hide");
+            },
+            bind(){
+                let data = {
+                    memberCardId:this.memberCardId,
+                    memberCardPass:this.memberCardPass
+                };
+                this.$http.post('/bindMemberCard',data).then(resp =>{
+                    let result = resp.body;
+                if (result.status === 200) {
+                    alert("绑定成功！");
+                } else{
+                    alert(result.message);
+                }
+            }).
+                catch(resp =>{
+                    alert("请求失败，请稍后重试");
+            });
+            },
             showHadReverse(){
                 if (!this.isLogin){
                     $('#loginModal').modal();
@@ -515,6 +765,38 @@
                     $('#arrowIcon').removeClass('glyphicon-menu-down');
                     this.isShown = false;
                 }
+            },
+            showCoupon(){
+                if (!this.isLogin){
+                    $('#loginModal').modal();
+                    return;
+                }
+                if (!this.couponIsShown){
+                    $('#couponList').removeClass('starry-hide');
+                    $('#couponList').addClass('starry-show');
+                    $('#couponIcon').removeClass('glyphicon-menu-right');
+                    $('#couponIcon').addClass('glyphicon-menu-down');
+                    this.$http.get('/getCouponList').then(resp =>{
+                        let result = resp.body;
+                    if (result.status === 200) {
+                        this.couponDataList = result.data;
+                    } else{
+                        alert(result.message);
+                    }
+                }).
+                    catch(resp =>{
+                        alert("请求失败，请稍后重试");
+                });
+                    this.couponIsShown = true;
+                }
+                else {
+                    $('#couponList').removeClass('starry-show');
+                    $('#couponList').addClass('starry-hide');
+                    $('#couponIcon').addClass('glyphicon-menu-right');
+                    $('#couponIcon').removeClass('glyphicon-menu-down');
+                    this.couponIsShown = false;
+                }
+
             },
             cancel(id) {
                 let reqData = {
@@ -796,70 +1078,6 @@
                     }
                 });
             }
-            // $("#time1").datetimePicker({
-            //   title: '预计入住时间',
-            //   yearSplit: '年',
-            //   monthSplit: '月',
-            //   dateSplit: '日',
-            //   times: function () {
-            //     return [  // 自定义的时间
-            //     ];
-            //   },
-            //   min: '2013-12-12',
-            //   onChange: function (picker, values, displayValues) {
-            //     let date = values[0]+'-'+values[1]+'-'+values[2]
-            //     console.log(date);
-            //     this.time = date;
-            //   }
-            // });
-            // $("#time2").datetimePicker({
-            //   title: '预计入住时间',
-            //   yearSplit: '年',
-            //   monthSplit: '月',
-            //   dateSplit: '日',
-            //   times: function () {
-            //     return [  // 自定义的时间
-            //     ];
-            //   },
-            //   min: '2013-12-12',
-            //   onChange: function (picker, values, displayValues) {
-            //     let date = values[0]+'-'+values[1]+'-'+values[2]
-            //     console.log(date);
-            //   }
-            // });
-            // $("#time3").datetimePicker({
-            //   title: '预计入住时间',
-            //   yearSplit: '年',
-            //   monthSplit: '月',
-            //   dateSplit: '日',
-            //   times: function () {
-            //     return [  // 自定义的时间
-            //     ];
-            //   },
-            //   min: '2013-12-12',
-            //   onChange: function (picker, values, displayValues) {
-            //     let date = values[0]+'-'+values[1]+'-'+values[2]
-            //     console.log(date);
-            //     this.time = date;
-            //   }
-            // });
-            // $("#time4").datetimePicker({
-            //   title: '预计入住时间',
-            //   yearSplit: '年',
-            //   monthSplit: '月',
-            //   dateSplit: '日',
-            //   times: function () {
-            //     return [  // 自定义的时间
-            //     ];
-            //   },
-            //   min: '2013-12-12',
-            //   onChange: function (picker, values, displayValues) {
-            //     let date = values[0]+'-'+values[1]+'-'+values[2]
-            //     console.log(date);
-            //     this.time = date;
-            //   }
-            // });
-
         }
     });
 

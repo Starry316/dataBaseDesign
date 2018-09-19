@@ -32,7 +32,7 @@ public interface RecordEntityMapper {
             "where status = 1")
     List<RecordEntity> getAll();
 
-    @Select("select a.id,a.roomId,a.checkInTime,a.checkOutTime,a.payment,b.roomType " +
+    @Select("select a.id,a.roomId,a.checkInTime,a.checkOutTime,a.payment,b.roomType,a.memberCardId " +
             "from record a join room b on (a.roomId = b.roomId) " +
             "where a.status = -1 and (#{roomId} is null or a.roomId = #{roomId}) " +
             "and (#{checkInTime} is null or a.checkInTime >= #{checkInTime}) " +

@@ -2,6 +2,7 @@ package cn.xuzilin.controller;
 
 import cn.xuzilin.consts.ConstPool;
 import cn.xuzilin.po.ManagerEntity;
+import cn.xuzilin.po.UserEntity;
 import cn.xuzilin.service.FeedbackService;
 import cn.xuzilin.utils.ResponesUtil;
 import cn.xuzilin.utils.SessionUtil;
@@ -51,6 +52,24 @@ public class FeedbackController {
         String dealStatus = map.get("dealStatus");
         int maxPage = feedbackService.getMaxPage(Byte.parseByte(dealStatus));
         return ResponesUtil.success("success",maxPage);
+    }
+
+    @GetMapping("/feedbackStatus")
+    public MessageVo feedbackStatus(HttpServletRequest request){
+       UserEntity user = SessionUtil.get(request,"user", UserEntity.class);
+        if (user == null)return ResponesUtil.systemError("用户未登录!");
+        JSONArray respData = feedbackService.getByUserId(user.getId());
+        System.out.println(respData);
+        return ResponesUtil.success("success",respData);
+    }
+
+    @PostMapping("/submitFeedback")
+    public MessageVo submitFeedback(HttpServletRequest request,@RequestBody Map<String,String>map){
+        UserEntity user = SessionUtil.get(request,"user", UserEntity.class);
+        if (user == null)return ResponesUtil.systemError("用户未登录!");
+        String content = map.get("feedbackContent");
+        feedbackService.addFeedback(user.getId(),content);
+        return ResponesUtil.success("success");
     }
 
 }

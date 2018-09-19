@@ -56,6 +56,17 @@ public class UserService {
         return true;
     }
 
+    public boolean bindMemberCard(int memberCardId,int userId){
+        if (userMapper.getCountByMemberCardId(memberCardId)>0)
+            return false;
+        userMapper.updateMemberCardById(memberCardId,userId);
+        return true;
+    }
+
+    public Integer getMemberCardId(int userId){
+        return userMapper.selectByPrimaryKey(userId).getMemberCardId();
+    }
+
     /**
      * 判断用户名是否重复
      * @param userName

@@ -36,6 +36,9 @@ public interface FeedBackEntityMapper {
     @Select("select content from feedback where id = #{id}")
     String getContentById(@Param("id") int id);
 
+    @Select("select * from feedback where userId = #{userId}")
+    List<FeedBackEntity> getByUserId(@Param("userId") int userId);
+
     @Select("select f.id,f.status,f.submitTime,f.dealTime,m.managerName,u.userName " +
             "from (feedback f left join manager m on (f.userId = m.id)) , user u " +
             "where (userId = u.id) and (#{status} = 3 or status = #{status})")

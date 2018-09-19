@@ -1,5 +1,8 @@
 package cn.xuzilin.po;
 
+import cn.xuzilin.utils.DateUtil;
+import cn.xuzilin.utils.SwitchUtil;
+
 import java.util.Date;
 
 public class FeedBackEntity {
@@ -16,6 +19,16 @@ public class FeedBackEntity {
     private Date dealTime;
 
     private String content;
+
+    private String statusName;
+
+    public String getStatusName() {
+        return statusName;
+    }
+
+    public void setStatusName(String statusName) {
+        this.statusName = statusName;
+    }
 
     public Integer getId() {
         return id;
@@ -39,6 +52,7 @@ public class FeedBackEntity {
 
     public void setStatus(Byte status) {
         this.status = status;
+        setStatusName(SwitchUtil.switchFeedbackStatusName(status));
     }
 
     public Integer getManagerId() {
@@ -49,8 +63,8 @@ public class FeedBackEntity {
         this.managerId = managerId;
     }
 
-    public Date getSubmitTime() {
-        return submitTime;
+    public String getSubmitTime() {
+        return DateUtil.formatDate(submitTime);
     }
 
     public void setSubmitTime(Date submitTime) {
