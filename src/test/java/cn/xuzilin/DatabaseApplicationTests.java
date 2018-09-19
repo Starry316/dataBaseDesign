@@ -40,9 +40,13 @@ public class DatabaseApplicationTests {
 	private RecordEntityMapper recordMapper;
 	@Test
 	public void contextLoads() {
-		couponService.create(2, BigDecimal.TEN,DateUtil.getNowDate());
+		//couponService.create(2, BigDecimal.TEN,DateUtil.getNowDate());
 //		String delayCheckOutTime = "2018-9-19";
-//		System.out.println(DateUtil.getNowDate().after(DateUtil.strToDate(delayCheckOutTime))) ;
+//		for (int i = 0; i < 30; i++) {
+//			System.out.println(DateUtil.formatDate(DateUtil.addDays(DateUtil.getNowDate(),i+1))) ;
+//		}
+//		System.out.println(DateUtil.subDateByDay(DateUtil.addDays(DateUtil.getNowDate(),4),DateUtil.getNowDate())) ;
+
 	}
 
 }

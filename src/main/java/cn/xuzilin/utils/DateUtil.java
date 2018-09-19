@@ -37,6 +37,11 @@ public class DateUtil {
         long res = (newDateTime - oldDateTime) / (1000 * 60 * 60 * 24);
         return res;
     }
+    public static Date addDays(Date date , int days){
+        long res = date.getTime();
+        res+=((long)days)*(1000 * 60 * 60 * 24);
+        return new Date(res);
+    }
     public static long daysToNow(Date oldDate){
         Date currentTime = new Date();
         return subDateByDay(currentTime,oldDate);

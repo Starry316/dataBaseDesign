@@ -14,6 +14,9 @@ public class UserService {
     @Resource
     private UserEntityMapper userMapper;
 
+    @Resource
+    private CouponService couponService;
+
     /**
      * 验证密码
      * @param userName
@@ -48,6 +51,7 @@ public class UserService {
         user.setPhone(phone);
         try {
             userMapper.insertSelective(user);
+            couponService.newUserCoupon(user.getId());
             SessionUtil.save(request,"user",user);
         }catch (Exception e){
             e.printStackTrace();

@@ -4,6 +4,7 @@ import cn.xuzilin.consts.ConstPool;
 import cn.xuzilin.dao.CouponEntityMapper;
 import cn.xuzilin.po.CouponEntity;
 import cn.xuzilin.po.UserEntity;
+import cn.xuzilin.utils.DateUtil;
 import cn.xuzilin.utils.SessionUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -36,6 +37,16 @@ public class CouponService {
         }while (validate(code));
         coupon.setCode(code);
         return couponMapper.insertSelective(coupon);
+    }
+
+    /**
+     * 新用户大礼包！
+     * @param userId
+     */
+    public void newUserCoupon(int userId){
+        create(userId,new BigDecimal("80"), DateUtil.addDays(DateUtil.getNowDate(),30));
+        create(userId,new BigDecimal("50"), DateUtil.addDays(DateUtil.getNowDate(),30));
+        create(userId,new BigDecimal("100"), DateUtil.addDays(DateUtil.getNowDate(),30));
     }
 
     public void useCoupon(int recordId,String code){

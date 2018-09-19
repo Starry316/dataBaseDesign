@@ -5,6 +5,7 @@ import cn.xuzilin.dao.RecordEntityMapper;
 import cn.xuzilin.dao.ReserveEntityMapper;
 import cn.xuzilin.dao.RoomEntityMapper;
 import cn.xuzilin.po.RecordEntity;
+import cn.xuzilin.po.ReserveEntity;
 import cn.xuzilin.po.RoomEntity;
 import cn.xuzilin.utils.BigDecimalUtil;
 import cn.xuzilin.utils.DateUtil;
@@ -166,8 +167,17 @@ public class RoomService {
         List<RecordEntity> list = recordMapper.getAll();
         for (RecordEntity i : list)
             if (i.getCheckOutTime().before( DateUtil.getNowDate())){
-                i.setStatus(ConstPool.OVERDUE);
+                i.setCheckOutTime(DateUtil.getNowDate());
                 recordMapper.updateByPrimaryKey(i);
             }
+        List<ReserveEntity> reserveList = reserveMapper.getAllByStatus(ConstPool.ACTIVE);
+            //超出预定时间2天的自动取消
+        for (ReserveEntity i:reserveList){
+            if (DateUtil.subDateByDay(DateUtil.getNowDate(),i.getReserveCheckInTime())>2){
+                i.setStatus(ConstPool.CANCEL);
+                reserveMapper.updateByPrimaryKeySelective(i);
+            }
+        }
     }
+
 }
