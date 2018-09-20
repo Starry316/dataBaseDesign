@@ -1,0 +1,81 @@
+.swiper-container img {
+    display: block;
+    width: 100%;
+}
+.starry-container{
+    padding: .5rem;
+    background-color: #1DB0B8;
+    color: whitesmoke;
+    font-size: 5vw;
+}
+.starry-panel{
+    background-color: white;
+    padding: 5px;
+    border-bottom:1px solid #e5e9ef;
+    border-top: 1px solid #e5e9ef;
+    box-shadow: 0px 1px 5px #e5e9ef;
+}
+.starry-background{
+    background-color: #EDEDED;
+}
+.starry-nav{
+    text-align: center;
+    vertical-align: middle;
+    position: fixed;
+    z-index: 100;
+    width: 100%;
+    top: 0;
+}
+.starry-shadow {
+    box-shadow: 0px 5px 30px rgba(0,0,0,.5);
+}
+.starry-middle{
+    vertical-align: middle;!important;
+    text-align: center;
+}
+.starry-rightfloat{
+    margin-left: 70%;
+    margin-bottom: 10px;
+}
+.starry-shadow-text{
+    transition: 1s;
+}
+.starry-shadow-text:hover{
+    text-shadow: 0 0 .1em,0 0 .3em;
+}
+.starry-heave-text{
+    text-shadow:0 1px hsl(0,0%,85%),
+    0 1px hsl(0,0%,80%),
+    0 1px hsl(0,0%,75%),
+    0 1px hsl(0,0%,70%),
+    0 1px hsl(0,0%,65%),
+    0 5px 10px black;
+}
+.starry-hide{
+    display: none;
+}
+.starry-show {
+    animation: show 1s ease-out forwards;
+}
+.row{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.alert{
+    padding: 5px;
+    margin-top: -10px;
+}
+.modal{
+    margin: 0;
+}
+body{
+    background-color: #f6f9fa;
+}
+@keyframes show {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
