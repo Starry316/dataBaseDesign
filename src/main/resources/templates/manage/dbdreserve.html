@@ -37,18 +37,18 @@
   <!--表格开始-->
   <div class="container-fluid" style="margin-top: 80px">
     <h3><strong>预定管理</strong></h3>
-    <br/>
+    <br />
     <div>
       <table class="table table-striped table-bordered table-hover">
         <thead>
         <tr>
-          <th class="center" >系统分配房间号</th>
+          <th class="center">系统分配房间号</th>
           <th class="center">房间类型</th>
           <th class="center">状态</th>
-          <th class="center" >顾客姓名</th>
+          <th class="center">顾客姓名</th>
           <th class="center">顾客手机号</th>
           <th class="center">预计入住时间</th>
-          <th class="center" >预计离开时间</th>
+          <th class="center">预计离开时间</th>
           <th class="center">取消预定</th>
           <th class="center">入住</th>
         </tr>
@@ -85,19 +85,23 @@
           <div v-for="i in customerNum">
             <div class="form-group">
               <label>顾客姓名：</label>
-              <input v-bind:id =i+'signName' class="form-control" placeholder="顾客姓名"/>
+              <input v-bind:id="i+'signName'" class="form-control" placeholder="顾客姓名" />
             </div>
             <div class="form-group">
               <label>身份证号码：</label>
-              <input v-bind:id =i+'signIdcardNo' class="form-control" placeholder="身份证号码"/>
+              <input v-bind:id="i+'signIdcardNo'" class="form-control" placeholder="身份证号码" />
             </div>
-            <div class="alert alert-danger hide" role="alert" v-bind:id =i+"idNoCheck">请输入正确的身份证号码</div>
+            <div class="alert alert-danger hide" role="alert" v-bind:id="i+&quot;idNoCheck&quot;">
+              请输入正确的身份证号码
+            </div>
             <div class="form-group">
               <label>手机号码：</label>
-              <input v-bind:id =i+'signPhoneNum' class="form-control" placeholder="手机号码"/>
+              <input v-bind:id="i+'signPhoneNum'" class="form-control" placeholder="手机号码" />
             </div>
-            <div class="alert alert-danger hide" role="alert" v-bind:id =i+"phoneCheck">请输入正确的手机号码</div>
-            <hr>
+            <div class="alert alert-danger hide" role="alert" v-bind:id="i+&quot;phoneCheck&quot;">
+              请输入正确的手机号码
+            </div>
+            <hr />
           </div>
         </div>
         <div class="modal-footer">
@@ -109,12 +113,6 @@
     </div>
   </div>
   <!--入住弹窗结束-->
-
-
-
-
-
-
   <!--&lt;!&ndash;入住弹窗&ndash;&gt;-->
   <!--<div class="modal fade" id="checkInModal" tabindex="-1" role="dialog">-->
   <!--<div class="modal-dialog" role="document">-->
@@ -154,17 +152,9 @@
   <div class="container-fluid starry-middle">
     <nav aria-label="Page navigation" class=" starry-middle">
       <ul class="pagination pagination-lg">
-        <li @click="frontPage" id="frontBtn">
-          <a href="#" aria-label="Previous" >
-            <span aria-hidden="true">&laquo;</span>
-          </a>
-        </li>
-        <li v-for="i in maxPage" v-bind:id =i+'page'><a href="#" @click="turnTo(i)">{{i}}</a></li>
-        <li @click="nextPage" id="nextBtn">
-          <a href="#" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>
+        <li @click="frontPage" id="frontBtn"> <a href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span> </a> </li>
+        <li v-for="i in maxPage" v-bind:id="i+'page'"><a href="#" @click="turnTo(i)">{{i}}</a></li>
+        <li @click="nextPage" id="nextBtn"> <a href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span> </a> </li>
       </ul>
     </nav>
   </div>
